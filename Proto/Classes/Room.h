@@ -17,6 +17,7 @@ private:
 	int p_roomCnt; 
 	int p_room[4][4];//room position setting. if 0 no room
 	void RoomSetting(int roomCnt);
+	void newRoom(int makeCnt);
 
 };
 
