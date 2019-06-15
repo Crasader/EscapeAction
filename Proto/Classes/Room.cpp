@@ -48,6 +48,7 @@ void Room::RoomSetting(int roomCnt)
 
 	while (makeRoom < roomCnt) {
 		int newCnt = RandomHelper::random_int(1, 3);
+		makeRoom++;
 
 	}
 

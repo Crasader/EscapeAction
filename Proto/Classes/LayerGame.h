@@ -2,7 +2,7 @@
 #define __LAYER_GAME_H__
 
 #include "cocos2d.h"
-
+#include "Room.h"
 USING_NS_CC;
 
 class LayerGame : public cocos2d::Layer
