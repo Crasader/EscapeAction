@@ -13,5 +13,7 @@ bool LayerGame::init()
         return false;
     }
 
+	auto back = new Room(1);//level 1 room
+
     return true;
 }
