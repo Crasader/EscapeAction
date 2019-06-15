@@ -13,5 +13,7 @@ bool LayerGame::init()
         return false;
     }
 
+	//this is Player branch!
+
     return true;
 }
