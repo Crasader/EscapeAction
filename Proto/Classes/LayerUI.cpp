@@ -14,6 +14,5 @@ bool LayerUI::init()
     }
 
 
-		return true;
-	}
+	return true;
 }
