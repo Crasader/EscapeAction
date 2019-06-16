@@ -10,7 +10,13 @@ class LayerGame : public cocos2d::Layer
 public:
     virtual bool init();
 
+	virtual void onPress(EventKeyboard::KeyCode key);
+	virtual void onRelease(EventKeyboard::KeyCode key);
+
+
     CREATE_FUNC(LayerGame);
+private:
+	Room* back;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
