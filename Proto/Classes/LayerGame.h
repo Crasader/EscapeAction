@@ -2,6 +2,7 @@
 #define __LAYER_GAME_H__
 
 #include "cocos2d.h"
+#include "../proj.win32/Furniture.h"
 
 USING_NS_CC;
 
