@@ -12,12 +12,12 @@ struct RoomInfo {
 	int s;
 	RoomInfo* p_next;
 };
-class Room
+class Room : public Node
 {
 public:
-	Room(int level, Layer* ly);
+	Room(int level);
 	~Room();
-
+	bool init();
 	int GetRoonCnt();
 	bool MoveRoom(int dir);
 
@@ -34,7 +34,6 @@ private:
 	Label* eDoor;
 	Label* sDoor;
 
-	Layer* p_ly;
 	RoomInfo* escRoom;
 	RoomInfo* now;
 	void RoomSetting(int roomCnt);

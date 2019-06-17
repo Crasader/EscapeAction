@@ -1,7 +1,7 @@
 #include "Room.h"
 
 
-Room::Room(int level,Layer* ly)
+Room::Room(int level)
 {
 
 	win_size = Director::getInstance()->getWinSize();
@@ -24,7 +24,6 @@ Room::Room(int level,Layer* ly)
 	p_escDoor = 0;
 	p_level = level;
 	p_roomCnt = level * 2 + 2;
-	p_ly = ly;
 	RoomSetting(p_roomCnt);
 	RoomInfoSet();
 	FirstRoomSet();
@@ -33,6 +32,12 @@ Room::Room(int level,Layer* ly)
 
 Room::~Room()
 {
+}
+
+bool Room::init()
+{
+	
+	return true;
 }
 
 int Room::GetRoonCnt()
@@ -204,6 +209,7 @@ void Room::RoomSetting(int roomCnt)
 		CCLOG("\n");
 	}
 
+
 }
 
 void Room::RoomInfoSet()
@@ -282,11 +288,11 @@ void Room::RoomInfoSet()
 
 void Room::DrawBack()
 {
-	p_ly->addChild(back);
-	p_ly->addChild(nDoor);
-	p_ly->addChild(wDoor);
-	p_ly->addChild(eDoor);
-	p_ly->addChild(sDoor);
+	this->addChild(back);
+	this->addChild(nDoor);
+	this->addChild(wDoor);
+	this->addChild(eDoor);
+	this->addChild(sDoor);
 }
 
 void Room::FirstRoomSet()

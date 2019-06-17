@@ -19,9 +19,9 @@ bool LayerGame::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	back = new Room(5,this);//level 1 room, now maxLevel is 7. 
+	back = new Room(5);//level 1 room, now maxLevel is 7. 
 							    //if want edit maxLevel //goto Room.h and fix p_room MatrixSize
-
+	this->addChild(back);
     return true;
 }
 
