@@ -1,23 +1,28 @@
 #include "Room.h"
 
 
-Room::Room(int level)
+Room::~Room()
 {
+}
+
+bool Room::init()
+{
+	int level = 5;
 
 	win_size = Director::getInstance()->getWinSize();
 
 	back = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	back->setPosition(Point(win_size.width*0.5,win_size.height*0.5));
-	
+	back->setPosition(Point(win_size.width*0.5, win_size.height*0.5));
+
 	nDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	nDoor->setPosition(Point(win_size.width*0.5,win_size.height*0.9));
-	
+	nDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.9));
+
 	wDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	wDoor->setPosition(Point(win_size.width*0.1, win_size.height*0.5));
-	
+
 	eDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	eDoor->setPosition(Point(win_size.width*0.9, win_size.height*0.5));
-	
+
 	sDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	sDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.1));
 
@@ -28,15 +33,7 @@ Room::Room(int level)
 	RoomInfoSet();
 	FirstRoomSet();
 	DrawBack();
-}
 
-Room::~Room()
-{
-}
-
-bool Room::init()
-{
-	
 	return true;
 }
 

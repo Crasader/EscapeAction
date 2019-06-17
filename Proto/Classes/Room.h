@@ -4,6 +4,7 @@
 
 using namespace std;
 USING_NS_CC;
+
 struct RoomInfo {
 	int num;
 	int n;//if -1, no door. or p_roomCnt = escapeDoor
@@ -12,12 +13,13 @@ struct RoomInfo {
 	int s;
 	RoomInfo* p_next;
 };
+
 class Room : public Node
 {
 public:
-	Room(int level);
-	~Room();
+	CREATE_FUNC(Room);
 	bool init();
+	~Room();
 	int GetRoonCnt();
 	bool MoveRoom(int dir);
 
@@ -40,6 +42,7 @@ private:
 	void RoomInfoSet();
 	void DrawBack();
 	void FirstRoomSet();
+
 
 };
 

@@ -15,6 +15,7 @@ public:
 
 
     CREATE_FUNC(LayerGame);
+
 private:
 	Room* back;
 };
