@@ -13,9 +13,9 @@ public:
 
 	Size win_size;
 
-	void Create_Fnt();
+	void Create_Fnt(); //가구 생성
 
-	void React();
+	void Touch_React(); //가구 터치시 반응
 
 	CREATE_FUNC(Furniture);
 };
