@@ -4,11 +4,6 @@
 USING_NS_CC;
 
 
-Scene * LayerGame::createScene()
-{
-	return nullptr;
-}
-
 bool LayerGame::init()
 {
     //////////////////////////////

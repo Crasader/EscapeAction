@@ -9,6 +9,8 @@ class Furniture : public Layer
 {
 public:
 
+	~Furniture();
+
 	virtual bool init();
 
 	Size win_size;
