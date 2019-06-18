@@ -11,20 +11,44 @@ bool Room::init()
 
 	win_size = Director::getInstance()->getWinSize();
 
+	background = Sprite::create("Background.png");
+	background->setPosition(Point(win_size.width*0.5f, win_size.height*0.5));
+
+	door_n = Sprite::create("Door.png");
+	door_n->setAnchorPoint(Vec2(0.5,0));
+	door_n->setPosition(Point(win_size.width*0.5, win_size.height*0.905));
+
+	door_w = Sprite::create("Door.png");
+	door_w->setAnchorPoint(Vec2(0.5, 0));
+	door_w->setRotation(-90);
+	door_w->setPosition(Point(win_size.width*0.06, win_size.height*0.5));
+
+
+	door_e = Sprite::create("Door.png");
+	door_e->setAnchorPoint(Vec2(0.5, 0));
+	door_e->setRotation(90);
+	door_e->setPosition(Point(win_size.width*0.94, win_size.height*0.5));
+
+	door_s = Sprite::create("Door.png");
+	door_s->setAnchorPoint(Vec2(0.5, 0));
+	door_s->setRotation(-180);
+	door_s->setPosition(Point(win_size.width*0.5, win_size.height*0.095));
+
 	back = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	back->setPosition(Point(win_size.width*0.5, win_size.height*0.5));
 
 	nDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	nDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.9));
+	nDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.95));
 
 	wDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	wDoor->setPosition(Point(win_size.width*0.1, win_size.height*0.5));
+	wDoor->setPosition(Point(win_size.width*0.05, win_size.height*0.5));
 
 	eDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	eDoor->setPosition(Point(win_size.width*0.9, win_size.height*0.5));
+	eDoor->setPosition(Point(win_size.width*0.95, win_size.height*0.5));
 
 	sDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	sDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.1));
+	sDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.05));
+
 
 	p_escDoor = 0;
 	p_level = level;
@@ -80,6 +104,11 @@ bool Room::MoveRoom(int dir)
 		wDoor->setString(to_string(now->w));
 		eDoor->setString(to_string(now->e));
 		sDoor->setString(to_string(now->s));
+
+		door_n->setVisible(now->n >= 0 ? true : false);
+		door_w->setVisible(now->w >= 0 ? true : false);
+		door_e->setVisible(now->e >= 0 ? true : false);
+		door_s->setVisible(now->s >= 0 ? true : false);
 	}
 	return true;
 }
@@ -285,11 +314,18 @@ void Room::RoomInfoSet()
 
 void Room::DrawBack()
 {
+	this->addChild(background);
+	this->addChild(door_n);
+	this->addChild(door_w);
+	this->addChild(door_e);
+	this->addChild(door_s);
+
 	this->addChild(back);
 	this->addChild(nDoor);
 	this->addChild(wDoor);
 	this->addChild(eDoor);
 	this->addChild(sDoor);
+
 }
 
 void Room::FirstRoomSet()
@@ -305,5 +341,11 @@ void Room::FirstRoomSet()
 	wDoor->setString(to_string(now->w));
 	eDoor->setString(to_string(now->e));
 	sDoor->setString(to_string(now->s));
+
+	
+	door_n->setVisible(now->n >= 0 ? true : false);
+	door_w->setVisible(now->w >= 0 ? true : false);
+	door_e->setVisible(now->e >= 0 ? true : false);
+	door_s->setVisible(now->s >= 0 ? true : false);
 
 }

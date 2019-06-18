@@ -31,6 +31,12 @@ private:
 	Size win_size;
 
 	Label* back;
+	Sprite* background;
+	Sprite* door_n;
+	Sprite* door_w;
+	Sprite* door_e;
+	Sprite* door_s;
+
 	Label* nDoor;
 	Label* wDoor;
 	Label* eDoor;
