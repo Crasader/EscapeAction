@@ -1,22 +1,11 @@
-#include "HelloWorldScene.h"
-#include "SimpleAudioEngine.h"
+#include "Button_Ui.h"
 
 USING_NS_CC;
 
 using namespace std;
 
-Scene* player_Item::createScene()
-{
-    return player_Item::create();
-}
-
 bool player_Item::init()
 {
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-
 	auto button1 = ui::Button::create("Button_Disable.png", "Button_Normal.png", "Button_Press.png");
 	button1->setTitleText("Button Text");
 	button1->setPosition(Point(100, 250));
@@ -48,12 +37,7 @@ bool player_Item::init()
 	button4->setName("btn4");
 	button4->setEnabled(false);
 	this->addChild(button4);
-
-	player* pPlayer = player::create();
-	this->addChild(pPlayer);
-	pPlayer->setPosition(200, 200);
-
-
+	
     return true;
 }
 

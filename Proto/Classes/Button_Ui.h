@@ -5,17 +5,15 @@
 #include "ui/CocosGUI.h"
 #include "ui/UIButton.h"
 #include "cocos-ext.h"
-#include "../proj.win32/player.h"
+#include "LayerGame.h"
 
 
 using namespace std;
 using namespace	cocos2d;
 
-class player_Item : public cocos2d::Scene
+class player_Item : public Node
 {
 public:
-    static cocos2d::Scene* createScene();
-
     virtual bool init();
 
 	bool check; //충돌체크

@@ -4,7 +4,7 @@
 bool GameScene::init()
 {
 
-	auto ly_game = LayerGame::create();
+	LayerGame* ly_game = LayerGame::create();
 	auto ly_ui = LayerUI::create();
 
 	this->addChild(ly_game);

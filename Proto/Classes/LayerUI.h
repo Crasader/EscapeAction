@@ -2,14 +2,14 @@
 #define __LAYER_UI_H__
 
 #include "cocos2d.h"
+#include "Button_Ui.h"
 
 USING_NS_CC;
 
 class LayerUI : public cocos2d::Layer
 {
 public:
-    virtual bool init();
-
+	virtual bool init();
     CREATE_FUNC(LayerUI);
 };
 
