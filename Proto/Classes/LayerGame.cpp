@@ -15,6 +15,7 @@ bool LayerGame::init()
 	this->addChild(rm);
 
 	pyer = player::create();
+	pyer->setRect(rm->GetBackRect());
 	this->addChild(pyer);
 
     return true;

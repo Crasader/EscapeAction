@@ -20,16 +20,16 @@ bool Room::init()
 		door_sp[i]->setColor(Color3B::BLACK);
 	}
 
-	door_sp[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.905));
+	door_sp[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.905));//ºÏ
 
 	door_sp[1]->setRotation(-90);
-	door_sp[1]->setPosition(Point(win_size.width*0.06, win_size.height*0.5));
+	door_sp[1]->setPosition(Point(win_size.width*0.06, win_size.height*0.5));//¼­
 
 	door_sp[2] ->setRotation(90);
-	door_sp[2]->setPosition(Point(win_size.width*0.94, win_size.height*0.5));
+	door_sp[2]->setPosition(Point(win_size.width*0.94, win_size.height*0.5));//µ¿
 
 	door_sp[3]->setRotation(-180);
-	door_sp[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.095));
+	door_sp[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.095));//³²
 	
 	p_escDoor = 0;
 	p_level = level;
@@ -61,6 +61,12 @@ bool Room::MoveRoom(int dir)
 		ChangeRoomByNum(moveNum);
 	}
 	return true;
+}
+
+Rect Room::GetBackRect()
+{
+	Rect rc = Rect(win_size.width*0.06, win_size.height*0.095, win_size.width*0.88, win_size.height*0.81);
+	return rc;
 }
 
 void Room::RoomSetting(int roomCnt)

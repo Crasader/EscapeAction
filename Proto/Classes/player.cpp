@@ -6,6 +6,7 @@ player::~player()
 
 bool player::init()
 {
+	rc = Rect(0, 0, 0, 0);
 	speed = 3;
 	plyer = Sprite::create("HelloWorld.png");
 	this->addChild(plyer);
@@ -21,6 +22,11 @@ bool player::init()
 
 	this->scheduleUpdate();
 	return true;
+}
+
+void player::setRect(Rect back_rc)
+{
+	rc = back_rc;
 }
 
 void player::onPress(EventKeyboard::KeyCode key)
@@ -64,17 +70,17 @@ void player::onRelease(EventKeyboard::KeyCode key)
 
 void player::update(float dt)
 {
-	if (keyUp&&plyer->getPositionY() < win_size.height - plyer_size.height*0.5f) {
+	if (keyUp&&plyer->getPositionY() < rc.getMaxY() - plyer_size.height*0.5f) {
 		plyer->setPositionY(plyer->getPositionY() + speed);
 	}
-	if (keyDown&&plyer->getPositionY() > plyer_size.height*0.5f) {
+	if (keyDown&&plyer->getPositionY() >rc.getMinY()+ plyer_size.height*0.5f) {
 		plyer->setPositionY(plyer->getPositionY() - speed);
 	}
 
-	if (keyLeft&&plyer->getPositionX() > plyer_size.width*0.5f) {
+	if (keyLeft&&plyer->getPositionX() >rc.getMinX()+ plyer_size.width*0.5f) {
 		plyer->setPositionX(plyer->getPositionX() - speed);
 	}
-	if (keyRight&&plyer->getPositionX() < win_size.width - plyer_size.width*0.5f) {
+	if (keyRight&&plyer->getPositionX() < rc.getMaxX() - plyer_size.width*0.5f) {
 		plyer->setPositionX(plyer->getPositionX() + speed);
 	}
 }

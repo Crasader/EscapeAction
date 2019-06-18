@@ -9,7 +9,7 @@ public:
 	CREATE_FUNC(player);
 	~player();
 	virtual bool init();
-
+	void setRect(Rect back_rc);
 	void onPress(EventKeyboard::KeyCode key);
 	void onRelease(EventKeyboard::KeyCode key);
 
@@ -21,6 +21,7 @@ private :
 	Size win_size;
 	Sprite* plyer;
 	Size plyer_size;
+	Rect rc;
 
 };
 

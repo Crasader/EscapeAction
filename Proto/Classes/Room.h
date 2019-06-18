@@ -20,7 +20,7 @@ public:
 	~Room();
 	int GetRoonCnt();
 	bool MoveRoom(int dir);
-
+	Rect GetBackRect();
 private:
 	int p_level;
 	int p_roomCnt; 
