@@ -7,11 +7,9 @@ USING_NS_CC;
 
 struct RoomInfo {
 	int num;
-	int n;//if -1, no door. or p_roomCnt = escapeDoor
-	int w;
-	int e;
-	int s;
+	int door[4];//0:n 1:w 2:e 3:s if -1 no door/have door = room number, p_roomCnt = escapeDoor
 	RoomInfo* p_next;
+	int color;
 };
 
 class Room : public Node
@@ -30,25 +28,20 @@ private:
 	int p_escDoor;
 	Size win_size;
 
-	Label* back;
 	Sprite* background;
-	Sprite* door_n;
-	Sprite* door_w;
-	Sprite* door_e;
-	Sprite* door_s;
-
-	Label* nDoor;
-	Label* wDoor;
-	Label* eDoor;
-	Label* sDoor;
-
+	Sprite* door_sp[4];
+	
 	RoomInfo* escRoom;
 	RoomInfo* now;
 	void RoomSetting(int roomCnt);
 	void RoomInfoSet();
+	void ChangeRoomByNum(int roomNum);
 	void DrawBack();
 	void FirstRoomSet();
-
+	void TestLabelDraw();
+	void TestLabelUpdate();
+	Label* back;
+	Label* door_lab[4];
 
 };
 

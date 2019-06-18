@@ -3,12 +3,7 @@
 
 bool GameScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
+
 	auto ly_game = LayerGame::create();
 	auto ly_ui = LayerUI::create();
 

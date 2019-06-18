@@ -6,12 +6,6 @@ USING_NS_CC;
 
 bool LayerGame::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
-        return false;
-    }
 
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(LayerGame::onPress, this);
@@ -24,6 +18,7 @@ bool LayerGame::init()
 
 	this->addChild(back);
     return true;
+
 }
 
 void LayerGame::onPress(EventKeyboard::KeyCode key)

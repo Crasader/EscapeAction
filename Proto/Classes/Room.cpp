@@ -14,50 +14,31 @@ bool Room::init()
 	background = Sprite::create("Background.png");
 	background->setPosition(Point(win_size.width*0.5f, win_size.height*0.5));
 
-	door_n = Sprite::create("Door.png");
-	door_n->setAnchorPoint(Vec2(0.5,0));
-	door_n->setPosition(Point(win_size.width*0.5, win_size.height*0.905));
+	for (int i = 0; i < 4;i++) {
+		door_sp[i] = Sprite::create("Door.png");
+		door_sp[i]->setAnchorPoint(Vec2(0.5, 0));
+		door_sp[i]->setColor(Color3B::BLACK);
+	}
 
-	door_w = Sprite::create("Door.png");
-	door_w->setAnchorPoint(Vec2(0.5, 0));
-	door_w->setRotation(-90);
-	door_w->setPosition(Point(win_size.width*0.06, win_size.height*0.5));
+	door_sp[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.905));
 
+	door_sp[1]->setRotation(-90);
+	door_sp[1]->setPosition(Point(win_size.width*0.06, win_size.height*0.5));
 
-	door_e = Sprite::create("Door.png");
-	door_e->setAnchorPoint(Vec2(0.5, 0));
-	door_e->setRotation(90);
-	door_e->setPosition(Point(win_size.width*0.94, win_size.height*0.5));
+	door_sp[2] ->setRotation(90);
+	door_sp[2]->setPosition(Point(win_size.width*0.94, win_size.height*0.5));
 
-	door_s = Sprite::create("Door.png");
-	door_s->setAnchorPoint(Vec2(0.5, 0));
-	door_s->setRotation(-180);
-	door_s->setPosition(Point(win_size.width*0.5, win_size.height*0.095));
-
-	back = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	back->setPosition(Point(win_size.width*0.5, win_size.height*0.5));
-
-	nDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	nDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.95));
-
-	wDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	wDoor->setPosition(Point(win_size.width*0.05, win_size.height*0.5));
-
-	eDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	eDoor->setPosition(Point(win_size.width*0.95, win_size.height*0.5));
-
-	sDoor = Label::createWithTTF("0", "fonts/arial.ttf", 20);
-	sDoor->setPosition(Point(win_size.width*0.5, win_size.height*0.05));
-
-
+	door_sp[3]->setRotation(-180);
+	door_sp[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.095));
+	
 	p_escDoor = 0;
 	p_level = level;
 	p_roomCnt = level * 2 + 2;
 	RoomSetting(p_roomCnt);
 	RoomInfoSet();
-	FirstRoomSet();
 	DrawBack();
-
+	TestLabelDraw();
+	FirstRoomSet();
 	return true;
 }
 
@@ -68,54 +49,23 @@ int Room::GetRoonCnt()
 
 bool Room::MoveRoom(int dir)
 {
-	RoomInfo* cursor = escRoom;
 	int moveNum = -1;//if -1 , no Move;
-	switch (dir)
-	{
-	case 0:
-		moveNum = now->n;
-		break;
-	case 1:
-		moveNum = now->w;
-		break;
-	case 2:
-		moveNum = now->e;
-		break;
-	case 3:
-		moveNum = now->s;
-		break;
-	default:
-		break;
-	}
+	
+	moveNum = now->door[dir];
 
 	if (moveNum == p_roomCnt) {
 		exit(0);
 	}
 
 	if (moveNum >= 0) {
-
-		for (int i = 0; i < moveNum; i++) {
-			cursor = cursor->p_next;
-		}
-
-		now = cursor;
-		back->setString(to_string(now->num));
-		nDoor->setString(to_string(now->n));
-		wDoor->setString(to_string(now->w));
-		eDoor->setString(to_string(now->e));
-		sDoor->setString(to_string(now->s));
-
-		door_n->setVisible(now->n >= 0 ? true : false);
-		door_w->setVisible(now->w >= 0 ? true : false);
-		door_e->setVisible(now->e >= 0 ? true : false);
-		door_s->setVisible(now->s >= 0 ? true : false);
+		ChangeRoomByNum(moveNum);
 	}
 	return true;
 }
 
 void Room::RoomSetting(int roomCnt)
 {
-	//p_room[][] reset to 0
+	//p_room[][] reset to -1
 	int colSize = sizeof(p_room[0]) / sizeof(int);
 	int rowSize = sizeof(p_room) / sizeof(p_room[0]);
 
@@ -144,7 +94,7 @@ void Room::RoomSetting(int roomCnt)
 		num++;
 		preColMin = col;
 		preColMax = col;
-
+		
 		int colCnt = RandomHelper::random_int(colMinCnt,colMaxCnt);// room count when row = i, 1~
 		int a = 1;
 		for (int i = 0; i < colCnt - 1;i++) {
@@ -255,12 +205,14 @@ void Room::RoomInfoSet()
 			cursor->p_next = new RoomInfo;
 			cursor = cursor->p_next;
 		}
+		//set random color
+		cursor->color =p_roomCnt-roomNum-1;
+
 		cursor->num = roomNum;
 		cursor->p_next = NULL;
-		cursor->n = -1;
-		cursor->w = -1;
-		cursor->e = -1;
-		cursor->s = -1;
+		for (int i = 0; i < 4;i++) {
+			cursor->door[i] = -1;
+		}
 
 		bool breakFor = false;
 		int i = 0;
@@ -278,74 +230,86 @@ void Room::RoomInfoSet()
 		}
 
 		if (i - 1 >= 0) {
-			cursor->n = p_room[i - 1][j];
+			cursor->door[0] = p_room[i - 1][j];
 		}
 		if (j-1>=0) {
-			cursor->w = p_room[i][j - 1];
+			cursor->door[1] = p_room[i][j - 1];
 		}
 		if (j+1<colSize) {
-			cursor->e = p_room[i][j + 1];
+			cursor->door[2] = p_room[i][j + 1];
 		}
 		if (i + 1 < rowSize) {
-			cursor->s = p_room[i + 1][j];
+			cursor->door[3] = p_room[i + 1][j];
 		}
 
 		roomNum++;
 	}
+	escRoom->door[p_escDoor] = p_roomCnt;
 
-	switch (p_escDoor) {
-	case 0:
-		escRoom->n = p_roomCnt;
-		break;
-	case 1:
-		escRoom->w = p_roomCnt;
-		break;
-	case 2:
-		escRoom->e = p_roomCnt;
-		break;
-	case 3:
-		escRoom->s = p_roomCnt;
-		break;
-	default:
-		break;
-	
+}
+
+void Room::ChangeRoomByNum(int roomNum)
+{
+	RoomInfo* cursor = escRoom;
+
+	for (int i = 0; i < roomNum; i++) {
+		cursor = cursor->p_next;
 	}
+	now = cursor;
+	background->setColor(Color3B(255, now->color * 20, now->color * 20));
+	for (int i = 0;i < 4;i++) {
+		door_sp[i]->setVisible(now->door[i] >= 0 ? true : false);
+	}
+	if (now->door[p_escDoor] == p_roomCnt) {
+		door_sp[p_escDoor]->setColor(Color3B::BLUE);
+	}
+	else {
+		door_sp[p_escDoor]->setColor(Color3B::BLACK);
+	}
+	TestLabelUpdate();
 }
 
 void Room::DrawBack()
 {
 	this->addChild(background);
-	this->addChild(door_n);
-	this->addChild(door_w);
-	this->addChild(door_e);
-	this->addChild(door_s);
-
-	this->addChild(back);
-	this->addChild(nDoor);
-	this->addChild(wDoor);
-	this->addChild(eDoor);
-	this->addChild(sDoor);
+	for (int i = 0;i < 4;i++) {
+		this->addChild(door_sp[i]);
+	}
 
 }
 
 void Room::FirstRoomSet()
 {
 	int nowRoom = RandomHelper::random_int(1,p_roomCnt-1);
-	RoomInfo* cursor = escRoom;
-	for (int i = 0; i < nowRoom; i++) {
-		cursor = cursor->p_next;
+	ChangeRoomByNum(nowRoom);
+}
+
+void Room::TestLabelDraw()
+{
+	back = Label::createWithTTF("0", "fonts/arial.ttf", 20);
+	back->setPosition(Point(win_size.width*0.5, win_size.height*0.5));
+
+	for (int i = 0; i < 4;i++) {
+		door_lab[i] = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	}
-	now = cursor;
+	door_lab[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.95));
+
+	door_lab[1]->setPosition(Point(win_size.width*0.05, win_size.height*0.5));
+
+	door_lab[2]->setPosition(Point(win_size.width*0.95, win_size.height*0.5));
+
+	door_lab[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.05));
+
+	this->addChild(back,1);
+	for (int i = 0;i < 4;i++) {
+		this->addChild(door_lab[i],1);
+	}
+}
+
+void Room::TestLabelUpdate()
+{
 	back->setString(to_string(now->num));
-	nDoor->setString(to_string(now->n));
-	wDoor->setString(to_string(now->w));
-	eDoor->setString(to_string(now->e));
-	sDoor->setString(to_string(now->s));
-
-	
-	door_n->setVisible(now->n >= 0 ? true : false);
-	door_w->setVisible(now->w >= 0 ? true : false);
-	door_e->setVisible(now->e >= 0 ? true : false);
-	door_s->setVisible(now->s >= 0 ? true : false);
-
+	for (int i = 0;i < 4;i++) {
+		door_lab[i]->setString(to_string(now->door[i]));
+	}
 }
