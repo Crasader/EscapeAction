@@ -6,14 +6,9 @@ USING_NS_CC;
 
 bool LayerGame::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
-        return false;
-    }
-
-	//this is Object branch!
+	Furniture* funt = Furniture::create();
+	funt->Create_Furniture();
+	this->addChild(funt);
 
 
     return true;
