@@ -22,7 +22,9 @@ public:
 	void Touch_React(); //가구 터치시 반응
 
 	virtual bool onTouchBegan(Touch* touch, Event* unused_event);
-	virtual bool onTouchEnded(Touch* touch, Event* unused_event);
+	virtual void onTouchEnded(Touch* touch, Event* unused_event);
+	bool isselect;
+	Sprite* select;
 
 	CREATE_FUNC(Furniture);
 };
