@@ -70,7 +70,6 @@ void player_Item::searchobj()
 		return;
 	}
 }
-
 void player_Item::keyobj()
 {
 	auto btn = (ui::Button*) this->getChildByName("btn3");
