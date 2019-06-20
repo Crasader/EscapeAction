@@ -11,14 +11,29 @@ class UIManager
 private:
 	UIManager();
 	~UIManager();
-	ui::Button* _weapon;
+
+	ui::Button* _atk;
+	ui::Button* _search;
+	ui::Button* _key;
+	ui::Button* _trap;
+
 public:
 	static UIManager* getInstance();
 
-	void setEnableWBtn(bool setEnable);
-	void setWeaponBtn(ui::Button* weapon);
+	//return false면 이미 버튼이 set된 상태
+	//버튼이 NULL일때만 set
+	bool setAtkBtn(ui::Button* atk);
+	bool setSearchBtn(ui::Button* search);
+	bool setKeyBtn(ui::Button* key);
+	bool setTrapBtn(ui::Button* trap);
 
-	ui::Button* getReserchBtn();
-	void getReserchBtn(ui::Button* reserch);
+
+	//버튼의 setEnable
+	void setEnable_AtkBtn(bool enable);
+	void setEnable_SearchBtn(bool enable);
+	void setEnable_KeyBtn(bool enable);
+	void setEnable_TrapBtn(bool enable);
+
+
 };
 
