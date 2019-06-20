@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+
 USING_NS_CC;
 
 class player:public Node
@@ -14,6 +15,10 @@ public:
 	void onRelease(EventKeyboard::KeyCode key);
 
 	void update(float dt);
+
+	player* player_db;
+	void set_player(player* p);
+	player* get_player();
 
 private : 
 	bool keyUp, keyDown, keyLeft, keyRight;

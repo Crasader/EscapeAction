@@ -3,12 +3,14 @@
 
 #include "cocos2d.h"
 #include "Button_Ui.h"
+#include "Joystick.h"
 
 USING_NS_CC;
 
 class LayerUI : public cocos2d::Layer
 {
 public:
+	
 	virtual bool init();
     CREATE_FUNC(LayerUI);
 };

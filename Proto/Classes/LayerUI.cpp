@@ -17,5 +17,7 @@ bool LayerUI::init()
 	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn3"));
 	UIManager::getInstance()->setBombBtn((ui::Button*)pl->getChildByName("btn4"));
 
+	Joystick* js = Joystick::create();
+	this->addChild(js);
 	return true;
 }
