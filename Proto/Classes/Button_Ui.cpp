@@ -40,10 +40,6 @@ bool player_Item::init()
 	button4->setEnabled(false);
 	this->addChild(button4);
 
-	p_data = player::create();
-	this->addChild(p_data);
-	p_data->setName("p_name");
-
 	this->scheduleUpdate();
 
     return true;
@@ -51,52 +47,20 @@ bool player_Item::init()
 
 void player_Item::atkobj()
 {
-	auto btn = (ui::Button*) this->getChildByName("btn1");
-	if (atk_on)
-	{
-		btn->setEnabled(true);
-	}
-	else;
+	CCLOG("atkobj");
 }
 
 void player_Item::searchobj()
 {
-	auto player_p = (Sprite*) this->getChildByName("p_name")->getChildByName("player_move");
-	auto obj_p = (Sprite*)this->getChildByName("btn1");
-	auto btn = (ui::Button*) this->getChildByName("btn2");
-
-	Rect rect_r = player_p -> getBoundingBox();
-	Rect obj_r = obj_p -> getBoundingBox();
-
-	if (rect_r.intersectsRect(obj_r)==true) {
-		if (btn->isEnabled() == false){
-			btn->setEnabled(true);
-		}
-	}
-	else
-		btn->setEnabled(false);
+	CCLOG("searchobj");
 }
 void player_Item::keyobj()
 {
-	auto btn = (ui::Button*) this->getChildByName("btn3");
-	if (key_count > 0)
-	{
-		btn->setEnabled(true);
-	}
-	else;
+	CCLOG("keyobj");
 }
 
 void player_Item::trapobj()
 {
-	auto btn = (ui::Button*) this->getChildByName("btn4");
-	if (trap_count > 0)
-	{
-		btn->setEnabled(true);
-	}
-	else;
+	CCLOG("trapobj");
 }
 
-void player_Item::update(float dt)
-{
-	searchobj();
-}

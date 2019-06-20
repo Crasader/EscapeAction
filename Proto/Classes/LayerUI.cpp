@@ -10,6 +10,9 @@ bool LayerUI::init()
 	//아이템 버튼 생성
 	player_Item* pl = player_Item::create();
 	this->addChild(pl);
+	//조이스틱 생성
+	Joystick* js = Joystick::create();
+	this->addChild(js);
 
 	//UIManager에 4개의 버튼 세팅
 	UIManager::getInstance()->setAtkBtn((ui::Button*)pl->getChildByName("btn1"));
@@ -17,7 +20,8 @@ bool LayerUI::init()
 	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn3"));
 	UIManager::getInstance()->setTrapBtn((ui::Button*)pl->getChildByName("btn4"));
 
-	Joystick* js = Joystick::create();
-	this->addChild(js);
+	//UIManager에 joystick 세팅
+	UIManager::getInstance()->setJoystick(js);
+
 	return true;
 }

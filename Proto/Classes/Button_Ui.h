@@ -5,8 +5,6 @@
 #include "ui/CocosGUI.h"
 #include "ui/UIButton.h"
 #include "cocos-ext.h"
-#include "LayerGame.h"
-#include "player.h"
 
 using namespace std;
 using namespace	cocos2d;
@@ -16,8 +14,6 @@ class player_Item : public Node
 public:
     virtual bool init();
 	
-	player* p_data;
-
 	Size win_size;
 
 	bool check; //충돌체크
@@ -32,8 +28,6 @@ public:
 	void keyobj();
 	void trapobj();
 
-	void update(float dt);
-   
     CREATE_FUNC(player_Item);
 };
 

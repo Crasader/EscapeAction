@@ -86,12 +86,3 @@ void player::update(float dt)
 	}
 }
 
-void player::set_player(player * p)
-{
-	player_db = p;
-}
-
-player* player::get_player()
-{
-	return player_db;
-}
