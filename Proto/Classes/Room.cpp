@@ -30,7 +30,7 @@ bool Room::init()
 
 	door_sp[3]->setRotation(-180);
 	door_sp[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.095));//³²
-	
+	r = Rect(win_size.width*0.06, win_size.height*0.095, win_size.width*0.88, win_size.height*0.81);
 	p_escDoor = 0;
 	p_level = level;
 	p_roomCnt = level * 2 + 2;
@@ -39,6 +39,9 @@ bool Room::init()
 	DrawBack();
 	TestLabelDraw();
 	FirstRoomSet();
+
+	//Furniture* ft;
+	//ft.setRoomRect(r);
 	return true;
 }
 
@@ -65,8 +68,7 @@ bool Room::MoveRoom(int dir)
 
 Rect Room::GetBackRect()
 {
-	Rect rc = Rect(win_size.width*0.06, win_size.height*0.095, win_size.width*0.88, win_size.height*0.81);
-	return rc;
+	return r;
 }
 
 void Room::RoomSetting(int roomCnt)

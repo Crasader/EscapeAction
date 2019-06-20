@@ -16,7 +16,7 @@ class Room : public Node
 {
 public:
 	CREATE_FUNC(Room);
-	bool init();
+	virtual bool init();
 	~Room();
 	int GetRoonCnt();
 	bool MoveRoom(int dir);
@@ -27,10 +27,10 @@ private:
 	int p_room[4][4];//room position setting. if -1 no room
 	int p_escDoor;
 	Size win_size;
-
+	Rect r;
 	Sprite* background;
 	Sprite* door_sp[4];
-	
+
 	RoomInfo* escRoom;
 	RoomInfo* now;
 	void RoomSetting(int roomCnt);

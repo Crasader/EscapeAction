@@ -21,6 +21,7 @@ bool player::init()
 	_eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
 
 	this->scheduleUpdate();
+
 	return true;
 }
 
@@ -31,7 +32,6 @@ void player::setRect(Rect back_rc)
 
 void player::onPress(EventKeyboard::KeyCode key)
 {
-
 	if (key == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW) {
 		keyDown = false;
 		keyUp = true;
