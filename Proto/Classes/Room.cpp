@@ -42,6 +42,7 @@ bool Room::init()
 
 	//Furniture* ft;
 	//ft.setRoomRect(r);
+
 	return true;
 }
 

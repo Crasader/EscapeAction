@@ -12,10 +12,10 @@ bool LayerUI::init()
 	this->addChild(pl);
 
 	//UIManager에 4개의 버튼 세팅
-	UIManager::getInstance()->setWeaponBtn((ui::Button*)pl->getChildByName("btn1"));
-	UIManager::getInstance()->setReserchBtn((ui::Button*)pl->getChildByName("btn2"));
+	UIManager::getInstance()->setAtkBtn((ui::Button*)pl->getChildByName("btn1"));
+	UIManager::getInstance()->setSearchBtn((ui::Button*)pl->getChildByName("btn2"));
 	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn3"));
-	UIManager::getInstance()->setBombBtn((ui::Button*)pl->getChildByName("btn4"));
+	UIManager::getInstance()->setTrapBtn((ui::Button*)pl->getChildByName("btn4"));
 
 	Joystick* js = Joystick::create();
 	this->addChild(js);
