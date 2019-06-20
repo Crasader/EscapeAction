@@ -40,10 +40,6 @@ bool player_Item::init()
 	button4->setEnabled(false);
 	this->addChild(button4);
 
-	p_data = player::create();
-	this->addChild(p_data);
-	p_data->setName("p_name");
-
 	this->scheduleUpdate();
 
     return true;
@@ -61,7 +57,6 @@ void player_Item::atkobj()
 
 void player_Item::searchobj()
 {
-	auto player_p = (Sprite*) this->getChildByName("p_name")->getChildByName("player_move");
 	auto obj_p = (Sprite*)this->getChildByName("btn1");
 	auto btn = (ui::Button*) this->getChildByName("btn2");
 

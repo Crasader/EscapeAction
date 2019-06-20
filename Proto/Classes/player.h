@@ -16,10 +16,6 @@ public:
 
 	void update(float dt);
 
-	player* player_db;
-	void set_player(player* p);
-	player* get_player();
-
 private : 
 	bool keyUp, keyDown, keyLeft, keyRight;
 	int speed;

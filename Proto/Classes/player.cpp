@@ -13,8 +13,8 @@ bool player::init()
 	plyer_size = plyer->getContentSize();
 	win_size = Director::getInstance()->getWinSize();
 	plyer->setName("player_move");
-
 	plyer->setPosition(Vec2(win_size.width*0.5f, win_size.height*0.5f));
+
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
 	listener->onKeyReleased = CC_CALLBACK_1(player::onRelease, this);
@@ -84,14 +84,4 @@ void player::update(float dt)
 	if (keyRight&&plyer->getPositionX() < rc.getMaxX() - plyer_size.width*0.5f) {
 		plyer->setPositionX(plyer->getPositionX() + speed);
 	}
-}
-
-void player::set_player(player * p)
-{
-	player_db = p;
-}
-
-player* player::get_player()
-{
-	return player_db;
 }

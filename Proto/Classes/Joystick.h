@@ -4,7 +4,6 @@
 
 #include "cocos2d.h"
 #include <string>
-#include "player.h"
 
 USING_NS_CC;
 using namespace std;
