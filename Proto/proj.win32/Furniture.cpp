@@ -43,14 +43,14 @@ bool Furniture::init()
 	Ary_fnt_wall_pos[7] = Vec2(win_size.width*0.72, win_size.height*0.093);
 
 	//벽 가구 태그
-	fnt_wall1->setTag(1);
-	fnt_wall2->setTag(2);
-	fnt_wall3->setTag(3);
-	fnt_wall4->setTag(4);
+	fnt_wall1->setTag(Furniture_wall1);
+	fnt_wall2->setTag(Furniture_wall2);
+	fnt_wall3->setTag(Furniture_wall3);
+	fnt_wall4->setTag(Furniture_wall4);
 
 	//방 가운데 가구 태그
-	fnt_middle1->setTag(5);
-	fnt_middle2->setTag(6);
+	fnt_middle1->setTag(Furniture_middle1);
+	fnt_middle2->setTag(Furniture_middle2);
 
 	this->addChild(fnt_wall1);
 	this->addChild(fnt_wall2);
@@ -131,11 +131,11 @@ void Furniture::Create_Furniture()
 	*/
 
 	//방 가운데 가구 배치
-	Sprite* fnt_middle1 = (Sprite*)this->getChildByTag(5);
+	Sprite* fnt_middle1 = (Sprite*)this->getChildByTag(Furniture_middle1);
 	Rect Rec_middle1 = fnt_middle1->getBoundingBox();
 	fnt_middle1->setPosition(100 + rand() % (int)win_size.width*0.5, 150 + rand() % (int)win_size.height*0.5);
 	
-	Sprite* fnt_middle2 = (Sprite*)this->getChildByTag(6);
+	Sprite* fnt_middle2 = (Sprite*)this->getChildByTag(Furniture_middle1);
 	Rect Rec_middle2 = fnt_middle2->getBoundingBox();
 	fnt_middle2->setPosition(400 + rand() % (int)win_size.width*0.5, 250 + rand() % (int)win_size.height*0.5);
 
@@ -143,22 +143,22 @@ void Furniture::Create_Furniture()
 	int randnum = rand() % 6;
 
 	//벽-북쪽 가구 배치
-	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(1);
+	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(Furniture_wall1);
 	Rect Rec_wall1 = fnt_wall1->getBoundingBox();
 	fnt_wall1->setPosition(Ary_fnt_wall_pos[rand() % 2]);
 
 	//벽-서쪽 가구 배치
-	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(2);
+	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(Furniture_wall12);
 	Rect Rec_wall2 = fnt_wall2->getBoundingBox();
 	fnt_wall2->setPosition(Ary_fnt_wall_pos[rand() % 2 + 2]);
 
 	//벽-동쪽 가구 배치
-	Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(3);
+	Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(Furniture_wall3);
 	Rect Rec_wall3 = fnt_wall3->getBoundingBox();
 	fnt_wall3->setPosition(Ary_fnt_wall_pos[rand() % 2 + 4]);
 
 	//벽-남쪽 가구 배치
-	Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(4);
+	Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(Furniture_wall4);
 	Rect Rec_wall4 = fnt_wall4->getBoundingBox();
 	fnt_wall4->setPosition(Ary_fnt_wall_pos[rand() % 2 + 6]);
 
@@ -198,10 +198,10 @@ void Furniture::Create_Furniture()
 void Furniture::Touch_React()
 {
 	//플레이어의 렉트와 가구의 렉트가 충돌상태에서 조사 버튼이 활성화. 버튼 입력시 반응 출력 함수
-	Sprite* ftn_wall1 = (Sprite*)this->getChildByTag(1);
-	Sprite* ftn_wall2 = (Sprite*)this->getChildByTag(2);
-	Sprite* ftn_middle1 = (Sprite*)this->getChildByTag(5);
-	Sprite* ftn_middle2 = (Sprite*)this->getChildByTag(6);
+	Sprite* ftn_wall1 = (Sprite*)this->getChildByTag(Furniture_wall1);
+	Sprite* ftn_wall2 = (Sprite*)this->getChildByTag(Furniture_wall2);
+	Sprite* ftn_middle1 = (Sprite*)this->getChildByTag(Furniture_middle1);
+	Sprite* ftn_middle2 = (Sprite*)this->getChildByTag(Furniture_middle1);
 
 	Rect wall1 = ftn_wall1->getBoundingBox();
 	Rect wall2 = ftn_wall2->getBoundingBox();
@@ -215,13 +215,13 @@ void Furniture::Touch_React()
 //가구터치 반응 잘 되는지 테스트
 bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
 {
-	Sprite* spr = (Sprite*)this->getChildByTag(1);
+	Sprite* spr = (Sprite*)this->getChildByTag(Furniture_wall1);
 	Rect rect1 = spr->getBoundingBox();
 
 	if (rect1.containsPoint(touch->getLocation()))
 	{
 		isselect = true;
-		select = (Sprite*)this->getChildByTag(1);
+		select = (Sprite*)this->getChildByTag(Furniture_wall1);
 		CCLOG("TOUCH TOUCH TOUCH");
 	}
 	else
