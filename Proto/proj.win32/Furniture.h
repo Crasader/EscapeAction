@@ -17,6 +17,8 @@ public:
 
 	Size win_size;
 
+	Vec2 Ary_fnt_wall_pos[8]; //Vec2 위치값 저장 배열
+
 	void Create_Furniture(); //가구 생성
 	bool Check(); //탐색시 가능 여부 확인
 	void Touch_React(); //가구 터치시 반응
