@@ -16,32 +16,58 @@ bool Furniture::init()
 	isselect = false;
 	//=============가구 터치 테스트
 
-	Sprite* fnt_wall1 = Sprite::create("button1.png"); //벽쪽 가구 스프라이트 생성
-	Sprite* fnt_wall2 = Sprite::create("button2.png"); //벽쪽 가구 스프라이트 생성
-	Sprite* fnt_middle1 = Sprite::create("buttonA.png"); //방 가운데 가구 스프라이트 생성
-	Sprite* fnt_middle2 = Sprite::create("buttonB.png"); //방 가운데 가구 스프라이트 생성
-	//한 방에 가구 총 4개 생성
+	//벽쪽 가구 총 8개
+	Sprite* fnt_wall1 = Sprite::create("button1.png"); 
+	Sprite* fnt_wall2 = Sprite::create("button2.png"); 
+	Sprite* fnt_wall3 = Sprite::create("buttonA.png"); 
+	Sprite* fnt_wall4 = Sprite::create("buttonB.png"); 
+	Sprite* fnt_wall5 = Sprite::create("button1.png"); 
+	Sprite* fnt_wall6 = Sprite::create("button2.png"); 
+	Sprite* fnt_wall7 = Sprite::create("buttonA.png"); 
+	Sprite* fnt_wall8 = Sprite::create("buttonB.png"); 
 
-	Sprite* fnt_wall3 = Sprite::create("buttonA.png"); //벽쪽 가구 스프라이트 생성
-	Sprite* fnt_wall4 = Sprite::create("buttonB.png"); //벽쪽 가구 스프라이트 생성
+	//방 가운데 가구 총 2개
+	Sprite* fnt_middle1 = Sprite::create("buttonA.png"); 
+	Sprite* fnt_middle2 = Sprite::create("buttonB.png"); 
 
-	fnt_wall1->setPosition(win_size.width*0.1, win_size.height*0.9);
-	fnt_wall2->setPosition(win_size.width*0.9, win_size.height*0.1);
-	fnt_wall3->setPosition(win_size.width*0.9, win_size.height*0.3);
-	fnt_wall4->setPosition(win_size.width*0.3, win_size.height*0.9);
+	//벽-북쪽
+	fnt_wall1->setPosition(win_size.width*0.28, win_size.height*0.906);
+	fnt_wall2->setPosition(win_size.width*0.72, win_size.height*0.906);
+	
+	//벽-서쪽
+	fnt_wall3->setPosition(win_size.width*0.06, win_size.height*0.3);
+	fnt_wall4->setPosition(win_size.width*0.06, win_size.height*0.703);
 
-	//각 가구마다 태그 붙임
+	//벽-동쪽
+	fnt_wall5->setPosition(win_size.width*0.941, win_size.height*0.3);
+	fnt_wall6->setPosition(win_size.width*0.941, win_size.height*0.703);
+
+	//벽-남쪽
+	fnt_wall7->setPosition(win_size.width*0.28, win_size.height*0.093);
+	fnt_wall8->setPosition(win_size.width*0.72, win_size.height*0.093);
+
+	//벽 가구 태그
 	fnt_wall1->setTag(1);
 	fnt_wall2->setTag(2);
 	fnt_wall3->setTag(3);
 	fnt_wall4->setTag(4);
-	//fnt_middle1->setTag(3);
-	//fnt_middle2->setTag(4);
+	fnt_wall5->setTag(5);
+	fnt_wall6->setTag(6);
+	fnt_wall7->setTag(7);
+	fnt_wall8->setTag(8);
 
-	this->addChild(fnt_wall1);
+	//방 가운데 가구 태그
+	fnt_middle1->setTag(9);
+	fnt_middle2->setTag(10);
+
+	/*this->addChild(fnt_wall1);
 	this->addChild(fnt_wall2);
 	this->addChild(fnt_wall3);
 	this->addChild(fnt_wall4);
+	this->addChild(fnt_wall5);
+	this->addChild(fnt_wall6);
+	this->addChild(fnt_wall7);
+	this->addChild(fnt_wall8);*/
 	this->addChild(fnt_middle1);
 	this->addChild(fnt_middle2);
 
@@ -84,23 +110,79 @@ void Furniture::Create_Furniture()
 	fnt_middle2->setPosition(200 + rand() % (int)win_size.width*0.5, 100 + rand() % (int)win_size.height*0.5);
 	*/
 
-	//벽 가구 8개 위치 정해서 랜덤으로 2개씩 뽑기
-	if (0 <= rand() % 100 <= 12)
+	////랜드함수 수치에 따른 가구 랜덤 출력
+	//if (0 <= rand() % 100 <= 12)
+	//{
+	//	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(1);
+	//}
+	//else if (13 <= rand() % 100 <= 38)
+	//{
+	//	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(2);
+	//}
+	//else if (39 <= rand() % 100 <= 64)
+	//{
+	//	Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(3);	
+	//}
+	//else
+	//{
+	//	Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(4);
+	//}
+
+
+	//태그 번호 랜덤출력(시도하다 망했음)
+	int randomnum = 1 + (rand() % 7);
+
+	if (0 < randomnum < 9)
+		CCLOG("KKKKKKKKKKKKKKKKKKKKKKKKKK");
+
+	if (randomnum == 1)
 	{
-		Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(1);
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
 	}
-	else if (13 <= rand() % 100 <= 38)
+	else if (randomnum == 2)
 	{
-		Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(2);
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
 	}
-	else if (39 <= rand() % 100 <= 64)
+	else if (randomnum == 3)
 	{
-		Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(3);	
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
+	}
+	else if (randomnum == 4)
+	{
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
+	}
+	else if (randomnum == 5)
+	{
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
+	}
+	else if (randomnum == 6)
+	{
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
+	}
+	else if (randomnum == 7)
+	{
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
+	}
+	else if (randomnum == 8)
+	{
+		Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+		this->addChild(fnt_wall_random);
 	}
 	else
-	{
-		Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(4);
-	}
+		CCLOG("ㅠㅠ");
+
+	/*
+	Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
+	this->addChild(fnt_wall_random);
+	*/
+
 }
 
 void Furniture::Touch_React()
