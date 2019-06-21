@@ -7,7 +7,7 @@ player::~player()
 bool player::init()
 {
 	rc = Rect(0, 0, 0, 0);
-	speed = 3;
+	speed = 5;
 	plyer = Sprite::create("player.png");
 	this->addChild(plyer);
 	plyer_size = plyer->getContentSize();
@@ -91,24 +91,24 @@ void player::update(float dt)
 	
 	//Á¶ÀÌ½ºÆ½
 	Move_joy_player = UIManager::getInstance()->get_Player_m_p();
-
+	Move_joy_player *= speed;
 	if (Move_joy_player != Vec2::ZERO)
 	{
 		if (Move_joy_player.y > 0 && plyer->getPositionY() < rc.getMaxY() - plyer_size.height*0.5f)
 		{
-			plyer->setPositionY((plyer->getPositionY() + Move_joy_player.y)+ speed);
+			plyer->setPositionY(plyer->getPositionY() + Move_joy_player.y);
 		}
 		if (Move_joy_player.y < 0 && plyer->getPositionY() > rc.getMinY() + plyer_size.height*0.5f)
 		{
-			plyer->setPositionY((plyer->getPositionY() + Move_joy_player.y)- speed);
+			plyer->setPositionY(plyer->getPositionY() + Move_joy_player.y);
 		}
 		if (Move_joy_player.x < 0 && plyer->getPositionX() > rc.getMinX() + plyer_size.height*0.5f)
 		{
-			plyer->setPositionX((plyer->getPositionX() + Move_joy_player.x)- speed);
+			plyer->setPositionX(plyer->getPositionX() + Move_joy_player.x);
 		}
 		if (Move_joy_player.x > 0 && plyer->getPositionX() < rc.getMaxX() - plyer_size.height*0.5f)
 		{
-			plyer->setPositionX((plyer->getPositionX() + Move_joy_player.x)+speed);
+			plyer->setPositionX(plyer->getPositionX() + Move_joy_player.x);
 		}
 	}
 }
