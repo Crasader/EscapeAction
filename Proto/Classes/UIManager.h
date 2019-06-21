@@ -21,7 +21,6 @@ private:
 	
 public:
 	static UIManager* getInstance();
-	Joystick* getJoystick();
 	Vec2 get_Player_m_p();
 
 	//return false면 이미 버튼이 set된 상태

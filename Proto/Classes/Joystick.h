@@ -23,6 +23,8 @@ public :
 	Vec2 Umj_Touch_p;
 	Vec2 Move_p_joy;
 
+	Vec2 max_touch;
+
 
 	bool onTouchBegan(Touch *touch, Event *unused_event);
 	void onTouchMoved(Touch *touch, Event *unused_event);

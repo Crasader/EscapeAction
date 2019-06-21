@@ -21,11 +21,6 @@ UIManager * UIManager::getInstance()
 		return pUIManager;
 }
 
-Joystick* UIManager::getJoystick()
-{
-	return _joystick;
-}
-
 Vec2 UIManager::get_Player_m_p()
 {
 	return _joystick->Move_p_joy;
@@ -69,7 +64,7 @@ bool UIManager::setTrapBtn(ui::Button * trap)
 
 bool UIManager::setJoystick(Joystick * joystick)
 {
-	if (joystick == NULL) {
+	if (_joystick == NULL) {
 		_joystick = joystick;
 		return true;
 	}

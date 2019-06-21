@@ -91,11 +91,26 @@ void player::update(float dt)
 	
 	//Á¶ÀÌ½ºÆ½
 	Move_joy_player = UIManager::getInstance()->get_Player_m_p();
-	if (Move_joy_player != 0)
-	{
-		plyer->setPosition(plyer->getPosition() + Move_joy_player);
-	}
 
+	if (Move_joy_player != Vec2::ZERO)
+	{
+		if (Move_joy_player.y > 0 && plyer->getPositionY() < rc.getMaxY() - plyer_size.height*0.5f)
+		{
+			plyer->setPositionY((plyer->getPositionY() + Move_joy_player.y)+ speed);
+		}
+		if (Move_joy_player.y < 0 && plyer->getPositionY() > rc.getMinY() + plyer_size.height*0.5f)
+		{
+			plyer->setPositionY((plyer->getPositionY() + Move_joy_player.y)- speed);
+		}
+		if (Move_joy_player.x < 0 && plyer->getPositionX() > rc.getMinX() + plyer_size.height*0.5f)
+		{
+			plyer->setPositionX((plyer->getPositionX() + Move_joy_player.x)- speed);
+		}
+		if (Move_joy_player.x > 0 && plyer->getPositionX() < rc.getMaxX() - plyer_size.height*0.5f)
+		{
+			plyer->setPositionX((plyer->getPositionX() + Move_joy_player.x)+speed);
+		}
+	}
 }
 
 void player::check()
@@ -110,9 +125,10 @@ void player::check()
 			oncheck = true;
 		}
 	}
-	else
+	else if(player_bounding->getPosition() > win_size*0.5)
 	{
 		UIManager::getInstance()->setEnable_AtkBtn(false);
+		oncheck = false;
 	}
 }
 
