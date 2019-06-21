@@ -60,6 +60,14 @@ void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 {
 	auto mj_p = (Sprite*)this->getChildByName("Joystick_mj");
 	mj_p->setPosition(Point(touch->getLocation()));
+	auto umj = (Sprite*)this->getChildByName("Joystick_umj");
+	Umj_Touch_p = umj->getPosition();
+
+	Mj_Touch_p = touch->getLocation();
+
+	Move_p_joy = Mj_Touch_p - Umj_Touch_p;
+	Move_p_joy = Move_p_joy.getNormalized();
+
 }
 
 void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
@@ -67,7 +75,7 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 	auto umj = (Sprite*)this->getChildByName("Joystick_umj");
 	auto mj = (Sprite*)this->getChildByName("Joystick_mj");
 
-	Mj_Touch_p = touch->getLocation();
+	Move_p_joy = Vec2::ZERO;
 
 	umj->setVisible(false);
 	mj->setVisible(false);

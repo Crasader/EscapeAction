@@ -69,7 +69,7 @@ bool UIManager::setTrapBtn(ui::Button * trap)
 
 bool UIManager::setJoystick(Joystick * joystick)
 {
-	if (joystick == NULL) {
+	if (_joystick == NULL) {
 		_joystick = joystick;
 		return true;
 	}

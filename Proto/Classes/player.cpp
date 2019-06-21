@@ -23,7 +23,7 @@ bool player::init()
 	oncheck = false;
 
 	this->scheduleUpdate();
-
+	Move_joy_player = Vec2(0, 0);
 	return true;
 }
 
@@ -88,10 +88,24 @@ void player::update(float dt)
 
 	//가구충돌체크
 	check();
-	
 	//조이스틱
-	Move_joy_player = UIManager::getInstance()->get_Player_m_p();
-	if (Move_joy_player != 0)
+	Move_joy_player = UIManager::getInstance()->get_Player_m_p()*5;
+
+	if (Move_joy_player.y > 0 && plyer->getPositionY() >= rc.getMaxY() - plyer_size.height*0.5f) {
+		Move_joy_player.y = 0;
+	}
+
+	if (Move_joy_player.y < 0 && plyer->getPositionY() <= rc.getMinY() + plyer_size.height*0.5f) {
+		Move_joy_player.y = 0;
+	}
+
+	if (Move_joy_player.x < 0 && plyer->getPositionX() <= rc.getMinX() + plyer_size.width*0.5f) {
+		Move_joy_player.x = 0;
+	}
+	if (Move_joy_player.x > 0 && plyer->getPositionX() >= rc.getMaxX() - plyer_size.width*0.5f) {
+		Move_joy_player.x = 0;
+	}
+	if (Move_joy_player != Vec2::ZERO)
 	{
 		plyer->setPosition(plyer->getPosition() + Move_joy_player);
 	}
