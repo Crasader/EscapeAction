@@ -58,15 +58,17 @@ bool Joystick::onTouchBegan(Touch * touch, Event * unused_event)
 
 void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 {
-	auto mj_p = (Sprite*)this->getChildByName("Joystick_mj");
-	mj_p->setPosition(Point(touch->getLocation()));
-	auto umj = (Sprite*)this->getChildByName("Joystick_umj");
-	Umj_Touch_p = umj->getPosition();
+	
+	if (Umj_Touch_p.x > Win_size.width *0.5)
+	{
+		auto mj_p = (Sprite*)this->getChildByName("Joystick_mj");
+		mj_p->setPosition(Point(touch->getLocation()));
 
-	Mj_Touch_p = touch->getLocation();
+		Mj_Touch_p = touch->getLocation();
 
-	Move_p_joy = Mj_Touch_p - Umj_Touch_p;
-	Move_p_joy = Move_p_joy.getNormalized();
+		Move_p_joy = Mj_Touch_p - Umj_Touch_p;
+		Move_p_joy = Move_p_joy.getNormalized();
+	}
 
 }
 
