@@ -18,8 +18,11 @@ private:
 	ui::Button* _key;
 	ui::Button* _trap;
 	Joystick* _joystick;
+	
 public:
 	static UIManager* getInstance();
+	Joystick* getJoystick();
+	Vec2 get_Player_m_p();
 
 	//return false면 이미 버튼이 set된 상태
 	//버튼이 NULL일때만 set

@@ -21,6 +21,8 @@ public :
 	Size Win_size;
 	Vec2 Mj_Touch_p;
 	Vec2 Umj_Touch_p;
+	Vec2 Move_p_joy;
+
 
 	bool onTouchBegan(Touch *touch, Event *unused_event);
 	void onTouchMoved(Touch *touch, Event *unused_event);

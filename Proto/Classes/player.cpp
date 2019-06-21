@@ -20,6 +20,7 @@ bool player::init()
 	listener->onKeyReleased = CC_CALLBACK_1(player::onRelease, this);
 
 	_eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
+	oncheck = false;
 
 	this->scheduleUpdate();
 
@@ -84,4 +85,38 @@ void player::update(float dt)
 	if (keyRight&&plyer->getPositionX() < rc.getMaxX() - plyer_size.width*0.5f) {
 		plyer->setPositionX(plyer->getPositionX() + speed);
 	}
+
+	//가구충돌체크
+	check();
+	
+	//조이스틱
+	Move_joy_player = UIManager::getInstance()->get_Player_m_p();
+	if (Move_joy_player != 0)
+	{
+		plyer->setPosition(plyer->getPosition() + Move_joy_player);
+	}
+
+}
+
+void player::check()
+{
+	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+
+	if (player_bounding->getPosition() < win_size*0.5)
+	{
+		if (oncheck == false)
+		{
+			UIManager::getInstance()->setEnable_AtkBtn(true);
+			oncheck = true;
+		}
+	}
+	else
+	{
+		UIManager::getInstance()->setEnable_AtkBtn(false);
+	}
+}
+
+void player::Joy_move_check()
+{
+	auto player_bounding = (Sprite*)this->getChildByName("player_move");
 }

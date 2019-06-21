@@ -17,6 +17,11 @@ public:
 
 	void update(float dt);
 
+	void check();
+	bool oncheck;
+
+	void Joy_move_check();
+
 private : 
 	bool keyUp, keyDown, keyLeft, keyRight;
 	int speed;
@@ -24,6 +29,8 @@ private :
 	Sprite* plyer;
 	Size plyer_size;
 	Rect rc;
+
+	Vec2 Move_joy_player;
 
 };
 
