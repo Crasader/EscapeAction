@@ -8,6 +8,7 @@ UIManager::UIManager()
 	_search = NULL;
 	_trap = NULL;
 	_key = NULL;
+	_joystick = NULL;
 }
 UIManager::~UIManager()
 {
@@ -56,6 +57,15 @@ bool UIManager::setTrapBtn(ui::Button * trap)
 	return false;
 }
 
+bool UIManager::setJoystick(Joystick * joystick)
+{
+	if (joystick == NULL) {
+		_joystick = joystick;
+		return true;
+	}
+	return false;
+}
+
 void UIManager::setEnable_AtkBtn(bool enable)
 {
 	_atk->setEnabled(enable);
@@ -75,3 +85,4 @@ void UIManager::setEnable_TrapBtn(bool enable)
 {
 	_trap->setEnabled(enable);
 }
+

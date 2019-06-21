@@ -57,6 +57,7 @@ void player_Item::atkobj()
 
 void player_Item::searchobj()
 {
+	auto player_p = (Sprite*) this->getChildByName("p_name")->getChildByName("player_move");
 	auto obj_p = (Sprite*)this->getChildByName("btn1");
 	auto btn = (ui::Button*) this->getChildByName("btn2");
 
@@ -91,7 +92,3 @@ void player_Item::trapobj()
 	else;
 }
 
-void player_Item::update(float dt)
-{
-	searchobj();
-}

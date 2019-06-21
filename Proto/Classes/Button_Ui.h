@@ -28,8 +28,6 @@ public:
 	void keyobj();
 	void trapobj();
 
-	void update(float dt);
-   
     CREATE_FUNC(player_Item);
 };
 

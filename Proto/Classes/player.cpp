@@ -74,11 +74,11 @@ void player::update(float dt)
 	if (keyUp&&plyer->getPositionY() < rc.getMaxY() - plyer_size.height*0.5f) {
 		plyer->setPositionY(plyer->getPositionY() + speed);
 	}
-	if (keyDown&&plyer->getPositionY() >rc.getMinY()+ plyer_size.height*0.5f) {
+	if (keyDown&&plyer->getPositionY() > rc.getMinY() + plyer_size.height*0.5f) {
 		plyer->setPositionY(plyer->getPositionY() - speed);
 	}
 
-	if (keyLeft&&plyer->getPositionX() >rc.getMinX()+ plyer_size.width*0.5f) {
+	if (keyLeft&&plyer->getPositionX() > rc.getMinX() + plyer_size.width*0.5f) {
 		plyer->setPositionX(plyer->getPositionX() - speed);
 	}
 	if (keyRight&&plyer->getPositionX() < rc.getMaxX() - plyer_size.width*0.5f) {
