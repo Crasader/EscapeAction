@@ -12,10 +12,6 @@ public:
 	~player();
 	virtual bool init();
 	void setRect(Rect back_rc);
-	void onPress(EventKeyboard::KeyCode key);
-	void onRelease(EventKeyboard::KeyCode key);
-
-	void update(float dt);
 
 	void check();
 	bool oncheck;

@@ -5,7 +5,6 @@
 #include "cocos-ext.h"
 #include "Room.h"
 #include "player.h"
-#include "../proj.win32/Furniture.h"
 
 USING_NS_CC;
 

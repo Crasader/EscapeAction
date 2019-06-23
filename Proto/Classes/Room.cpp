@@ -8,29 +8,36 @@ Room::~Room()
 bool Room::init()
 {
 	int level = 5;
-
+	float scale = 1.5;
 	win_size = Director::getInstance()->getWinSize();
 
 	background = Sprite::create("Background.png");
 	background->setPosition(Point(win_size.width*0.5f, win_size.height*0.5));
+	background->setScale(scale);
+	Size bgSize = background->getContentSize();
+	r = background->getBoundingBox();
+	r = Rect(bgSize.width*scale*0.06+r.getMinX(), bgSize.height*scale*0.095+r.getMinY()
+		, bgSize.width*scale*0.88, bgSize.height*scale*0.81);
 
 	for (int i = 0; i < 4;i++) {
 		door_sp[i] = Sprite::create("Door.png");
 		door_sp[i]->setAnchorPoint(Vec2(0.5, 0));
 		door_sp[i]->setColor(Color3B::BLACK);
+		door_sp[i]->setScale(scale);
 	}
 
-	door_sp[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.905));//ºÏ
+	door_sp[0]->setPosition(Point(win_size.width*0.5,r.getMaxY()));//ºÏ
 
 	door_sp[1]->setRotation(-90);
-	door_sp[1]->setPosition(Point(win_size.width*0.06, win_size.height*0.5));//¼­
+	door_sp[1]->setPosition(Point(r.getMinX(), win_size.height*0.5));//¼­
 
 	door_sp[2] ->setRotation(90);
-	door_sp[2]->setPosition(Point(win_size.width*0.94, win_size.height*0.5));//µ¿
+	door_sp[2]->setPosition(Point(r.getMaxX(), win_size.height*0.5));//µ¿
 
 	door_sp[3]->setRotation(-180);
-	door_sp[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.095));//³²
-	r = Rect(win_size.width*0.06, win_size.height*0.095, win_size.width*0.88, win_size.height*0.81);
+	door_sp[3]->setPosition(Point(win_size.width*0.5, r.getMinY()));//³²
+
+
 	p_escDoor = 0;
 	p_level = level;
 	p_roomCnt = level * 2 + 2;
@@ -42,6 +49,13 @@ bool Room::init()
 
 	//Furniture* ft;
 	//ft.setRoomRect(r);
+	Rect r2 = background->getBoundingBox();
+	Furniture* funt = Furniture::create();
+	funt->Create_Furniture();
+	funt->setPosition(r2.getMinX(), r2.getMinY());
+	funt->setScale(scale);
+	this->addChild(funt);
+	this->scheduleUpdate();
 
 	return true;
 }
@@ -301,13 +315,13 @@ void Room::TestLabelDraw()
 	for (int i = 0; i < 4;i++) {
 		door_lab[i] = Label::createWithTTF("0", "fonts/arial.ttf", 20);
 	}
-	door_lab[0]->setPosition(Point(win_size.width*0.5, win_size.height*0.95));
+	door_lab[0]->setPosition(Point(win_size.width*0.5,r.getMaxY()));
 
-	door_lab[1]->setPosition(Point(win_size.width*0.05, win_size.height*0.5));
+	door_lab[1]->setPosition(Point(r.getMinX(), win_size.height*0.5));
 
-	door_lab[2]->setPosition(Point(win_size.width*0.95, win_size.height*0.5));
+	door_lab[2]->setPosition(Point(r.getMaxX(), win_size.height*0.5));
 
-	door_lab[3]->setPosition(Point(win_size.width*0.5, win_size.height*0.05));
+	door_lab[3]->setPosition(Point(win_size.width*0.5, r.getMinY()));
 
 	this->addChild(back,1);
 	for (int i = 0;i < 4;i++) {
@@ -321,4 +335,28 @@ void Room::TestLabelUpdate()
 	for (int i = 0;i < 4;i++) {
 		door_lab[i]->setString(to_string(now->door[i]));
 	}
+}
+
+void Room::update(float dt)
+{
+	Vec2 move = UIManager::getInstance()->get_Player_m_p() * 8;
+
+	Vec2 pos = this->getPosition();
+	float wid = background->getContentSize().width*background->getScale()*0.5f;
+	float hei = background->getContentSize().height*background->getScale()*0.5f;
+	
+	if (move.x > 0 &&pos.x+wid+win_size.width*0.5<= win_size.width) {
+		move.setPoint(0, move.y);
+	}else if (move.x<0 && pos.x -wid + win_size.width*0.5 >= 0) {
+		move.setPoint(0, move.y);
+	}
+
+	if (move.y > 0 && pos.y + hei + win_size.height*0.5 <= win_size.height) {
+		move.setPoint(move.x, 0);
+	}
+	else if (move.y < 0 && pos.y - hei + win_size.height*0.5 >= 0) {
+		move.setPoint(move.x, 0);
+	}
+
+	this->setPosition(pos.x-move.x, pos.y-move.y);
 }

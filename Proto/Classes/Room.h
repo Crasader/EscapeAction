@@ -1,6 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include <string>
+#include "UIManager.h"
+#include "../proj.win32/Furniture.h"
 
 using namespace std;
 USING_NS_CC;
@@ -42,6 +44,8 @@ private:
 	void TestLabelUpdate();
 	Label* back;
 	Label* door_lab[4];
+
+	void update(float dt);
 
 };
 
