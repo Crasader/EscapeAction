@@ -2,8 +2,7 @@
 #define __FURNITURE_H__
 
 #include "cocos2d.h"
-#include <spine/spine-cocos2dx.h>
-#include <random>
+#include "Item.h"
 
 USING_NS_CC;
 
@@ -20,7 +19,6 @@ public:
 	Vec2 Ary_fnt_wall_pos[8]; //Vec2 위치값 저장 배열
 
 	void Create_Furniture(); //가구 생성
-	bool Check(); //탐색시 가능 여부 확인
 	void Touch_React(); //가구 터치시 반응
 
 	virtual bool onTouchBegan(Touch* touch, Event* unused_event);
@@ -29,6 +27,9 @@ public:
 	Sprite* select;
 
 	CREATE_FUNC(Furniture);
+
+private:
+	Item* It;
 };
 
 #endif // __FURNITURE_H__

@@ -7,6 +7,8 @@ Furniture::~Furniture()
 
 bool Furniture::init()
 {
+	It = Item::create();
+
 	win_size = Director::getInstance()->getWinSize();
 
 	srand(time(NULL));
@@ -43,14 +45,14 @@ bool Furniture::init()
 	Ary_fnt_wall_pos[7] = Vec2(win_size.width*0.72, win_size.height*0.093);
 
 	//벽 가구 태그
-	fnt_wall1->setTag(Furniture_wall1);
-	fnt_wall2->setTag(Furniture_wall2);
-	fnt_wall3->setTag(Furniture_wall3);
-	fnt_wall4->setTag(Furniture_wall4);
+	fnt_wall1->setName("Furniture_wall1");
+	fnt_wall2->setName("Furniture_wall2");
+	fnt_wall3->setName("Furniture_wall3");
+	fnt_wall4->setName("Furniture_wall4");
 
 	//방 가운데 가구 태그
-	fnt_middle1->setTag(Furniture_middle1);
-	fnt_middle2->setTag(Furniture_middle2);
+	fnt_middle1->setName("Furniture_middle1");
+	fnt_middle2->setName("Furniture_middle2");
 
 	this->addChild(fnt_wall1);
 	this->addChild(fnt_wall2);
@@ -78,64 +80,13 @@ bool Furniture::init()
 
 void Furniture::Create_Furniture()
 {
-	/*
-	//가구 포지션 랜덤으로 배치(차후 서로 겹치지 않는 코드, 문앞에 생기지 않는 코드 추가할 것)
-	//생각중인 건 8개로 쪼개서 배치하거나...(너무 복잡한가)
-	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(1);
-	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(2);
-	Sprite* fnt_middle1 = (Sprite*)this->getChildByTag(3);
-	Sprite* fnt_middle2 = (Sprite*)this->getChildByTag(4);
-
-	
-	if (rand() % 100 >= 50)
-	{
-		fnt_wall1->setPosition((rand() % (int)win_size.width*0.94), win_size.height*0.905);
-		fnt_wall2->setPosition(win_size.width*0.94, ((rand() % (int)win_size.height*0.9)));
-		CCLOG("HELP HELP HELP");
-	}
-	else
-	{
-		fnt_wall1->setPosition(((rand() % (int)win_size.width*0.94)), win_size.height*0.095);
-		fnt_wall2->setPosition(win_size.width*0.06, (rand() % (int)win_size.height*0.9));
-		CCLOG("WANT GO TO HOME");
-	}
-
-	fnt_middle1->setPosition(200 + rand() % (int)win_size.width*0.5, 100 + rand() % (int)win_size.height*0.5);
-	fnt_middle2->setPosition(200 + rand() % (int)win_size.width*0.5, 100 + rand() % (int)win_size.height*0.5);
-	*/
-
-	////랜드함수 수치에 따른 가구 랜덤 출력
-	//if (0 <= rand() % 100 <= 12)
-	//{
-	//	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(1);
-	//}
-	//else if (13 <= rand() % 100 <= 38)
-	//{
-	//	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(2);
-	//}
-	//else if (39 <= rand() % 100 <= 64)
-	//{
-	//	Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(3);	
-	//}
-	//else
-	//{
-	//	Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(4);
-	//}
-
-	/*
-	//태그 번호 랜덤출력(시도하다 망했음)
-	int randomnum = 1 + (rand() % 7);
-
-	Sprite* fnt_wall_random = (Sprite*)this->getChildByTag(randomnum);
-	this->addChild(fnt_wall_random);
-	*/
-
 	//방 가운데 가구 배치
-	Sprite* fnt_middle1 = (Sprite*)this->getChildByTag(Furniture_middle1);
+	Sprite* fnt_middle1 = (Sprite*)this->getChildByName("Furniture_middle1");
 	Rect Rec_middle1 = fnt_middle1->getBoundingBox();
+	fnt_middle1->addComponent(It->Save_ItemData());
 	fnt_middle1->setPosition(100 + rand() % (int)win_size.width*0.5, 150 + rand() % (int)win_size.height*0.5);
 	
-	Sprite* fnt_middle2 = (Sprite*)this->getChildByTag(Furniture_middle1);
+	Sprite* fnt_middle2 = (Sprite*)this->getChildByName("Furniture_middle2");
 	Rect Rec_middle2 = fnt_middle2->getBoundingBox();
 	fnt_middle2->setPosition(400 + rand() % (int)win_size.width*0.5, 250 + rand() % (int)win_size.height*0.5);
 
@@ -143,22 +94,22 @@ void Furniture::Create_Furniture()
 	int randnum = rand() % 6;
 
 	//벽-북쪽 가구 배치
-	Sprite* fnt_wall1 = (Sprite*)this->getChildByTag(Furniture_wall1);
+	Sprite* fnt_wall1 = (Sprite*)this->getChildByName("Furniture_wall1");
 	Rect Rec_wall1 = fnt_wall1->getBoundingBox();
 	fnt_wall1->setPosition(Ary_fnt_wall_pos[rand() % 2]);
 
 	//벽-서쪽 가구 배치
-	Sprite* fnt_wall2 = (Sprite*)this->getChildByTag(Furniture_wall12);
+	Sprite* fnt_wall2 = (Sprite*)this->getChildByName("Furniture_wall2");
 	Rect Rec_wall2 = fnt_wall2->getBoundingBox();
 	fnt_wall2->setPosition(Ary_fnt_wall_pos[rand() % 2 + 2]);
 
 	//벽-동쪽 가구 배치
-	Sprite* fnt_wall3 = (Sprite*)this->getChildByTag(Furniture_wall3);
+	Sprite* fnt_wall3 = (Sprite*)this->getChildByName("Furniture_wall3");
 	Rect Rec_wall3 = fnt_wall3->getBoundingBox();
 	fnt_wall3->setPosition(Ary_fnt_wall_pos[rand() % 2 + 4]);
 
 	//벽-남쪽 가구 배치
-	Sprite* fnt_wall4 = (Sprite*)this->getChildByTag(Furniture_wall4);
+	Sprite* fnt_wall4 = (Sprite*)this->getChildByName("Furniture_wall4");
 	Rect Rec_wall4 = fnt_wall4->getBoundingBox();
 	fnt_wall4->setPosition(Ary_fnt_wall_pos[rand() % 2 + 6]);
 
@@ -198,10 +149,10 @@ void Furniture::Create_Furniture()
 void Furniture::Touch_React()
 {
 	//플레이어의 렉트와 가구의 렉트가 충돌상태에서 조사 버튼이 활성화. 버튼 입력시 반응 출력 함수
-	Sprite* ftn_wall1 = (Sprite*)this->getChildByTag(Furniture_wall1);
-	Sprite* ftn_wall2 = (Sprite*)this->getChildByTag(Furniture_wall2);
-	Sprite* ftn_middle1 = (Sprite*)this->getChildByTag(Furniture_middle1);
-	Sprite* ftn_middle2 = (Sprite*)this->getChildByTag(Furniture_middle1);
+	Sprite* ftn_wall1 = (Sprite*)this->getChildByName("Furniture_wall1");
+	Sprite* ftn_wall2 = (Sprite*)this->getChildByName("Furniture_wall2");
+	Sprite* ftn_middle1 = (Sprite*)this->getChildByName("Furniture_middle1");
+	Sprite* ftn_middle2 = (Sprite*)this->getChildByName("Furniture_middle1");
 
 	Rect wall1 = ftn_wall1->getBoundingBox();
 	Rect wall2 = ftn_wall2->getBoundingBox();
@@ -210,18 +161,44 @@ void Furniture::Touch_React()
 
 	//아래는 if문 작성할 것...
 
+	//플레이어가 무슨 가구를 탐색하는지 체크 필요(현재 충돌 중인 가구)
+
+	//가구에 아이템이 있을/없을 경우
+	if (It->save_item == true)
+	{
+		if (It->weapon == true)
+		{
+			//UI매니저 쪽에 weapon(_atk) 활성화 및 ++;
+			It->weapon = false;
+		}
+		else if (It->key == true)
+		{
+			//UI매니저 쪽에 key(_key) 활성화 및 ++;
+			It->key = false;
+		}
+		else if (It->trap == true)
+		{
+			//UI매니저 쪽에 trap(_trap) 활성화 및 ++;
+			It->trap = false;
+		}
+	}
+	else
+	{
+		//아무것도 없음
+	}
+
 }
 
 //가구터치 반응 잘 되는지 테스트
 bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
 {
-	Sprite* spr = (Sprite*)this->getChildByTag(Furniture_wall1);
+	Sprite* spr = (Sprite*)this->getChildByName("Furniture_wall1");
 	Rect rect1 = spr->getBoundingBox();
 
 	if (rect1.containsPoint(touch->getLocation()))
 	{
 		isselect = true;
-		select = (Sprite*)this->getChildByTag(Furniture_wall1);
+		select = (Sprite*)this->getChildByName("Furniture_wall1");
 		CCLOG("TOUCH TOUCH TOUCH");
 	}
 	else
