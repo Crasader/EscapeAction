@@ -3,7 +3,7 @@
 Item::~Item()
 {
 }
-
+//190626
 bool Item::init()
 {
 	/*ItemData* weapon = false;

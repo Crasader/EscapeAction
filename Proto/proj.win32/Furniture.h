@@ -6,6 +6,7 @@
 
 USING_NS_CC;
 
+//190626
 class Furniture : public Layer
 {
 public:

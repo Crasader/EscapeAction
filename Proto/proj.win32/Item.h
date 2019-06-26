@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 
 USING_NS_CC;
-
+//190626
 class Item : public Node
 {
 public:

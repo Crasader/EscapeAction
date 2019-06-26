@@ -4,7 +4,7 @@
 Furniture::~Furniture()
 {
 }
-
+//190626
 bool Furniture::init()
 {
 	It = Item::create();
