@@ -21,7 +21,8 @@ private:
 	
 public:
 	static UIManager* getInstance();
-	Vec2 get_Player_m_p();
+	Point get_Player_m_p1();
+	Vec2 get_Player_m_p2();	
 
 	//return false면 이미 버튼이 set된 상태
 	//버튼이 NULL일때만 set

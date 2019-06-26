@@ -19,7 +19,15 @@ bool LayerGame::init()
 	pyer->setRect(rm->GetBackRect());
 	this->addChild(pyer);
 
+	//½ºÄÉÁì ½ÇÇà
+	this->scheduleUpdate();
+
     return true;
+}
+
+void LayerGame::update(float dt)
+{
+	//pyer->Joy_move_check();
 }
 
 

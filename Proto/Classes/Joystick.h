@@ -21,7 +21,8 @@ public :
 	Size Win_size;
 	Vec2 Mj_Touch_p;
 	Vec2 Umj_Touch_p;
-	Vec2 Move_p_joy;
+	Vec2 Move_p_joy1;
+	Vec2 Move_p_joy2;
 
 	Vec2 max_touch;
 

@@ -14,19 +14,26 @@ public:
 	void setRect(Rect back_rc);
 
 	void check();
-	bool oncheck;
-
+	
 	void Joy_move_check();
 
 private : 
 	bool keyUp, keyDown, keyLeft, keyRight;
 	int speed;
+
+	bool oncheck;
+
 	Size win_size;
 	Sprite* plyer;
 	Size plyer_size;
 	Rect rc;
 
 	Vec2 Move_joy_player;
+
+	Sprite* _player;
+	Animation* _player_anime;
+	Animate* _player_animat;
+	RepeatForever* rep_player;
 
 };
 

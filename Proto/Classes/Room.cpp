@@ -339,7 +339,7 @@ void Room::TestLabelUpdate()
 
 void Room::update(float dt)
 {
-	Vec2 move = UIManager::getInstance()->get_Player_m_p() * 8;
+	Vec2 move = UIManager::getInstance()->get_Player_m_p2() * 8;
 
 	Vec2 pos = this->getPosition();
 	float wid = background->getContentSize().width*background->getScale()*0.5f;

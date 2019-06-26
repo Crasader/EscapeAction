@@ -16,6 +16,9 @@ public:
 private:
 	Room* rm;
 	player* pyer;
+
+	//스케쥴 업데이트
+	void update(float dt);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

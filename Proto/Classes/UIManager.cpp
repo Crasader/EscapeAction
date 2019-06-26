@@ -21,9 +21,14 @@ UIManager * UIManager::getInstance()
 		return pUIManager;
 }
 
-Vec2 UIManager::get_Player_m_p()
+Point UIManager::get_Player_m_p1()
 {
-	return _joystick->Move_p_joy;
+	return _joystick->Move_p_joy1;
+}
+
+Vec2 UIManager::get_Player_m_p2()
+{
+	return _joystick->Move_p_joy2;
 }
 
 bool UIManager::setAtkBtn(ui::Button * atk)
