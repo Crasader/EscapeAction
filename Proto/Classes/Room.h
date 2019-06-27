@@ -3,6 +3,7 @@
 #include <string>
 #include "UIManager.h"
 #include "../proj.win32/Furniture.h"
+#include "player.h"
 
 using namespace std;
 USING_NS_CC;
@@ -23,6 +24,7 @@ public:
 	int GetRoonCnt();
 	bool MoveRoom(int dir);
 	Rect GetBackRect();
+
 private:
 	int p_level;
 	int p_roomCnt; 

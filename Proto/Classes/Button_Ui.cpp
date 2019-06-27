@@ -13,7 +13,7 @@ bool player_Item::init()
 	button1->setPosition(Point(win_size.width*0.05,win_size.height*0.7));
 	button1->addClickEventListener(CC_CALLBACK_0(player_Item::atkobj, this));
 	button1->setName("btn1");
-	button1->setEnabled(false);
+	button1->setEnabled(true);
 	this->addChild(button1);
 
 	auto button2 = ui::Button::create("Button_Disable.png", "Button_Normal.png", "Button_Press.png");
@@ -53,6 +53,21 @@ void player_Item::atkobj()
 		btn->setEnabled(true);
 	}
 	else;
+
+	/*_player_B = Sprite::create("s0.png");
+	this->addChild(_player_B);
+	_player_B->setName("player_ani");
+	_player_B->setPosition(Vec2(win_size.width*0.5f, win_size.height*0.5f));
+	_player_B->setScale(3.5);
+
+	_player_anime_B = Animation::create();
+	_player_anime_B->setDelayPerUnit(0.2f);
+	_player_anime_B->addSpriteFrameWithFile("s0.png");
+	_player_anime_B->addSpriteFrameWithFile("s1.png");
+	_player_anime_B->addSpriteFrameWithFile("s2.png");
+
+	_player_animat_B = Animate::create(_player_anime_B);
+	_player_B->runAction(_player_animat_B);*/
 }
 
 void player_Item::searchobj()
@@ -67,6 +82,7 @@ void player_Item::searchobj()
 	if (rect_r.intersectsRect(obj_r)==true) {
 		if (btn->isEnabled() == false){
 			btn->setEnabled(true);
+			
 		}
 	}
 	else

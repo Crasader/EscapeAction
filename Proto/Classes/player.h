@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "UIManager.h"
+#include "../proj.win32/Enum_collection.h"
 
 USING_NS_CC;
 
@@ -16,6 +17,7 @@ public:
 	void check();
 	
 	void Joy_move_check();
+	
 
 private : 
 	bool keyUp, keyDown, keyLeft, keyRight;
@@ -24,7 +26,6 @@ private :
 	bool oncheck;
 
 	Size win_size;
-	Sprite* plyer;
 	Size plyer_size;
 	Rect rc;
 
@@ -34,6 +35,8 @@ private :
 	Animation* _player_anime;
 	Animate* _player_animat;
 	RepeatForever* rep_player;
+
+	player_Move_enum playerState;
 
 };
 

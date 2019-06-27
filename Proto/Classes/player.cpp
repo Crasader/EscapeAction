@@ -54,70 +54,112 @@ void player::check()
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 		oncheck = false;
 	}
+
+
 }
 
 void player::Joy_move_check()
 {
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
-
-
-	if (oncheck == false)
+	
+	if (player_animetion_move.x > 0)
 	{
-		_player->stopAllActions();
-		_player_anime = Animation::create();
-		_player_anime->setDelayPerUnit(0.5f);
-
-		_player_anime->addSpriteFrameWithFile("1.png");
-		_player_anime->addSpriteFrameWithFile("2.png");
-		_player_anime->addSpriteFrameWithFile("3.png");
-		_player_anime->addSpriteFrameWithFile("4.png");
-		_player_anime->addSpriteFrameWithFile("5.png");
-
-		_player_animat = Animate::create(_player_anime);
-		rep_player = RepeatForever::create(_player_animat);
-
-		_player->runAction(rep_player);
-
-		oncheck = true;
+		if (playerState != RMOVE)
+		{
+			playerState = RMOVE;
+			oncheck = true;
+		}
+		_player->setPosition(_player->getPosition() + (Point(10, 0)));
+	}
+	else if (player_animetion_move.x < 0)
+	{
+		if (playerState != LMOVE)
+		{
+			playerState = LMOVE;
+			oncheck = true;
+		}
+		_player->setPosition(_player->getPosition() - (Point(10, 0)));
 	}
 	else
 	{
-		if (player_animetion_move.x < 0)
+		if (playerState != IDLE)
 		{
-			_player->stopAllActions();
-
-			_player_anime = Animation::create();
-			_player_anime->setDelayPerUnit(0.15f);
-
-			_player_anime->addSpriteFrameWithFile("17.png");
-			_player_anime->addSpriteFrameWithFile("18.png");
-			_player_anime->addSpriteFrameWithFile("19.png");
-			_player_anime->addSpriteFrameWithFile("18.png");
-
-			_player_animat = Animate::create(_player_anime);
-			rep_player = RepeatForever::create(_player_animat);
-
-			_player->runAction(rep_player);
+			playerState = IDLE;
+			oncheck = true;
 		}
-		else if (player_animetion_move.x > 0)
+	}
+
+	
+
+	if (oncheck == true)
+	{
+		switch (playerState)
 		{
+		case NONE:
+
+			break;
+		case IDLE:
 			_player->stopAllActions();
-
 			_player_anime = Animation::create();
-			_player_anime->setDelayPerUnit(0.15f);
+			_player_anime->setDelayPerUnit(0.5f);
 
-
-			_player_anime->addSpriteFrameWithFile("5.png");
-			_player_anime->addSpriteFrameWithFile("4.png");
-			_player_anime->addSpriteFrameWithFile("3.png");
-			_player_anime->addSpriteFrameWithFile("2.png");
-			_player_anime->addSpriteFrameWithFile("1.png");
-			_player_anime->addSpriteFrameWithFile("0.png");
+			_player_anime->addSpriteFrameWithFile("I1.png");
+			_player_anime->addSpriteFrameWithFile("I0.png");
 
 			_player_animat = Animate::create(_player_anime);
 			rep_player = RepeatForever::create(_player_animat);
 
 			_player->runAction(rep_player);
+
+			oncheck = false;
+			break;
+		case LMOVE:
+			_player->stopAllActions();
+			_player->setFlipX(true);
+
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.15f);
+
+
+			_player_anime->addSpriteFrameWithFile("r5.png");
+			_player_anime->addSpriteFrameWithFile("r4.png");
+			_player_anime->addSpriteFrameWithFile("r3.png");
+			_player_anime->addSpriteFrameWithFile("r2.png");
+			_player_anime->addSpriteFrameWithFile("r1.png");
+			_player_anime->addSpriteFrameWithFile("r0.png");
+
+			_player_animat = Animate::create(_player_anime);
+			rep_player = RepeatForever::create(_player_animat);
+
+			_player->runAction(rep_player);
+
+			oncheck = false;
+			break;
+		case RMOVE:
+			_player->stopAllActions();
+			_player->setFlipX(false);
+
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.15f);
+
+			_player_anime->addSpriteFrameWithFile("r5.png");
+			_player_anime->addSpriteFrameWithFile("r4.png");
+			_player_anime->addSpriteFrameWithFile("r3.png");
+			_player_anime->addSpriteFrameWithFile("r2.png");
+			_player_anime->addSpriteFrameWithFile("r1.png");
+			_player_anime->addSpriteFrameWithFile("r0.png");
+
+			_player_animat = Animate::create(_player_anime);
+			rep_player = RepeatForever::create(_player_animat);
+
+			_player->runAction(rep_player);
+			oncheck = false;
+			break;
+		case SEARCH:
+
+			break;
+		default:
+			break;
 		}
 	}
 }

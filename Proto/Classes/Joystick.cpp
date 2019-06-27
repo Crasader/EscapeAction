@@ -8,12 +8,14 @@ bool Joystick::init()
 	_UnMoveJoy->setName("Joystick_umj");
 	_UnMoveJoy->setOpacity(150);
 	_UnMoveJoy->setVisible(false);
+	_UnMoveJoy->setPosition(Win_size * 2);
 	this->addChild(_UnMoveJoy);
 
 	_MoveJoy = Sprite::create("Joy.png");
 	_MoveJoy->setName("Joystick_mj");
 	_MoveJoy->setOpacity(150);
 	_MoveJoy->setVisible(false);
+	_MoveJoy->setPosition(Win_size * 2);
 	this->addChild(_MoveJoy);
 
 	auto Joy_listener = EventListenerTouchOneByOne::create();
@@ -73,6 +75,7 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 	auto umj = (Sprite*)this->getChildByName("Joystick_umj");
 	auto mj = (Sprite*)this->getChildByName("Joystick_mj");
 
+	Move_p_joy1 = Point(0,0);
 	Move_p_joy2 = Vec2::ZERO;
 
 	umj->setVisible(false);

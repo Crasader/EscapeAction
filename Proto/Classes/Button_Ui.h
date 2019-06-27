@@ -5,6 +5,7 @@
 #include "ui/CocosGUI.h"
 #include "ui/UIButton.h"
 #include "cocos-ext.h"
+//#include "player.h"
 
 using namespace std;
 using namespace	cocos2d;
@@ -27,6 +28,10 @@ public:
 	void searchobj();
 	void keyobj();
 	void trapobj();
+
+	//Sprite* _player_B;
+	//Animation* _player_anime_B;
+	//Animate* _player_animat_B;
 
     CREATE_FUNC(player_Item);
 };

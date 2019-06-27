@@ -56,7 +56,7 @@ bool Room::init()
 	funt->setScale(scale);
 	this->addChild(funt);
 	this->scheduleUpdate();
-
+	
 	return true;
 }
 
@@ -339,7 +339,7 @@ void Room::TestLabelUpdate()
 
 void Room::update(float dt)
 {
-	Vec2 move = UIManager::getInstance()->get_Player_m_p2() * 8;
+	/*Vec2 move = UIManager::getInstance()->get_Player_m_p2() * 8;
 
 	Vec2 pos = this->getPosition();
 	float wid = background->getContentSize().width*background->getScale()*0.5f;
@@ -357,6 +357,6 @@ void Room::update(float dt)
 	else if (move.y < 0 && pos.y - hei + win_size.height*0.5 >= 0) {
 		move.setPoint(move.x, 0);
 	}
-
-	this->setPosition(pos.x-move.x, pos.y-move.y);
+	
+	this->setPosition(pos.x-move.x, pos.y-move.y);*/
 }
