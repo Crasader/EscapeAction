@@ -4,15 +4,19 @@
 #include "cocos2d.h"
 
 USING_NS_CC;
-//190626
+//190627
 class Item : public Node
 {
 public:
 
-	//아이템 종류 : 무기, 열쇠, 폭탄
-	bool weapon;
-	bool key;
-	bool trap;
+	struct ItemData
+	{
+		//아이템 종류 : 무기, 열쇠, 폭탄, 없음
+		bool weapon;
+		bool key;
+		bool trap;
+		bool no_item;
+	};
 
 
 	~Item();

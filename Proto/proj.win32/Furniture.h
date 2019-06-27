@@ -6,10 +6,16 @@
 
 USING_NS_CC;
 
-//190626
+//190627
 class Furniture : public Layer
 {
 public:
+
+	struct FurnitureData
+	{
+		//가구종류랑 아이템데이터(어떻게 받아오지...
+		bool search;
+	}FntData;
 
 	~Furniture();
 
