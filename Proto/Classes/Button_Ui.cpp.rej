@@ -1,0 +1,10 @@
+diff a/Proto/Classes/Button_Ui.cpp b/Proto/Classes/Button_Ui.cpp	(rejected hunks)
+@@ -13,7 +13,7 @@
+ 	button1->setPosition(Point(win_size.width*0.05,win_size.height*0.7));
+ 	button1->addClickEventListener(CC_CALLBACK_0(player_Item::atkobj, this));
+ 	button1->setName("btn1");
+-	button1->setEnabled(false);
++	button1->setEnabled(true);
+ 	this->addChild(button1);
+ 
+ 	auto button2 = ui::Button::create("Button_Disable.png", "Button_Normal.png", "Button_Press.png");

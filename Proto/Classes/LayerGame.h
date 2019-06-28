@@ -9,6 +9,8 @@
 #include "UIManager.h"
 
 #include "../proj.win32/Enum_collection.h"
+#include "../proj.win32/JSONtest.h"
+#include "../proj.win32/DrawField.h"
 
 USING_NS_CC;
 
@@ -30,6 +32,7 @@ private:
 	player_Move_enum playerState_move_camera;
 	bool camera_check;
 	Vec2 camera_move;
+	JSONtest* jt;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

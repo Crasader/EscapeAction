@@ -12,6 +12,15 @@ bool LayerGame::init()
     {
         return false;
     }
+	//JSONtest 클래스 생성
+	jt = JSONtest::create();
+	this->addChild(jt);
+
+	/*DrawField* df = DrawField::create();
+	df->setJSON(jt->getJSON());*/
+
+
+
 	win_size = Director::getInstance()->getWinSize();
 
 	rm = Room::create();
@@ -25,7 +34,7 @@ bool LayerGame::init()
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setName("camera_main");
 	this->addChild(camera);
-	camera->setPosition3D(Vec3(0, 0, 800));
+	camera->setPosition3D(Vec3(0, 0, 200));
 
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
 
@@ -38,14 +47,15 @@ bool LayerGame::init()
 
 void LayerGame::update(float dt)
 {
+	int move = 5;
 	pyer->Joy_move_check();
 
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	auto camera_m = this->getChildByName("camera_main");
 
-	CCLOG("%f %f", camera_move.x,pos.x);
-
-	if (camera_move.x > 0)
+//	CCLOG("%f %f", camera_move.x,pos.x);
+	camera->setPosition(pos);
+	/*if (camera_move.x > 0)
 	{
 		if (playerState_move_camera != RMOVE)
 		{
@@ -55,7 +65,7 @@ void LayerGame::update(float dt)
 		if (camera->getPositionX() < win_size.x*0.17)
 		{
 			if (pos.x > -220)
-			camera->setPosition(camera->getPosition() + (Point(10, 0)));
+			camera->setPosition(camera->getPosition() + (Point(move, 0)));
 		}
 		else
 		{
@@ -72,7 +82,7 @@ void LayerGame::update(float dt)
 		if (camera->getPositionX() > -win_size.x*0.17)
 		{
 			if(pos.x < 220)
-			camera->setPosition(camera->getPosition() - (Point(10, 0)));
+			camera->setPosition(camera->getPosition() - (Point(move, 0)));
 		}
 		else
 		{
@@ -97,7 +107,7 @@ void LayerGame::update(float dt)
 	}*/
 
 
-	camera_move = UIManager::getInstance()->get_Player_m_p1();
+	//camera_move = UIManager::getInstance()->get_Player_m_p1();
 }
 
 

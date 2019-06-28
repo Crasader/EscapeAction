@@ -60,7 +60,7 @@ void player::check()
 void player::Joy_move_check()
 {
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
-	
+	int move = 3;
 	CCLOG("_p %f", _player->getPositionX());
 
 	if (player_animetion_move.x > 0)
@@ -72,7 +72,7 @@ void player::Joy_move_check()
 		}
 		if (_player->getPositionX() < 780)
 		{
-			_player->setPosition(_player->getPosition() + (Point(10, 0)));
+			_player->setPosition(_player->getPosition() + (Point(move, 0)));
 		}
 	}
 	else if (player_animetion_move.x < 0)
@@ -84,7 +84,7 @@ void player::Joy_move_check()
 		}
 		if (_player->getPositionX() > -780)
 		{
-			_player->setPosition(_player->getPosition() - (Point(10, 0)));
+			_player->setPosition(_player->getPosition() - (Point(move, 0)));
 		}
 	}
 	else

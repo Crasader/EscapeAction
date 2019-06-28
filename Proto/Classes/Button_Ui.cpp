@@ -31,7 +31,6 @@ bool player_Item::init()
 	button3->setName("btn3");
 	button3->setEnabled(false);
 	this->addChild(button3);
-
 	auto button4 = ui::Button::create("Button_Disable.png", "Button_Normal.png", "Button_Press.png");
 	button4->setTitleText("Button Text");
 	button4->setPosition(Point(win_size.width*0.05, win_size.height*0.4));

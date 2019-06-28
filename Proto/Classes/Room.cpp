@@ -37,7 +37,6 @@ bool Room::init()
 	door_sp[3]->setRotation(-180);
 	door_sp[3]->setPosition(Point(win_size.width*0.5, r.getMinY()));//³²
 
-
 	p_escDoor = 0;
 	p_level = level;
 	p_roomCnt = level * 2 + 2;

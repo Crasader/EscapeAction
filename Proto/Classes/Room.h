@@ -5,6 +5,7 @@
 #include "../proj.win32/Furniture.h"
 #include "player.h"
 
+#include <vector>
 using namespace std;
 USING_NS_CC;
 
@@ -34,6 +35,7 @@ private:
 	Rect r;
 	Sprite* background;
 	Sprite* door_sp[4];
+	vector<RoomInfo*> rooms;
 
 	RoomInfo* escRoom;
 	RoomInfo* now;
