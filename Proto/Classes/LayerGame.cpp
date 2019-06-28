@@ -25,8 +25,7 @@ bool LayerGame::init()
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setName("camera_main");
 	this->addChild(camera);
-	pos = pyer->getChildByName("player_ani")->getPosition();
-	camera->setPosition3D(Vec3(pos.x, pos.y, 800));
+	camera->setPosition3D(Vec3(0, 0, 800));
 
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
 
@@ -41,6 +40,7 @@ void LayerGame::update(float dt)
 {
 	pyer->Joy_move_check();
 
+	pos = pyer->getChildByName("player_ani")->getPosition();
 	auto camera_m = this->getChildByName("camera_main");
 
 	CCLOG("%f %f", camera_move.x,pos.x);
@@ -52,9 +52,14 @@ void LayerGame::update(float dt)
 			playerState_move_camera = RMOVE;
 			camera_check = true;
 		}
-		if (camera->getPositionX() < win_size.x*0.7)
+		if (camera->getPositionX() < win_size.x*0.17)
 		{
+			if (pos.x > -220)
 			camera->setPosition(camera->getPosition() + (Point(10, 0)));
+		}
+		else
+		{
+			
 		}
 	}
 	else if (camera_move.x < 0)
@@ -64,8 +69,9 @@ void LayerGame::update(float dt)
 			playerState_move_camera = LMOVE;
 			camera_check = true;
 		}
-		if (camera->getPositionX() > win_size.x*0.3)
+		if (camera->getPositionX() > -win_size.x*0.17)
 		{
+			if(pos.x < 220)
 			camera->setPosition(camera->getPosition() - (Point(10, 0)));
 		}
 		else

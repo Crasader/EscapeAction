@@ -14,10 +14,9 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
-	_player->setPosition(win_size*0.5);
+	//_player->setPosition(win_size*0.5);
 	this->addChild(_player);
 	_player->setName("player_ani");
-	_player->setScale(3.5);
 
 	_player_anime = Animation::create();
 	_player_anime->setDelayPerUnit(0.5f);
@@ -63,6 +62,7 @@ void player::Joy_move_check()
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
 	
 	CCLOG("_p %f", _player->getPositionX());
+
 	if (player_animetion_move.x > 0)
 	{
 		if (playerState != RMOVE)
@@ -70,7 +70,10 @@ void player::Joy_move_check()
 			playerState = RMOVE;
 			oncheck = true;
 		}
-		_player->setPosition(_player->getPosition() + (Point(10, 0)));
+		if (_player->getPositionX() < 780)
+		{
+			_player->setPosition(_player->getPosition() + (Point(10, 0)));
+		}
 	}
 	else if (player_animetion_move.x < 0)
 	{
@@ -79,7 +82,10 @@ void player::Joy_move_check()
 			playerState = LMOVE;
 			oncheck = true;
 		}
-		_player->setPosition(_player->getPosition() - (Point(10, 0)));
+		if (_player->getPositionX() > -780)
+		{
+			_player->setPosition(_player->getPosition() - (Point(10, 0)));
+		}
 	}
 	else
 	{

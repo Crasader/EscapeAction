@@ -12,7 +12,7 @@ bool Room::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	background = Sprite::create("Background.png");
-	background->setPosition(Point(win_size.width*0.5f, win_size.height*0.5));
+	//background->setPosition(Point(win_size.width*0.5f, win_size.height*0.5));
 	background->setScale(scale);
 	Size bgSize = background->getContentSize();
 	r = background->getBoundingBox();
