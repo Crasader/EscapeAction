@@ -14,9 +14,9 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
+	_player->setPosition(win_size*0.5);
 	this->addChild(_player);
 	_player->setName("player_ani");
-	_player->setPosition(Vec2(win_size.width*0.5f, win_size.height*0.5f));
 	_player->setScale(3.5);
 
 	_player_anime = Animation::create();
@@ -62,6 +62,7 @@ void player::Joy_move_check()
 {
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
 	
+	CCLOG("_p %f", _player->getPositionX());
 	if (player_animetion_move.x > 0)
 	{
 		if (playerState != RMOVE)
