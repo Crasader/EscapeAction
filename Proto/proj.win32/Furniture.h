@@ -3,19 +3,30 @@
 
 #include "cocos2d.h"
 #include "Item.h"
+#include <../base/CCVector.h>
+#include <vector>
+
 
 USING_NS_CC;
 
 //190627
-class Furniture : public Layer
+
+struct FurnitureData
+{
+	//가구종류 필요할 것 같은데...
+
+	int fnt_num; //가구 개수(방 크기 결정)
+	ItemData* F_ItemData; //아이템 클래스에서 데이터 받아옴
+	int item_num; //각각 저장된 아이템 번호(0:weapon, 1:key, 2:trap, 3:no_item)
+	bool search; //탐색 여부
+
+}typedef FntData;
+
+std::vector<FntData*> v_FntData;
+
+class Furniture : public Node
 {
 public:
-
-	struct FurnitureData
-	{
-		//가구종류랑 아이템데이터(어떻게 받아오지...
-		bool search;
-	}FntData;
 
 	~Furniture();
 
@@ -35,8 +46,8 @@ public:
 
 	CREATE_FUNC(Furniture);
 
-private:
 	Item* It;
+
 };
 
 #endif // __FURNITURE_H__

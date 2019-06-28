@@ -7,11 +7,74 @@ Furniture::~Furniture()
 //190626
 bool Furniture::init()
 {
-	It = Item::create();
-
 	win_size = Director::getInstance()->getWinSize();
 
 	srand(time(NULL));
+	
+	//아이템 클래스 생성
+	It = Item::create();
+	this->addChild(It);
+
+	CCLOG("Furniture OK"); //퍼니쳐 클래스 제대로 씬에서 실행되는지 확인
+
+	//==============================가구 데이터 생성======================================
+	FntData* Sfnt = new FntData;
+	Sfnt->F_ItemData = It->itm; //아이템 데이터 구조체 연결
+
+	//각 아이템 데이터 true 확인
+	if (Sfnt->F_ItemData->weapon)
+	{
+		Sfnt->item_num = 0;
+		CCLOG("Weapon True");
+	}
+	if (Sfnt->F_ItemData->key)
+	{
+		Sfnt->item_num = 1;
+		CCLOG("Key True");
+	}
+	if (Sfnt->F_ItemData->trap)
+	{
+		Sfnt->item_num = 2;
+		CCLOG("Trap True");
+	}
+	if (Sfnt->F_ItemData->no_item)
+	{
+		Sfnt->item_num = 3;
+		CCLOG("No_Item True");
+	}
+
+	//가구 탐색 bool 초기화
+	Sfnt->search = false;
+
+	//가구 데이터 벡터 접근
+	std::vector<FntData*>::iterator v = v_FntData.begin();
+
+	//가구 개수 랜덤으로 지정
+	Sfnt->fnt_num = rand() % 5 + 1;
+
+	CCLOG("fnt_num : %d", Sfnt->fnt_num);
+
+	//가구 개수만큼 가구 데이터 벡터로 push
+	for (int i = 0; i < Sfnt->fnt_num; i++)
+	{
+		v_FntData.push_back(Sfnt);
+	}
+	
+	CCLOG("vector fntdata size : %d", v_FntData.size());
+
+	//==============================가구 데이터 생성======================================
+	
+
+	//가구 종류 늘어나면 스프라이트 더 추가됨
+	Sprite* fnt_wall1 = Sprite::create("button1.png");
+	Sprite* fnt_wall2 = Sprite::create("button2.png");
+
+	Sprite* searchbutton = Sprite::create("buttonB.png");
+
+
+
+	//==========================================================================아래로 옛날코드
+	/*
 
 	//=============가구 터치 테스트
 	select = NULL;
@@ -67,6 +130,8 @@ bool Furniture::init()
 	fnt_wall3->setVisible(false);
 	fnt_wall4->setVisible(false);
 
+	*/
+
 	//==================터치 테스트
 	auto listner = EventListenerTouchOneByOne::create();
 	listner->onTouchBegan = CC_CALLBACK_2(Furniture::onTouchBegan, this);
@@ -80,6 +145,7 @@ bool Furniture::init()
 
 void Furniture::Create_Furniture()
 {
+	/*
 	//방 가운데 가구 배치
 	Sprite* fnt_middle1 = (Sprite*)this->getChildByName("Furniture_middle1");
 	Rect Rec_middle1 = fnt_middle1->getBoundingBox();
@@ -144,10 +210,13 @@ void Furniture::Create_Furniture()
 		fnt_wall4->setVisible(true);
 	}
 	//==================rand에 따른 벽 가구 배치 6가지의 경우의 수=======================
+	*/
+
 }
 
 void Furniture::Touch_React()
 {
+	/*
 	//플레이어의 렉트와 가구의 렉트가 충돌상태에서 조사 버튼이 활성화. 버튼 입력시 반응 출력 함수
 	Sprite* ftn_wall1 = (Sprite*)this->getChildByName("Furniture_wall1");
 	Sprite* ftn_wall2 = (Sprite*)this->getChildByName("Furniture_wall2");
@@ -186,13 +255,14 @@ void Furniture::Touch_React()
 	{
 		//아무것도 없음
 	}
+	*/
 
 }
 
 //가구터치 반응 잘 되는지 테스트
 bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
 {
-	Sprite* spr = (Sprite*)this->getChildByName("Furniture_wall1");
+	/*Sprite* spr = (Sprite*)this->getChildByName("Furniture_wall1");
 	Rect rect1 = spr->getBoundingBox();
 
 	if (rect1.containsPoint(touch->getLocation()))
@@ -202,12 +272,13 @@ bool Furniture::onTouchBegan(Touch * touch, Event * unused_event)
 		CCLOG("TOUCH TOUCH TOUCH");
 	}
 	else
-	{ }
+	{ }*/
 
 	return true;
 }
 
 void Furniture::onTouchEnded(Touch * touch, Event * unused_event)
 {
+	
 }
 

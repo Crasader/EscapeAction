@@ -6,40 +6,37 @@ Item::~Item()
 //190627
 bool Item::init()
 {
+	itm = new ItemData;
 
+	srand(time(NULL));
+
+	Save_ItemData();
 	return true;
 }
 
 void Item::Save_ItemData()
 {
-	ItemData* item = new ItemData;
-	item->weapon = false;
-	item->key = false;
-	item->trap = false;
-	item->no_item = false;
+	itm->weapon = false;
+	itm->key = false;
+	itm->trap = false;
+	itm->no_item = false;
 
-	if (rand() % 1 == 1)
+	switch (rand() % 4) //rand로 안 먹는다면 변수 추가해서 대입할것
 	{
-		save_item = true;
-		if (save_item == true)
-		{
-			switch (rand() % 3) //rand로 안 먹는다면 변수 추가해서 대입할것
-			{
-			case 0:
-				item->weapon = true;
-				break;
-			case 1:
-				item->key = true;
-				break;
-			case 2:
-				item->trap = true;
-				break;
-			case 3:
-				item->no_item = true;
-				break;
-			}
-		}
+	case 0:
+		itm->weapon = true;
+		break;
+	case 1:
+		itm->key = true;
+		break;
+	case 2:
+		itm->trap = true;
+		break;
+	case 3:
+		itm->no_item = true;
+		break;
 	}
-	else
-		return;
+
+
+	return;
 }
