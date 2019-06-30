@@ -1,9 +1,9 @@
 {"room":[
   {
-  "Wall":["wall/Wall1.png","wall/Wall2.png","wall/Wall3.png","wall/WallFur"]
+  "Wall":["wall/Wall1.png","wall/Wall2.png","wall/Wall3.png","wall/WallFur.png","wall/WallFur.png"]
 },
 {
-"Wall":["wall/Wall2.png","wall/Wall1.png","wall/WallFur","wall/Wall3.png"]
+"Wall":["wall/Wall2.png","wall/Wall1.png","wall/WallFur.png","wall/Wall3.png"]
   }
   ]
   }

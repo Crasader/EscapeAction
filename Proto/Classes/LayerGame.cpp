@@ -12,19 +12,17 @@ bool LayerGame::init()
     {
         return false;
     }
-	//JSONtest 클래스 생성
-	jt = JSONtest::create();
-	this->addChild(jt);
-
-	/*DrawField* df = DrawField::create();
-	df->setJSON(jt->getJSON());*/
-
-
 
 	win_size = Director::getInstance()->getWinSize();
 
 	rm = Room::create();
 	this->addChild(rm);
+	//JSONtest 클래스 생성
+	jt = JSONtest::create();
+	this->addChild(jt);
+	//drawField
+	DrawField* df = DrawField::create();
+	this->addChild(df);
 
 	pyer = player::create();
 	this->addChild(pyer);

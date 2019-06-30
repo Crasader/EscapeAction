@@ -9,15 +9,9 @@ bool JSONtest::init()
 JSONtest::~JSONtest()
 {
 }
-
-rapidjson::Document * JSONtest::getJSON()
-{
-	return jsonDoc;
-}
-
 void JSONtest::setData()
 {
-	FILE* fp = fopen("fieldData.json", "r");
+/*	FILE* fp = fopen("fieldData.json", "r");
 	jsonDoc->SetObject();
 	rapidjson::Document::AllocatorType& allocator = jsonDoc->GetAllocator();
 	char readBuffer[500];
@@ -26,5 +20,14 @@ void JSONtest::setData()
 	const rapidjson::Value& a = (*jsonDoc)["room"];
 	//log("%s", );
 	//log("%s",(*jsonDoc)["room"].GetString());
+	fclose(fp);*/
+
+	FILE* fp = fopen("fieldData.json", "rb");
+	char readBuffer[500];
+	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	field.ParseStream(is);
+
 	fclose(fp);
+	
 }
