@@ -4,15 +4,15 @@
 #include <cstdio>
 #include "cocos2d.h"
 USING_NS_CC;
-using namespace rapidjson;
 using namespace std;
-class DrawField : public Node
+using namespace rapidjson;
+
+class DrawStruct:public Node
 {
 public:
-	CREATE_FUNC(DrawField);
+	CREATE_FUNC(DrawStruct);
 	virtual bool init();
-	void setJSON(rapidjson::Document* d);
-	~DrawField();
+	~DrawStruct();
 private:
 	Document field;
 };

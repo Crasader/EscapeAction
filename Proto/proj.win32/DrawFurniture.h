@@ -1,18 +1,20 @@
 #pragma once
+
 #include "external/json/document.h"
 #include "external/json/filereadstream.h"//파일을 열어오기위함
 #include <cstdio>
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 USING_NS_CC;
-using namespace rapidjson;
 using namespace std;
-class DrawField : public Node
+using namespace rapidjson;
+
+class DrawFurniture :public Node
 {
 public:
-	CREATE_FUNC(DrawField);
+	CREATE_FUNC(DrawFurniture);
 	virtual bool init();
-	void setJSON(rapidjson::Document* d);
-	~DrawField();
+	~DrawFurniture();
 private:
 	Document field;
 };

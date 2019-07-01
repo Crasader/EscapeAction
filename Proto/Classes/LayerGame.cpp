@@ -6,27 +6,22 @@ USING_NS_CC;
 bool LayerGame::init()
 {
 
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
-        return false;
-    }
-
 	win_size = Director::getInstance()->getWinSize();
 
-	rm = Room::create();
-	this->addChild(rm);
 	//JSONtest 클래스 생성
 	jt = JSONtest::create();
 	this->addChild(jt);
 	//drawField
 	DrawField* df = DrawField::create();
 	this->addChild(df);
-
+	//draw 가구
+	DrawFurniture* dfur = DrawFurniture::create();
+	this->addChild(dfur);
+	//drawStruct
+	DrawStruct* ds = DrawStruct::create();
+	this->addChild(ds);
 	pyer = player::create();
 	this->addChild(pyer);
-
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
 	camera->setCameraFlag(CameraFlag::USER1);
@@ -52,7 +47,7 @@ void LayerGame::update(float dt)
 	auto camera_m = this->getChildByName("camera_main");
 
 //	CCLOG("%f %f", camera_move.x,pos.x);
-	camera->setPosition(pos);
+	camera->setPosition(pos.x, pos.y+60);
 	/*if (camera_move.x > 0)
 	{
 		if (playerState_move_camera != RMOVE)

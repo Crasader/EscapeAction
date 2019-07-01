@@ -17,6 +17,10 @@ public:
 	void check();
 	
 	void Joy_move_check();
+	//Å×½ºÆ®
+	virtual void onPress(EventKeyboard::KeyCode key);
+	virtual void onRelease(EventKeyboard::KeyCode key);
+
 	
 
 private : 

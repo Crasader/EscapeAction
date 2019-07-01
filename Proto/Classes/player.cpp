@@ -6,6 +6,15 @@ player::~player()
 
 bool player::init()
 {
+	//test
+	auto listener = EventListenerKeyboard::create();
+	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
+	listener->onKeyReleased = CC_CALLBACK_1(player::onRelease, this);
+
+	 _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
+
+
+
 	rc = Rect(0, 0, 0, 0);
 	speed = 5;
 
@@ -14,7 +23,8 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
-	//_player->setPosition(win_size*0.5);
+	_player->setAnchorPoint(Vec2(0,0));
+	_player->setPosition(0,120);
 	this->addChild(_player);
 	_player->setName("player_ani");
 
@@ -59,7 +69,7 @@ void player::check()
 
 void player::Joy_move_check()
 {
-	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
+	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2()*3;
 	int move = 3;
 	//CCLOG("_p %f", _player->getPositionX());
 
@@ -70,10 +80,9 @@ void player::Joy_move_check()
 			playerState = RMOVE;
 			oncheck = true;
 		}
-		if (_player->getPositionX() < 780)
-		{
+		//if (_player->getPositionX() < 780){
 			_player->setPosition(_player->getPosition() + (Point(move, 0)));
-		}
+		//}
 	}
 	else if (player_animetion_move.x < 0)
 	{
@@ -82,10 +91,9 @@ void player::Joy_move_check()
 			playerState = LMOVE;
 			oncheck = true;
 		}
-		if (_player->getPositionX() > -780)
-		{
+		//if (_player->getPositionX() > -780){
 			_player->setPosition(_player->getPosition() - (Point(move, 0)));
-		}
+		//}
 	}
 	else
 	{
@@ -96,7 +104,7 @@ void player::Joy_move_check()
 		}
 	}
 
-	
+	//_player->setPosition(_player->getPosition() + player_animetion_move);
 
 	if (oncheck == true)
 	{
@@ -169,4 +177,18 @@ void player::Joy_move_check()
 			break;
 		}
 	}
+}
+
+void player::onPress(EventKeyboard::KeyCode key)
+{
+	if (key == EventKeyboard::KeyCode::KEY_UP_ARROW) {
+		_player->setPositionY(_player->getPositionY()+120);
+	}
+	if (key == EventKeyboard::KeyCode::KEY_DOWN_ARROW) {
+		_player->setPositionY(_player->getPositionY() - 120);
+	}
+}
+
+void player::onRelease(EventKeyboard::KeyCode key)
+{
 }

@@ -11,6 +11,8 @@
 #include "../proj.win32/Enum_collection.h"
 #include "../proj.win32/JSONtest.h"
 #include "../proj.win32/DrawField.h"
+#include "../proj.win32/DrawStruct.h"
+#include "../proj.win32/DrawFurniture.h"
 
 USING_NS_CC;
 
@@ -24,7 +26,7 @@ private:
 	player* pyer;
 	Camera* camera;
 
-	Vec2 win_size;
+	Size win_size;
 	Vec2 pos;
 	//스케쥴 업데이트
 	void update(float dt);
