@@ -4,7 +4,7 @@
 Furniture::~Furniture()
 {
 }
-//190626
+//190701
 bool Furniture::init()
 {
 	win_size = Director::getInstance()->getWinSize();
@@ -47,7 +47,7 @@ bool Furniture::init()
 	Sfnt->search = false;
 
 	//가구 데이터 벡터 접근
-	std::vector<FntData*>::iterator v = v_FntData.begin();
+	vector<FntData*>::iterator v = v_FntData.begin();
 
 	//가구 개수 랜덤으로 지정
 	Sfnt->fnt_num = rand() % 5 + 1;
@@ -67,10 +67,27 @@ bool Furniture::init()
 
 	//가구 종류 늘어나면 스프라이트 더 추가됨
 	Sprite* fnt_wall1 = Sprite::create("button1.png");
+	fnt_wall1->setPosition(500, 500);
+	fnt_wall1->setName("Fnt_wall1");
+
 	Sprite* fnt_wall2 = Sprite::create("button2.png");
+	fnt_wall2->setPosition(600, 500);
+	fnt_wall2->setName("Fnt_wall2");
 
+	//탐색 버튼
 	Sprite* searchbutton = Sprite::create("buttonB.png");
+	searchbutton->setPosition(300, 500);
+	searchbutton->setName("Searchbutton");
 
+	this->addChild(searchbutton, 10);
+
+
+	//가구 종류 스프라이트 랜덤 지정
+	Sfnt->fnt_sprite = rand() % 1;
+	if(Sfnt->fnt_sprite==0)
+		this->addChild(fnt_wall1, 1);
+	if(Sfnt->fnt_sprite==1)
+		this->addChild(fnt_wall2, 1);
 
 
 	//==========================================================================아래로 옛날코드
@@ -223,6 +240,7 @@ void Furniture::Touch_React()
 	Sprite* ftn_middle1 = (Sprite*)this->getChildByName("Furniture_middle1");
 	Sprite* ftn_middle2 = (Sprite*)this->getChildByName("Furniture_middle1");
 
+
 	Rect wall1 = ftn_wall1->getBoundingBox();
 	Rect wall2 = ftn_wall2->getBoundingBox();
 	Rect middle2 = ftn_middle1->getBoundingBox();
@@ -257,22 +275,41 @@ void Furniture::Touch_React()
 	}
 	*/
 
+	CCLOG("Touch React OK");
+
+	Sprite* spr = (Sprite*)this->getChildByName("Searchbutton");
+	spr->setVisible(false);
+
+	FntData* Sfnt = new FntData;
+	Sfnt->F_ItemData = It->itm;
+
+	Sfnt->search = true;
+	Sfnt->F_ItemData->no_item = true;
+
+	if (Sfnt->F_ItemData->key)
+		Sfnt->F_ItemData->key = false;
+
+	if (Sfnt->F_ItemData->weapon)
+		Sfnt->F_ItemData->weapon = false;
+
+	if (Sfnt->F_ItemData->trap)
+		Sfnt->F_ItemData->trap = false;
 }
 
-//가구터치 반응 잘 되는지 테스트
+//터치 반응 잘 되는지 테스트
 bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
 {
-	/*Sprite* spr = (Sprite*)this->getChildByName("Furniture_wall1");
+	Sprite* spr = (Sprite*)this->getChildByName("Searchbutton");
 	Rect rect1 = spr->getBoundingBox();
 
 	if (rect1.containsPoint(touch->getLocation()))
 	{
 		isselect = true;
-		select = (Sprite*)this->getChildByName("Furniture_wall1");
+		select = (Sprite*)this->getChildByName("Searchbutton");
 		CCLOG("TOUCH TOUCH TOUCH");
+		Touch_React();
 	}
 	else
-	{ }*/
 
 	return true;
 }
