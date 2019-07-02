@@ -13,9 +13,15 @@
       "edge_name": "wall/Wall3_edge.png"
     }
   ],
-  "furniture":[
-    "furniture/furniture1.png",
-    "furniture/furniture2.png"
+  "furniture": [
+    {
+      "name": "furniture/furniture1.png",
+      "size": 1
+    },
+    {
+      "name": "furniture/furniture2.png",
+      "size": 1
+    }
   ],
   "deco":[
     "decoration/deco1.png",

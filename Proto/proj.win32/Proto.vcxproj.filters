@@ -15,24 +15,45 @@
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
+    <ClCompile Include="..\Classes\LayerGame.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LayerUI.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Room.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UIManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Button_Ui.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\LayerGame.cpp">
+    <ClCompile Include="..\Classes\Joystick.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Furniture.cpp" />
+    <ClCompile Include="DrawField.cpp" />
+    <ClCompile Include="DrawFurniture.cpp" />
+    <ClCompile Include="DrawStruct.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="JSONtest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
+    <ClInclude Include="..\Classes\Joystick.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LayerGame.h">
@@ -41,9 +62,31 @@
     <ClInclude Include="..\Classes\LayerUI.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\player.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Room.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UIManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Button_Ui.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="DrawStruct.h" />
+    <ClInclude Include="Enum_collection.h" />
+    <ClInclude Include="Furniture.h" />
+    <ClInclude Include="DrawField.h" />
+    <ClInclude Include="DrawFurniture.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="JSONtest.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -8,6 +8,7 @@
 #include "external/json/stringbuffer.h"
 #include "external/json/filereadstream.h"//파일을 열어오기위함
 #include <cstdio>
+#include "Furniture.h"
 
 USING_NS_CC;
 using namespace rapidjson;
