@@ -89,6 +89,23 @@ bool Furniture::init()
 			CCLOG("No_Item True");
 		}
 
+		//가구 랜덤설정
+		assert(fur_name.IsArray());
+		int arr_count = -1;
+		for (auto& fur : fur_name.GetArray()) {
+			arr_count++;
+		}
+
+		int fur_rand = RandomHelper::random_int(0, arr_count);
+		log("fur_rand : %d", fur_rand);
+		assert(fur_name[fur_rand].HasMember("name"));
+		assert(fur_name[fur_rand]["name"].IsString());
+		Sfnt->fnt_img = fur_name[fur_rand]["name"].GetString();
+
+		assert(fur_name[fur_rand].HasMember("size"));
+		assert(fur_name[fur_rand]["size"].IsInt());
+		Sfnt->fnt_size = fur_name[fur_rand]["size"].GetInt();
+
 		//가구 탐색 bool 초기화
 		Sfnt->search = false;
 		v_FntData.push_back(Sfnt);
@@ -100,7 +117,6 @@ bool Furniture::init()
 	}
 	
 	CCLOG("vector fntdata size : %d", v_FntData.size());
-	log("data size %d", v_FntData.size());
 	//==============================가구 데이터 생성======================================
 	
 	/*
@@ -128,30 +144,11 @@ bool Furniture::init()
 	if(Sfnt->fnt_sprite==1)
 		this->addChild(fnt_wall2, 1);
 */
-	//가구 랜덤설정
-	/*assert(fur_name.IsArray());
-	int arr_count = -1;
-	for (auto& fur : fur_name.GetArray()) {
-		arr_count++;
-	}
-
-	int fur_rand = RandomHelper::random_int(0, arr_count);
-	log("fur_rand : %d",fur_rand);
-	assert(fur_name[fur_rand].HasMember("name"));
-	assert(fur_name[fur_rand]["name"].IsString());
-	Sfnt->fnt_img = fur_name[fur_rand]["name"].GetString();
-
-	assert(fur_name[fur_rand].HasMember("size"));
-	assert(fur_name[fur_rand]["size"].IsInt());
-	Sfnt->fnt_size= fur_name[fur_rand]["size"].GetInt();
-
-	log("%s", Sfnt->fnt_img);
-
 	auto listner = EventListenerTouchOneByOne::create();
 	listner->onTouchBegan = CC_CALLBACK_2(Furniture::onTouchBegan, this);
 	listner->onTouchEnded = CC_CALLBACK_2(Furniture::onTouchEnded, this);
 
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listner, 2);*/
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listner, 2);
 
 
 	return true;
