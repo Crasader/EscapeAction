@@ -1,0 +1,24 @@
+{
+  "wall": [
+    {
+      "tile_name": "wall/Wall1.png",
+      "edge_name" : "wall/Wall1_edge.png"
+    },
+    {
+      "tile_name": "wall/Wall2.png",
+      "edge_name": "wall/Wall2_edge.png"
+    },
+    {
+      "tile_name": "wall/Wall3.png",
+      "edge_name": "wall/Wall3_edge.png"
+    }
+  ],
+  "furniture":[
+    "furniture/furniture1.png",
+    "furniture/furniture2.png"
+  ],
+  "deco":[
+    "decoration/deco1.png",
+    "decoration/deco2.png"
+  ]
+}
