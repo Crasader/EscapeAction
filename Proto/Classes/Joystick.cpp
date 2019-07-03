@@ -53,6 +53,8 @@ bool Joystick::onTouchBegan(Touch * touch, Event * unused_event)
 	{
 		
 	}
+
+	_touchCheck = true;
 	return true;
 }
 
@@ -80,4 +82,6 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 
 	umj->setVisible(false);
 	mj->setVisible(false);
+
+	_touchCheck = false;
 }

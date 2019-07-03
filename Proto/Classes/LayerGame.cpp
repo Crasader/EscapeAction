@@ -39,11 +39,8 @@ bool LayerGame::init()
 void LayerGame::update(float dt)
 {
 	pyer->Joy_move_check();
-
 	pos = pyer->getChildByName("player_ani")->getPosition();
-	auto camera_m = this->getChildByName("camera_main");
-
-	CCLOG("%f %f", camera_move.x,pos.x);
+	camera_move = UIManager::getInstance()->get_Player_m_p1();
 
 	if (camera_move.x > 0)
 	{
@@ -59,7 +56,7 @@ void LayerGame::update(float dt)
 		}
 		else
 		{
-			
+			playerState_move_camera = IDLE;			
 		}
 	}
 	else if (camera_move.x < 0)
@@ -76,7 +73,7 @@ void LayerGame::update(float dt)
 		}
 		else
 		{
-			
+			playerState_move_camera = IDLE;
 		}
 	}
 	else
@@ -87,17 +84,4 @@ void LayerGame::update(float dt)
 			camera_check = true;
 		}
 	}
-	/*if (camera->getPositionX() > win_size.x*0.3)
-	{
-		pyer->setPosition(pyer->getPosition() - (Point(10, 0)));
-	}
-	else if (camera->getPositionX() < win_size.x*0.7)
-	{
-		pyer->setPosition(pyer->getPosition() + (Point(10, 0)));
-	}*/
-
-
-	camera_move = UIManager::getInstance()->get_Player_m_p1();
 }
-
-

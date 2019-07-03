@@ -8,6 +8,7 @@
 #include "Room.h"
 #include "UIManager.h"
 
+#include "ui/CocosGUI.h"
 #include "../proj.win32/Enum_collection.h"
 
 USING_NS_CC;
@@ -30,6 +31,7 @@ private:
 	player_Move_enum playerState_move_camera;
 	bool camera_check;
 	Vec2 camera_move;
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__

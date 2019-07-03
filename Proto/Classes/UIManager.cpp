@@ -1,4 +1,5 @@
 #include "UIManager.h"
+#include "Button_Ui.h"
 
 static UIManager* pUIManager = NULL;
 
@@ -29,6 +30,11 @@ Point UIManager::get_Player_m_p1()
 Vec2 UIManager::get_Player_m_p2()
 {
 	return _joystick->Move_p_joy2;
+}
+
+void UIManager::set_btn_UI(Button_Ui * btn_UI)
+{
+	_btn_UI = btn_UI;
 }
 
 bool UIManager::setAtkBtn(ui::Button * atk)
@@ -94,5 +100,25 @@ void UIManager::setEnable_KeyBtn(bool enable)
 void UIManager::setEnable_TrapBtn(bool enable)
 {
 	_trap->setEnabled(enable);
+}
+
+void UIManager::setAttack_btn(bool atk)
+{
+	_btn_UI->atk_on = atk;
+}
+
+bool UIManager::getAttack_btn()
+{
+	return _btn_UI->atk_on;
+}
+
+void UIManager::setSearch_btn(bool sch)
+{
+	_btn_UI->search_on = sch;
+}
+
+bool UIManager::getSearch_btn()
+{
+	return _btn_UI->search_on;
 }
 

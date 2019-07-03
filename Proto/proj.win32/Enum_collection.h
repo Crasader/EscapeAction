@@ -6,5 +6,8 @@ enum player_Move_enum
 	IDLE,
 	LMOVE,
 	RMOVE,
+	ATTACK,
 	SEARCH,
+	KEY,
+	TRAP,
 };

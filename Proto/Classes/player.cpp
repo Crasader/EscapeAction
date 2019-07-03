@@ -14,7 +14,7 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
-	//_player->setPosition(win_size*0.5);
+	_player->setScale(3.5);
 	this->addChild(_player);
 	_player->setName("player_ani");
 
@@ -27,6 +27,9 @@ bool player::init()
 	rep_player = RepeatForever::create(_player_animat);
 	_player->runAction(rep_player);
 
+	s_check = false;
+
+	_UIM = UIManager::getInstance();
 	return true;
 }
 
@@ -35,39 +38,34 @@ void player::setRect(Rect back_rc)
 	rc = back_rc;
 }
 
-
-void player::check()
-{
-	auto player_bounding = (Sprite*)this->getChildByName("player_move");
-	//가구 오브젝트랑 만나는것 체크
-	if (player_bounding->getPosition() < win_size*0.5)
-	{
-		if (oncheck == false)
-		{
-			UIManager::getInstance()->setEnable_AtkBtn(true);
-			oncheck = true;
-		}
-	}
-	else if(player_bounding->getPosition() > win_size*0.5)
-	{
-		UIManager::getInstance()->setEnable_AtkBtn(false);
-		oncheck = false;
-	}
-
-
-}
-
 void player::Joy_move_check()
 {
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p1();
-	
-	CCLOG("_p %f", _player->getPositionX());
+	atk_check = UIManager::getInstance()->getAttack_btn();
+	s_check = UIManager::getInstance()->getSearch_btn();
 
-	if (player_animetion_move.x > 0)
+	CCLOG("_playerState %d", _playerState);
+	CCLOG("s_check %d", s_check);
+	CCLOG("oncheck %d", oncheck);
+	CCLOG("atk_check %d", atk_check);
+
+	if (atk_check == true)
 	{
-		if (playerState != RMOVE)
+		_playerState = ATTACK;
+		UIManager::getInstance()->setAttack_btn(false);
+		oncheck = true;
+	}
+	else if (s_check == true)
+	{
+		_playerState = SEARCH;
+		UIManager::getInstance()->setSearch_btn(false);
+		oncheck = true;
+	}
+	else if (player_animetion_move.x > 0)
+	{
+		if (_playerState != RMOVE)
 		{
-			playerState = RMOVE;
+			_playerState = RMOVE;
 			oncheck = true;
 		}
 		if (_player->getPositionX() < 780)
@@ -77,9 +75,9 @@ void player::Joy_move_check()
 	}
 	else if (player_animetion_move.x < 0)
 	{
-		if (playerState != LMOVE)
+		if (_playerState != LMOVE)
 		{
-			playerState = LMOVE;
+			_playerState = LMOVE;
 			oncheck = true;
 		}
 		if (_player->getPositionX() > -780)
@@ -87,23 +85,24 @@ void player::Joy_move_check()
 			_player->setPosition(_player->getPosition() - (Point(10, 0)));
 		}
 	}
-	else
+	else if (player_animetion_move.x == 0 && _playerState != ATTACK && _playerState != SEARCH)
 	{
-		if (playerState != IDLE)
+		if (_playerState != IDLE)
 		{
-			playerState = IDLE;
+			_playerState = IDLE;
 			oncheck = true;
 		}
 	}
-
-	
+	else
+	{
+	}
 
 	if (oncheck == true)
 	{
-		switch (playerState)
+		switch (_playerState)
 		{
 		case NONE:
-
+			
 			break;
 		case IDLE:
 			_player->stopAllActions();
@@ -139,8 +138,8 @@ void player::Joy_move_check()
 			rep_player = RepeatForever::create(_player_animat);
 
 			_player->runAction(rep_player);
-
 			oncheck = false;
+			RL_Flip = true;
 			break;
 		case RMOVE:
 			_player->stopAllActions();
@@ -161,12 +160,62 @@ void player::Joy_move_check()
 
 			_player->runAction(rep_player);
 			oncheck = false;
+			RL_Flip = false;
 			break;
-		case SEARCH:
+		case ATTACK:
+		{
+			_player->stopAllActions();
+			_player->setFlipX(RL_Flip);
 
-			break;
-		default:
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.075f);
+
+			_player_anime->addSpriteFrameWithFile("a0.png");
+			_player_anime->addSpriteFrameWithFile("a1.png");
+			_player_anime->addSpriteFrameWithFile("a2.png");
+			_player_anime->addSpriteFrameWithFile("a3.png");
+			_player_anime->addSpriteFrameWithFile("a4.png");
+			_player_anime->addSpriteFrameWithFile("a5.png");
+			_player_anime->addSpriteFrameWithFile("a6.png");
+
+			_player_animat = Animate::create(_player_anime);
+
+			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::pause_ani, this)), NULL);
+
+			_player->runAction(A_player);
+
+			oncheck = false;
 			break;
 		}
+		case SEARCH:
+		{
+			_player->stopAllActions();
+			_player->setFlipX(RL_Flip);
+
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.1f);
+
+			_player_anime->addSpriteFrameWithFile("s0.png");
+			_player_anime->addSpriteFrameWithFile("s1.png");
+			_player_anime->addSpriteFrameWithFile("s2.png");
+			_player_anime->addSpriteFrameWithFile("s1.png");
+			_player_anime->addSpriteFrameWithFile("s0.png");
+
+			_player_animat = Animate::create(_player_anime);
+
+			Sequence* S_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::pause_ani, this)), NULL);
+
+			_player->runAction(S_player);
+
+			oncheck = false;
+			break;
+		}
+		}
 	}
+}
+
+void player::pause_ani()
+{
+	_playerState = IDLE;
+	oncheck = true;
 }

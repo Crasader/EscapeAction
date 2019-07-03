@@ -8,7 +8,7 @@ USING_NS_CC;
 bool LayerUI::init()
 {
 	//아이템 버튼 생성
-	player_Item* pl = player_Item::create();
+	Button_Ui* pl = Button_Ui::create();
 	this->addChild(pl);
 	//조이스틱 생성
 	Joystick* js = Joystick::create();
@@ -19,6 +19,9 @@ bool LayerUI::init()
 	UIManager::getInstance()->setSearchBtn((ui::Button*)pl->getChildByName("btn2"));
 	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn3"));
 	UIManager::getInstance()->setTrapBtn((ui::Button*)pl->getChildByName("btn4"));
+
+	//UIManager에 버튼 세팅
+	UIManager::getInstance()->set_btn_UI(pl);
 
 	//UIManager에 joystick 세팅
 	UIManager::getInstance()->setJoystick(js);

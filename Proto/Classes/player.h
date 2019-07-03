@@ -3,6 +3,8 @@
 #include "UIManager.h"
 #include "../proj.win32/Enum_collection.h"
 
+
+
 USING_NS_CC;
 
 class player:public Node
@@ -14,16 +16,21 @@ public:
 	virtual bool init();
 	void setRect(Rect back_rc);
 
-	void check();
-	
 	void Joy_move_check();
 	
+	void pause_ani();
+	bool s_check;
+	bool atk_check;
+
+	player_Move_enum _playerState;
+
+	UIManager* _UIM;
 
 private : 
-	bool keyUp, keyDown, keyLeft, keyRight;
 	int speed;
 
 	bool oncheck;
+	bool RL_Flip;
 
 	Size win_size;
 	Size plyer_size;
@@ -35,8 +42,5 @@ private :
 	Animation* _player_anime;
 	Animate* _player_animat;
 	RepeatForever* rep_player;
-
-	player_Move_enum playerState;
-
 };
 
