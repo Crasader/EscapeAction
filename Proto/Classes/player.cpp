@@ -6,6 +6,8 @@ player::~player()
 
 bool player::init()
 {
+	_camera = NULL;
+	delayAfterimg = 0;
 	//test
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
@@ -105,7 +107,7 @@ void player::Joy_move_check()
 	}
 
 	//_player->setPosition(_player->getPosition() + player_animetion_move);
-
+	
 	if (oncheck == true)
 	{
 		switch (playerState)
@@ -117,10 +119,10 @@ void player::Joy_move_check()
 			_player->stopAllActions();
 			_player_anime = Animation::create();
 			_player_anime->setDelayPerUnit(0.5f);
-
+			
 			_player_anime->addSpriteFrameWithFile("I1.png");
 			_player_anime->addSpriteFrameWithFile("I0.png");
-
+			
 			_player_animat = Animate::create(_player_anime);
 			rep_player = RepeatForever::create(_player_animat);
 
@@ -148,6 +150,8 @@ void player::Joy_move_check()
 
 			_player->runAction(rep_player);
 
+			this->schedule(schedule_selector(player::afterImage));
+			
 			oncheck = false;
 			break;
 		case RMOVE:
@@ -191,4 +195,32 @@ void player::onPress(EventKeyboard::KeyCode key)
 
 void player::onRelease(EventKeyboard::KeyCode key)
 {
+}
+
+void player::afterImage(float dt)
+{
+	if (playerState != LMOVE) {
+		delayAfterimg = 0;
+		unscheduleAllSelectors();
+		return;
+	}else if (_player_anime->getDelayPerUnit()<=delayAfterimg) {
+		delayAfterimg = 0;
+		Sprite* spr = Sprite::createWithSpriteFrame(_player->getDisplayFrame());
+		spr->setAnchorPoint(Vec2(0, 0));
+		spr->setPosition(_player->getPosition());
+		spr->setFlipX(true);
+		//action
+		float time = 0.5;
+		DelayTime* delay = DelayTime::create(time);
+		FadeOut* fade = FadeOut::create(time);
+		RemoveSelf* remove = RemoveSelf::create();
+		Spawn* spw = Spawn::create(delay, fade, NULL);
+		Sequence* seq = Sequence::create(spw, remove, NULL);
+		this->addChild(spr,-1);
+		spr->runAction(seq);
+		spr->setCameraMask(_camera->getCameraMask());
+	}
+	else {
+		delayAfterimg += dt*2;
+	}
 }

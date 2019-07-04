@@ -2,10 +2,16 @@
 
 bool JSONtest::init()
 {
-	Furniture* f = Furniture::create();
 	testLevel = 5;
 	rmCnt = (testLevel * 2) + 2;//1레벨 올라갈때마다 방+2, 1Level : 4개, 2Level: 6개...
 	bonusRmCnt = RandomHelper::random_int((int)rmCnt/3, (int)rmCnt/2);//보너스 방
+	int minfl = (int)(rmCnt / 5);//올림, 한 층에 올 수 있는 최대 방갯수 = 5
+	int maxfl = (int)(rmCnt / 2);//내림. 한 층에 올 수 있는 최소 방갯수 = 2
+	if (rmCnt % 5 != 0) {
+		minfl++;
+	}
+	floor = RandomHelper::random_int(minfl, maxfl);
+
 	parse_resName();//리소스 이름 파일 open, res_name에 
 
 	parse_mapData();
@@ -14,7 +20,7 @@ bool JSONtest::init()
 }
 void JSONtest::setData()//fieldData 파일에 setData
 {
-	FILE* fp = fopen("fieldData.json", "rb");
+	FILE* fp = fopen("jsonData/fieldData.json", "rb");
 	char readBuffer[500];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 
@@ -43,7 +49,7 @@ void JSONtest::parse_mapData()
 	
 
 
-	FILE* fp = fopen("mapDataTest.json", "wb");
+	FILE* fp = fopen("jsonData/mapDataTest.json", "wb");
 	char wirteBuffer[500];
 	FileWriteStream os(fp, wirteBuffer, sizeof(wirteBuffer));
 	Writer<FileWriteStream> writer(os);
@@ -55,7 +61,7 @@ void JSONtest::parse_mapData()
 
 void JSONtest::parse_resName()
 {
-	FILE* fname = fopen("ResourceName.json", "rb");
+	FILE* fname = fopen("jsonData/ResourceName.json", "rb");
 	char readBuffer_fname[500];
 	FileReadStream name_s(fname, readBuffer_fname, sizeof(readBuffer_fname));
 	res_name.ParseStream(name_s);

@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "cocos2d.h"
 #include <string>
 #include "UIManager.h"
@@ -51,5 +51,5 @@ private:
 
 	void update(float dt);
 
-};
+};*/
 

@@ -8,18 +8,22 @@ bool LayerGame::init()
 
 	win_size = Director::getInstance()->getWinSize();
 
-	//JSONtest 클래스 생성
-	jt = JSONtest::create();
-	this->addChild(jt);
+	//LevelDataSet 클래스 생성
+	LevelDataSet* levelData = LevelDataSet::create();
+	this->addChild(levelData);
 	//drawField
 	DrawField* df = DrawField::create();
 	this->addChild(df);
 	//draw 가구
 	DrawFurniture* dfur = DrawFurniture::create();
 	this->addChild(dfur);
+	/*
+	//JSONtest 클래스 생성
+	jt = JSONtest::create();
+	this->addChild(jt);
 	//drawStruct
 	DrawStruct* ds = DrawStruct::create();
-	this->addChild(ds);
+	this->addChild(ds);*/
 	pyer = player::create();
 	this->addChild(pyer);
 	Size winSize = Director::getInstance()->getWinSize();
@@ -27,10 +31,10 @@ bool LayerGame::init()
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setName("camera_main");
 	this->addChild(camera);
-	camera->setPosition3D(Vec3(0, 0, 200));
+	camera->setPosition3D(Vec3(0, 0,200));
 
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
-
+	pyer->_camera = camera;
 	camera_move = Vec2(0, 0);
 	//스케쥴 실행
 	this->scheduleUpdate();
@@ -40,9 +44,9 @@ bool LayerGame::init()
 
 void LayerGame::update(float dt)
 {
+	
 	int move = 5;
 	pyer->Joy_move_check();
-
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	auto camera_m = this->getChildByName("camera_main");
 

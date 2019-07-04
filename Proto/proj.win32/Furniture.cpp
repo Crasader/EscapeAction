@@ -7,10 +7,10 @@ Furniture::~Furniture()
 //190701
 bool Furniture::init()
 {
-
+	Document fur_name;
 	//파일 오픈 & 파싱
-	FILE* fp = fopen("furnitureName.json", "rb");
-	char readBuffer[500];
+	FILE* fp = fopen("jsonData/name/nameFur.json", "rb");
+	char readBuffer[5000];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 	fur_name.ParseStream(is);
 	fclose(fp);
@@ -18,44 +18,16 @@ bool Furniture::init()
 	srand(time(NULL));
 	win_size = Director::getInstance()->getWinSize();
 	
+	total_fntSize = 0;
+
 	CCLOG("Furniture OK"); //퍼니쳐 클래스 제대로 씬에서 실행되는지 확인
-
-	//==============================가구 데이터 생성======================================
-	//FntData* Sfnt = new FntData;
-	//Sfnt->F_ItemData = It->itm; //아이템 데이터 구조체 연결
-
-	////각 아이템 데이터 true 확인
-	//if (Sfnt->F_ItemData->weapon)
-	//{
-	//	Sfnt->item_num = 0;
-	//	CCLOG("Weapon True");
-	//}
-	//if (Sfnt->F_ItemData->key)
-	//{
-	//	Sfnt->item_num = 1;
-	//	CCLOG("Key True");
-	//}
-	//if (Sfnt->F_ItemData->trap)
-	//{
-	//	Sfnt->item_num = 2;
-	//	CCLOG("Trap True");
-	//}
-	//if (Sfnt->F_ItemData->no_item)
-	//{
-	//	Sfnt->item_num = 3;
-	//	CCLOG("No_Item True");
-	//}
-
-	////가구 탐색 bool 초기화
-	//Sfnt->search = false;
 
 	//가구 데이터 벡터 접근
 	vector<FntData*>::iterator v = v_FntData.begin();
 
 	//가구 개수 랜덤으로 지정
-	fnt_num = rand() % 5 + 1;
+	int fnt_num = RandomHelper::random_int(1, 5);
 
-	CCLOG("fnt_num : %d",fnt_num);
 
 	//가구 개수만큼 가구 데이터 벡터로 push
 	for (int i = 0; i < fnt_num; i++)
@@ -65,28 +37,28 @@ bool Furniture::init()
 		Item* It=Item::create();
 
 		FntData* Sfnt = new FntData;
-		Sfnt->F_ItemData = It->itm; //아이템 데이터 구조체 연결
+		//Sfnt->F_ItemData = It->itm; //아이템 데이터 구조체 연결
 
 		//각 아이템 데이터 true 확인
-		if (Sfnt->F_ItemData->weapon)
+		if (It->itm->weapon)
 		{
 			Sfnt->item_num = 0;
-			CCLOG("Weapon True");
+			//CCLOG("Weapon True");
 		}
-		if (Sfnt->F_ItemData->key)
+		if (It->itm->key)
 		{
 			Sfnt->item_num = 1;
-			CCLOG("Key True");
+			//CCLOG("Key True");
 		}
-		if (Sfnt->F_ItemData->trap)
+		if (It->itm->trap)
 		{
 			Sfnt->item_num = 2;
-			CCLOG("Trap True");
+			//CCLOG("Trap True");
 		}
-		if (Sfnt->F_ItemData->no_item)
+		if (It->itm->no_item)
 		{
 			Sfnt->item_num = 3;
-			CCLOG("No_Item True");
+			//CCLOG("No_Item True");
 		}
 
 		//가구 랜덤설정
@@ -97,61 +69,56 @@ bool Furniture::init()
 		}
 
 		int fur_rand = RandomHelper::random_int(0, arr_count);
-		log("fur_rand : %d", fur_rand);
+		//log("fur_rand : %d", fur_rand);
 		assert(fur_name[fur_rand].HasMember("name"));
 		assert(fur_name[fur_rand]["name"].IsString());
 		Sfnt->fnt_img = fur_name[fur_rand]["name"].GetString();
+		bool retry = false;
+		for (auto v : v_FntData) {
+			if(Sfnt->fnt_img==v->fnt_img){
+				retry = true;
+				break;
+			}
+		}
+		if (retry) {
+			i--;
+			continue;
+		}
 
 		assert(fur_name[fur_rand].HasMember("size"));
 		assert(fur_name[fur_rand]["size"].IsInt());
 		Sfnt->fnt_size = fur_name[fur_rand]["size"].GetInt();
-
+		if (total_fntSize + Sfnt->fnt_size > 5) {//방에 들어 갈 수 있는 가구 total 크기 최댓값 = 5;
+			CCLOG("fnt_num : %d", i);
+			break;
+		}
+		total_fntSize += Sfnt->fnt_size;
 		//가구 탐색 bool 초기화
 		Sfnt->search = false;
 		v_FntData.push_back(Sfnt);
 	}
 	int i = 0;
 	for (auto v : v_FntData) {
-		log("%d item : %d", i, v->item_num);
+		//log("%d item : %d", i, v->item_num);
 		i++;
 	}
-	
-	CCLOG("vector fntdata size : %d", v_FntData.size());
-	//==============================가구 데이터 생성======================================
-	
-	/*
-	//가구 종류 늘어나면 스프라이트 더 추가됨
-	Sprite* fnt_wall1 = Sprite::create("button1.png");
-	fnt_wall1->setPosition(500, 500);
-	fnt_wall1->setName("Fnt_wall1");
+	//log("rand_fnt : %d", fnt_num);
+	log("v_fnt : %d", v_FntData.size());
+	//CCLOG("vector fntdata size : %d", v_FntData.size());
 
-	Sprite* fnt_wall2 = Sprite::create("button2.png");
-	fnt_wall2->setPosition(600, 500);
-	fnt_wall2->setName("Fnt_wall2");
+	//auto listner = EventListenerTouchOneByOne::create();
+	//listner->onTouchBegan = CC_CALLBACK_2(Furniture::onTouchBegan, this);
+	//listner->onTouchEnded = CC_CALLBACK_2(Furniture::onTouchEnded, this);
 
-	//탐색 버튼
-	Sprite* searchbutton = Sprite::create("buttonB.png");
-	searchbutton->setPosition(300, 500);
-	searchbutton->setName("Searchbutton");
-
-	this->addChild(searchbutton, 10);
-
-
-	//가구 종류 스프라이트 랜덤 지정
-	Sfnt->fnt_sprite = rand() % 1;
-	if(Sfnt->fnt_sprite==0)
-		this->addChild(fnt_wall1, 1);
-	if(Sfnt->fnt_sprite==1)
-		this->addChild(fnt_wall2, 1);
-*/
-	auto listner = EventListenerTouchOneByOne::create();
-	listner->onTouchBegan = CC_CALLBACK_2(Furniture::onTouchBegan, this);
-	listner->onTouchEnded = CC_CALLBACK_2(Furniture::onTouchEnded, this);
-
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listner, 2);
+	//Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listner, 2);
 
 
 	return true;
+}
+
+int Furniture::getTotalFntSize()
+{
+	return total_fntSize;
 }
 
 void Furniture::Create_Furniture()
@@ -291,25 +258,25 @@ void Furniture::Touch_React()
 }
 
 //터치 반응 잘 되는지 테스트
-bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
-{
-	Sprite* spr = (Sprite*)this->getChildByName("Searchbutton");
-	Rect rect1 = spr->getBoundingBox();
-
-	if (rect1.containsPoint(touch->getLocation()))
-	{
-		isselect = true;
-		select = (Sprite*)this->getChildByName("Searchbutton");
-		CCLOG("TOUCH TOUCH TOUCH");
-		Touch_React();
-	}
-	else
-
-	return true;
-}
-
-void Furniture::onTouchEnded(Touch * touch, Event * unused_event)
-{
-	
-}
+//bool Furniture::onTouchBegan(Touch * touch, Event * unused_event) 
+//{
+//	Sprite* spr = (Sprite*)this->getChildByName("Searchbutton");
+//	Rect rect1 = spr->getBoundingBox();
+//
+//	if (rect1.containsPoint(touch->getLocation()))
+//	{
+//		isselect = true;
+//		select = (Sprite*)this->getChildByName("Searchbutton");
+//		CCLOG("TOUCH TOUCH TOUCH");
+//		Touch_React();
+//	}
+//	else
+//
+//	return true;
+//}
+//
+//void Furniture::onTouchEnded(Touch * touch, Event * unused_event)
+//{
+//	
+//}
 

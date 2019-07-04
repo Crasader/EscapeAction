@@ -1,5 +1,5 @@
 #include "Room.h"
-
+/*
 
 Room::~Room()
 {
@@ -357,5 +357,5 @@ void Room::update(float dt)
 		move.setPoint(move.x, 0);
 	}
 	
-	this->setPosition(pos.x-move.x, pos.y-move.y);*/
-}
+	this->setPosition(pos.x-move.x, pos.y-move.y);
+}*/

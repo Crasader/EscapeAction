@@ -23,6 +23,7 @@ private:
 	int testLevel;//테스트를 위한 레벨, 클라이언트에서 레벨을 받았다고 가정
 	int rmCnt;//방 갯수
 	int bonusRmCnt;//보너스 방 갯수
+	int floor;
 
 	Document field;//field 데이터 파싱하기위한 document
 	Document map_data;//맵 데이터 파싱하기위한 document

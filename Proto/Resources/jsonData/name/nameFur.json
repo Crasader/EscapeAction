@@ -6,5 +6,13 @@
   {
     "name": "fur/fur2.png",
     "size": 1
+  },
+  {
+    "name": "fur/jang.png",
+    "size": 1
+  },
+  {
+    "name": "fur/sofa.png",
+    "size": 3
   }
 ]

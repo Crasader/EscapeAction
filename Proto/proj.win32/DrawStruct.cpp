@@ -4,7 +4,7 @@
 bool DrawStruct::init()
 {
 	//파일 내용 불러오기
-	FILE* fp = fopen("fieldData.json", "rb");
+	FILE* fp = fopen("jsonData/fieldData.json", "rb");
 	char readBuffer[500];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 	field.ParseStream(is);

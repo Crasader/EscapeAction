@@ -5,14 +5,14 @@
 #include "cocos-ext.h"
 
 #include "player.h"
-#include "Room.h"
 #include "UIManager.h"
 
 #include "../proj.win32/Enum_collection.h"
-#include "../proj.win32/JSONtest.h"
-#include "../proj.win32/DrawField.h"
-#include "../proj.win32/DrawStruct.h"
+/*#include "../proj.win32/JSONtest.h"
+#include "../proj.win32/DrawStruct.h"*/
 #include "../proj.win32/DrawFurniture.h"
+#include "../proj.win32/LevelDataSet.h"
+#include "../proj.win32/DrawField.h"
 
 USING_NS_CC;
 
@@ -22,7 +22,6 @@ public:
 	virtual bool init();
     CREATE_FUNC(LayerGame);
 private:
-	Room* rm;
 	player* pyer;
 	Camera* camera;
 
@@ -34,7 +33,7 @@ private:
 	player_Move_enum playerState_move_camera;
 	bool camera_check;
 	Vec2 camera_move;
-	JSONtest* jt;
+//JSONtest* jt;
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __LAYER_GAME_H__
