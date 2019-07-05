@@ -18,6 +18,7 @@ private:
 	ui::Button* _key;
 	ui::Button* _trap;
 	Joystick* _joystick;
+	Button_Ui* _btn_ui;
 	
 public:
 	static UIManager* getInstance();
@@ -38,6 +39,13 @@ public:
 	void setEnable_SearchBtn(bool enable);
 	void setEnable_KeyBtn(bool enable);
 	void setEnable_TrapBtn(bool enable);
+
+	void set_btn_ui(Button_Ui* btn_ui);
+
+	void set_atk_btn(bool atk);
+	bool get_atk_btn();
+	void set_src_btn(bool src);
+	bool get_src_btn();
 
 };
 

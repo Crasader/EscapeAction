@@ -1,0 +1,9 @@
+diff a/Proto/proj.win32/Furniture.h b/Proto/proj.win32/Furniture.h	(rejected hunks)
+@@ -20,7 +20,6 @@
+ 	Vec2 Ary_fnt_wall_pos[8]; //Vec2 ��ġ�� ���� �迭
+ 
+ 	void Create_Furniture(); //���� ����
+-	bool Check(); //Ž���� ���� ���� Ȯ��
+ 	void Touch_React(); //���� ��ġ�� ����
+ 
+ 	virtual bool onTouchBegan(Touch* touch, Event* unused_event);

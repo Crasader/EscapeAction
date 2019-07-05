@@ -2,7 +2,7 @@
 
 bool JSONtest::init()
 {
-	Furniture* f = Furniture::create();
+	//Furniture* f = Furniture::create();
 	testLevel = 5;
 	rmCnt = (testLevel * 2) + 2;//1레벨 올라갈때마다 방+2, 1Level : 4개, 2Level: 6개...
 	bonusRmCnt = RandomHelper::random_int((int)rmCnt/3, (int)rmCnt/2);//보너스 방

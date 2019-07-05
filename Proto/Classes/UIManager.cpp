@@ -96,3 +96,28 @@ void UIManager::setEnable_TrapBtn(bool enable)
 	_trap->setEnabled(enable);
 }
 
+void UIManager::set_btn_ui(Button_Ui * btn_ui)
+{
+	_btn_ui = btn_ui;
+}
+
+void UIManager::set_atk_btn(bool atk)
+{
+	_btn_ui->atk_on =atk;
+}
+
+bool UIManager::get_atk_btn()
+{
+	return _btn_ui->atk_on;
+}
+
+void UIManager::set_src_btn(bool src)
+{
+	_btn_ui->search_on = src;
+}
+
+bool UIManager::get_src_btn()
+{
+	return _btn_ui->search_on;
+}
+

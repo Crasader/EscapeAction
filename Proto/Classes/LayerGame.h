@@ -31,7 +31,7 @@ private:
 	//스케쥴 업데이트
 	void update(float dt);
 
-	player_Move_enum playerState_move_camera;
+	//player_Move_enum playerState_move_camera;
 	bool camera_check;
 	Vec2 camera_move;
 	JSONtest* jt;
