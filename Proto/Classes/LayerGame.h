@@ -8,12 +8,11 @@
 #include "UIManager.h"
 
 #include "../proj.win32/Enum_collection.h"
-/*#include "../proj.win32/JSONtest.h"
-#include "../proj.win32/DrawStruct.h"*/
 #include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/LevelDataSet.h"
 #include "../proj.win32/DrawField.h"
-
+#include "../proj.win32/DrawStruct.h"
+#include "../proj.win32/DrawDeco.h"
 USING_NS_CC;
 
 class LayerGame : public cocos2d::Layer

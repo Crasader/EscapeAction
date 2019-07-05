@@ -10,6 +10,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NameInfo">
+      <UniqueIdentifier>{47aae85d-ca7a-42dc-876b-4b20829e6cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DrawMap">
+      <UniqueIdentifier>{efe53c31-d9db-4d65-8242-700c462d4479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,12 +48,29 @@
     <ClCompile Include="..\Classes\Joystick.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Furniture.cpp" />
-    <ClCompile Include="DrawField.cpp" />
-    <ClCompile Include="DrawFurniture.cpp" />
-    <ClCompile Include="DrawStruct.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="JSONtest.cpp" />
+    <ClCompile Include="LevelDataSet.cpp" />
+    <ClCompile Include="Furniture.cpp">
+      <Filter>NameInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomWall.cpp">
+      <Filter>NameInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomDeco.cpp">
+      <Filter>NameInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawField.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawFurniture.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawStruct.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawDeco.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -80,13 +103,30 @@
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="DrawStruct.h" />
     <ClInclude Include="Enum_collection.h" />
-    <ClInclude Include="Furniture.h" />
-    <ClInclude Include="DrawField.h" />
-    <ClInclude Include="DrawFurniture.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="JSONtest.h" />
+    <ClInclude Include="LevelDataSet.h" />
+    <ClInclude Include="Furniture.h">
+      <Filter>NameInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomWall.h">
+      <Filter>NameInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomDeco.h">
+      <Filter>NameInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawField.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawFurniture.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawStruct.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDeco.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -8,22 +8,26 @@ bool LayerGame::init()
 
 	win_size = Director::getInstance()->getWinSize();
 
-	//LevelDataSet 클래스 생성
+	//LevelDataSet 클래스 생성, addChild 필요 없음
 	LevelDataSet* levelData = LevelDataSet::create();
-	this->addChild(levelData);
+
 	//drawField
 	DrawField* df = DrawField::create();
 	this->addChild(df);
+	//draw 장식
+	DrawDeco* ddeco = DrawDeco::create();
+	this->addChild(ddeco);
 	//draw 가구
 	DrawFurniture* dfur = DrawFurniture::create();
 	this->addChild(dfur);
+	//draw 구조
+	DrawStruct* ds = DrawStruct::create();
+	this->addChild(ds,10);
 	/*
 	//JSONtest 클래스 생성
 	jt = JSONtest::create();
 	this->addChild(jt);
-	//drawStruct
-	DrawStruct* ds = DrawStruct::create();
-	this->addChild(ds);*/
+	*/
 	pyer = player::create();
 	this->addChild(pyer);
 	Size winSize = Director::getInstance()->getWinSize();

@@ -26,7 +26,7 @@ bool Furniture::init()
 	vector<FntData*>::iterator v = v_FntData.begin();
 
 	//가구 개수 랜덤으로 지정
-	int fnt_num = RandomHelper::random_int(1, 5);
+	int fnt_num = RandomHelper::random_int(2, 5);
 
 
 	//가구 개수만큼 가구 데이터 벡터로 push

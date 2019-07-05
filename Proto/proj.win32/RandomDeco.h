@@ -15,8 +15,13 @@ public:
 	virtual bool init();
 	~RandomDeco();
 
+	int getDecoCount();//장식 리소스 갯수 반환
 	string getDecoName();
+	void randDecoAgain();
 private:
+	Document name_deco;
+
+	int resCnt;
 	string deco;
 };
 

@@ -55,11 +55,6 @@ bool DrawField::init()
 	}
 	return true;
 }
-
-void DrawField::setJSON(rapidjson::Document * d)
-{
-}
-
 DrawField::~DrawField()
 {
 }

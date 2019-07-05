@@ -23,6 +23,9 @@ bool DrawFurniture::init()
 		for (auto& rm : floor.GetArray()) {
 			for (auto& fur : rm.GetArray()) {
 				Sprite* furni = Sprite::create(fur["name"].GetString());
+				if (RandomHelper::random_int(0, 1) == 1) {
+					furni->setFlipX(true);
+				}
 				furni->setAnchorPoint(Vec2(0.5,0));
 				furni->setPosition(fur["pos"].GetFloat()*wid, hgt*fl);
 				this->addChild(furni);

@@ -6,13 +6,13 @@
 USING_NS_CC;
 using namespace rapidjson;
 using namespace std;
-class DrawField : public Node
+class DrawDeco : public Node
 {
 public:
-	CREATE_FUNC(DrawField);
+	CREATE_FUNC(DrawDeco);
 	virtual bool init();
-	~DrawField();
+	~DrawDeco();
 private:
-	Document field;
+	Document draw_deco;
 };
 

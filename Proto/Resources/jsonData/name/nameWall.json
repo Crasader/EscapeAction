@@ -1,5 +1,9 @@
 [
   {
+    "tile_name": "wall/Wall.png",
+    "edge_name": "wall/Wall_edge.png"
+  },
+  {
     "tile_name": "wall/Wall1.png",
     "edge_name": "wall/Wall1_edge.png"
   },
@@ -10,5 +14,9 @@
   {
     "tile_name": "wall/Wall3.png",
     "edge_name": "wall/Wall3_edge.png"
+  },
+  {
+    "tile_name": "wall/Wall4.png",
+    "edge_name": "wall/Wall4_edge.png"
   }
 ]

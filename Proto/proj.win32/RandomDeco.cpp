@@ -4,7 +4,7 @@
 
 bool RandomDeco::init()
 {
-	Document name_deco;
+	name_deco;
 	FILE* fp = fopen("jsonData/name/nameDeco.json", "rb");
 	char readBuffer[5000];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
@@ -12,11 +12,10 @@ bool RandomDeco::init()
 	fclose(fp);
 
 	assert(name_deco.IsArray());
-	int resCnt = -1;
+	resCnt = -1;
 	for (auto& wl : name_deco.GetArray()) {
 		resCnt++;
 	}
-
 	int rand = RandomHelper::random_int(0, resCnt);
 	assert(name_deco[rand].IsString());
 	deco = name_deco[rand].GetString();
@@ -28,7 +27,19 @@ RandomDeco::~RandomDeco()
 {
 }
 
+int RandomDeco::getDecoCount()
+{
+	return resCnt+1;
+}
+
 string RandomDeco::getDecoName()
 {
 	return deco;
+}
+
+void RandomDeco::randDecoAgain()
+{
+	int rand = RandomHelper::random_int(0, resCnt);
+	assert(name_deco[rand].IsString());
+	deco = name_deco[rand].GetString();
 }
