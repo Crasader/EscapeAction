@@ -48,6 +48,15 @@
     <ClCompile Include="DrawStruct.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="JSONtest.cpp" />
+    <ClCompile Include="LevelDataSet.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomDeco.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomWall.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -87,6 +96,15 @@
     <ClInclude Include="DrawFurniture.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="JSONtest.h" />
+    <ClInclude Include="LevelDataSet.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomDeco.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomWall.h">
+      <Filter>win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -164,7 +164,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="Furniture.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="JSONtest.cpp" />
+    <ClCompile Include="LevelDataSet.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomDeco.cpp" />
+    <ClCompile Include="RandomWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
@@ -183,7 +186,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="Furniture.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="JSONtest.h" />
+    <ClInclude Include="LevelDataSet.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="RandomDeco.h" />
+    <ClInclude Include="RandomWall.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">

@@ -1,0 +1,42 @@
+diff a/Proto/proj.win32/Furniture.cpp b/Proto/proj.win32/Furniture.cpp	(rejected hunks)
+@@ -11,40 +11,7 @@
+ 
+ 	srand(time(NULL));
+ 	
+-	//������ Ŭ���� ����
+-	It = Item::create();
+-	this->addChild(It);
+-
+-	CCLOG("Furniture OK"); //�۴��� Ŭ���� ����� ������ ����Ǵ��� Ȯ��
+-
+-	//==============================���� ������ ����======================================
+ 	FntData* Sfnt = new FntData;
+-	Sfnt->F_ItemData = It->itm; //������ ������ ����ü ����
+-
+-	//�� ������ ������ true Ȯ��
+-	if (Sfnt->F_ItemData->weapon)
+-	{
+-		Sfnt->item_num = 0;
+-		CCLOG("Weapon True");
+-	}
+-	if (Sfnt->F_ItemData->key)
+-	{
+-		Sfnt->item_num = 1;
+-		CCLOG("Key True");
+-	}
+-	if (Sfnt->F_ItemData->trap)
+-	{
+-		Sfnt->item_num = 2;
+-		CCLOG("Trap True");
+-	}
+-	if (Sfnt->F_ItemData->no_item)
+-	{
+-		Sfnt->item_num = 3;
+-		CCLOG("No_Item True");
+-	}
+-
+-	//���� Ž�� bool �ʱ�ȭ
+-	Sfnt->search = false;
+ 
+ 	//���� ������ ���� ����
+ 	vector<FntData*>::iterator v = v_FntData.begin();
