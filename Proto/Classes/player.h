@@ -14,8 +14,8 @@ public:
 	virtual bool init();
 	void setRect(Rect back_rc);
 	Camera* _camera;
-	void check();
-	
+	void checkFur();
+	bool getCheckFur();
 	void Joy_move_check();
 	//테스트
 	virtual void onPress(EventKeyboard::KeyCode key);
@@ -26,7 +26,8 @@ public:
 	int getRoomNum();
 	//player 방 번호 setting
 	void setRoomNum(int roomNum);
-
+	
+	//가구 관련
 	Rect getRect();
 
 private : 
@@ -36,7 +37,7 @@ private :
 	int speed;
 	float delayAfterimg;
 	bool oncheck;
-
+	bool check_fur;
 	Size win_size;
 	Size plyer_size;
 	Rect rc;

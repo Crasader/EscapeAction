@@ -30,6 +30,10 @@ bool LayerGame::init()
 	pyer = player::create();
 	this->addChild(pyer);
 
+	//啊备 ui 积己
+	fu = FurnitureUI::create();
+	this->addChild(fu);
+	dfur->setFurUI(fu);
 
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
@@ -51,17 +55,30 @@ bool LayerGame::init()
 
 void LayerGame::update(float dt)
 {
+	pos = pyer->getChildByName("player_ani")->getPosition();
 	//啊备 滚瓢 test
 	dfur->checkFur(pyer->getRect(), 0);
-	if (dfur->getCheck()) {
-		pyer->getChildByName("player_ani")->setPosition(dfur->getCheckPos(), 0);
+	if (fu->checkSearch()) {
+		float posX = fu->getPos();
+		float dis_pb = pos.x - posX;
+		if (dis_pb==0) {
+			fu->setStart();
+			pyer->checkFur();
+		}else if(dis_pb<3&&dis_pb>-3){
+			pyer->getChildByName("player_ani")->setPositionX(posX);
+		}
+		else {
+			int i = dis_pb > 0 ? 1 : -1;
+			pyer->getChildByName("player_ani")->setPositionX(pos.x-(i*3));
+		}
 	}
 	int move = 5;
 	pyer->Joy_move_check();
-	pos = pyer->getChildByName("player_ani")->getPosition();
+	/*if (!pyer->getCheckFur() && fu->checkSearch()) {
+		fu->setCancle();//啊备 眉农 秒家
+	}*/
 	auto camera_m = this->getChildByName("camera_main");
 
-//	CCLOG("%f %f", camera_move.x,pos.x);
 	camera->setPosition(pos.x, pos.y+60);
 	/*if (camera_move.x > 0)
 	{

@@ -6,6 +6,7 @@ player::~player()
 
 bool player::init()
 {
+	check_fur = false;
 	_camera = NULL;
 	delayAfterimg = 0;
 	//test
@@ -48,9 +49,9 @@ void player::setRect(Rect back_rc)
 }
 
 
-void player::check()
+void player::checkFur()
 {
-	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
 	//가구 오브젝트랑 만나는것 체크
 	if (player_bounding->getPosition() < win_size*0.5)
 	{
@@ -64,9 +65,19 @@ void player::check()
 	{
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 		oncheck = false;
+	}*/
+
+	if (playerState != player_Move_enum::SEARCH) {
+		playerState = player_Move_enum::SEARCH;
+		check_fur = true;
+		oncheck = true;
 	}
 
+}
 
+bool player::getCheckFur()
+{
+	return check_fur;
 }
 
 void player::Joy_move_check()
@@ -82,9 +93,7 @@ void player::Joy_move_check()
 			playerState = RMOVE;
 			oncheck = true;
 		}
-		//if (_player->getPositionX() < 780){
-			_player->setPosition(_player->getPosition() + (Point(move, 0)));
-		//}
+		_player->setPosition(_player->getPosition() + (Point(move, 0)));
 	}
 	else if (player_animetion_move.x < 0)
 	{
@@ -93,9 +102,7 @@ void player::Joy_move_check()
 			playerState = LMOVE;
 			oncheck = true;
 		}
-		//if (_player->getPositionX() > -780){
-			_player->setPosition(_player->getPosition() - (Point(move, 0)));
-		//}
+		_player->setPosition(_player->getPosition() - (Point(move, 0)));
 	}
 	else
 	{
@@ -175,7 +182,7 @@ void player::Joy_move_check()
 			oncheck = false;
 			break;
 		case SEARCH:
-
+			oncheck = false;
 			break;
 		default:
 			break;

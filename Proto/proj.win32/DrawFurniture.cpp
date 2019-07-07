@@ -5,8 +5,8 @@
 
 bool DrawFurniture::init()
 {
-	check_furpos = 0;
-	_checkFurNum = -1;
+//초기화
+	_fu = NULL;
 	v_spr.clear();
 
 	Document draw_fur;
@@ -36,25 +36,6 @@ bool DrawFurniture::init()
 				furni->setPosition(fur["pos"].GetFloat()*wid, hgt*fl);
 				this->addChild(furni);
 				v_spr.pushBack(furni);
-				Size furni_size = furni->getContentSize();
-				//버튼 생성
-				ui::Button* btn = ui::Button::create("fur_button.png");
-				btn->setPosition(Vec2(fur["pos"].GetFloat()*wid, hgt*fl + furni_size.height*0.5));
-				btn->setScale(0.35);
-				btn->setTag(furCnt);
-				btn->addClickEventListener(CC_CALLBACK_0(DrawFurniture::clickBtn, this, btn->getTag()));
-				btn->setVisible(false);
-				this->addChild(btn);
-				v_btn.pushBack(btn);
-				//프로그래스 바 생성
-				ProgressTimer* progress = ProgressTimer::create(Sprite::create("fur_button_prgress.png"));
-				progress->setPosition(Vec2(fur["pos"].GetFloat()*wid, hgt*fl + furni_size.height*0.5));
-				progress->setType(ProgressTimer::Type::RADIAL);
-				progress->setPercentage(0);
-				progress->setVisible(false);
-				progress->setScale(0.35);
-				this->addChild(progress);
-				v_pro.pushBack(progress);
 				furCnt++;
 			}
 			v_furCnt.push_back(furCnt);
@@ -76,16 +57,14 @@ void DrawFurniture::checkFur(Rect player,int roomNum)
 	}
 	int last = v_furCnt.at(roomNum);
 	Vector<Sprite*>::iterator iter = v_spr.begin()+fir;
-	for (iter; iter != v_spr.begin()+last;iter++) {
+	//현재 방의 가구만 player와 겹치는지 체크
+	for (iter; iter != v_spr.begin() + last; iter++) {
 		Rect fur_rect = v_spr.at(fir)->getBoundingBox();
-		ui::Button* btn = v_btn.at(fir);
-		if (_checkFurNum == -1) {
-			if (player.intersectsRect(fur_rect)) {
-				btn->setVisible(true);
-			}
-			else {
-				btn->setVisible(false);
-			}
+		if (player.intersectsRect(fur_rect)) {
+			_fu->setBtnVisible(fir, true);
+		}
+		else {
+			_fu->setBtnVisible(fir, false);
 		}
 		fir++;
 	}
@@ -95,6 +74,12 @@ DrawFurniture::~DrawFurniture()
 {
 }
 
+void DrawFurniture::setFurUI(FurnitureUI * fu)
+{
+	_fu = fu;
+}
+
+/*
 bool DrawFurniture::getCheck()
 {
 	if (_checkFurNum != -1) {
@@ -143,4 +128,4 @@ void DrawFurniture::endCheck()
 	ProgressTimer* progress = v_pro.at(_checkFurNum);
 	progress->setVisible(false);
 	_checkFurNum = -1;
-}
+}*/

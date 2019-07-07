@@ -24,6 +24,7 @@ public:
 private:
 	//draw
 	DrawFurniture* dfur;
+	FurnitureUI* fu;
 
 	player* pyer;
 	Camera* camera;
