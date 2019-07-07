@@ -22,7 +22,16 @@ public:
 	virtual void onRelease(EventKeyboard::KeyCode key);
 	void afterImage(float dt);
 
+	//player가 위치한 방 번호 받아오기
+	int getRoomNum();
+	//player 방 번호 setting
+	void setRoomNum(int roomNum);
+
+	Rect getRect();
+
 private : 
+	Rect _playerRect;
+
 	bool keyUp, keyDown, keyLeft, keyRight;
 	int speed;
 	float delayAfterimg;
@@ -41,6 +50,9 @@ private :
 	RepeatForever* rep_player;
 
 	player_Move_enum playerState;
+
+	//player가 현재 위치한 방 번호
+	int _roomNum;
 
 };
 

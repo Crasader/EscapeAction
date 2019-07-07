@@ -25,7 +25,7 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
-	_player->setAnchorPoint(Vec2(0,0));
+	_player->setAnchorPoint(Vec2(0.5,0));
 	_player->setPosition(0,120);
 	this->addChild(_player);
 	_player->setName("player_ani");
@@ -223,4 +223,21 @@ void player::afterImage(float dt)
 	else {
 		delayAfterimg += dt*2;
 	}
+}
+
+int player::getRoomNum()
+{
+	return _roomNum;
+}
+
+void player::setRoomNum(int roomNum)
+{
+	_roomNum = roomNum;
+}
+
+Rect player::getRect()
+{
+	//가구 체크할 Rect 설정
+
+	return _player->getBoundingBox();
 }

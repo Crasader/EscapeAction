@@ -6,7 +6,6 @@ USING_NS_CC;
 bool LayerGame::init()
 {
 
-	win_size = Director::getInstance()->getWinSize();
 
 	//LevelDataSet 클래스 생성, addChild 필요 없음
 	LevelDataSet* levelData = LevelDataSet::create();
@@ -18,7 +17,7 @@ bool LayerGame::init()
 	DrawDeco* ddeco = DrawDeco::create();
 	this->addChild(ddeco);
 	//draw 가구
-	DrawFurniture* dfur = DrawFurniture::create();
+	dfur = DrawFurniture::create();
 	this->addChild(dfur);
 	//draw 구조
 	DrawStruct* ds = DrawStruct::create();
@@ -30,6 +29,8 @@ bool LayerGame::init()
 	*/
 	pyer = player::create();
 	this->addChild(pyer);
+
+
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
 	camera->setCameraFlag(CameraFlag::USER1);
@@ -40,6 +41,8 @@ bool LayerGame::init()
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
 	pyer->_camera = camera;
 	camera_move = Vec2(0, 0);
+
+
 	//스케쥴 실행
 	this->scheduleUpdate();
 
@@ -48,7 +51,11 @@ bool LayerGame::init()
 
 void LayerGame::update(float dt)
 {
-	
+	//가구 버튼 test
+	dfur->checkFur(pyer->getRect(), 0);
+	if (dfur->getCheck()) {
+		pyer->getChildByName("player_ani")->setPosition(dfur->getCheckPos(), 0);
+	}
 	int move = 5;
 	pyer->Joy_move_check();
 	pos = pyer->getChildByName("player_ani")->getPosition();

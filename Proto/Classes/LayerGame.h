@@ -13,6 +13,7 @@
 #include "../proj.win32/DrawField.h"
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawDeco.h"
+
 USING_NS_CC;
 
 class LayerGame : public cocos2d::Layer
@@ -21,6 +22,9 @@ public:
 	virtual bool init();
     CREATE_FUNC(LayerGame);
 private:
+	//draw
+	DrawFurniture* dfur;
+
 	player* pyer;
 	Camera* camera;
 

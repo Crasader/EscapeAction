@@ -13,6 +13,5 @@ public:
 	virtual bool init();
 	~DrawField();
 private:
-	Document field;
 };
 

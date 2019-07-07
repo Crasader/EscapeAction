@@ -14,6 +14,7 @@ bool LayerUI::init()
 	Joystick* js = Joystick::create();
 	this->addChild(js);
 
+
 	//UIManager에 4개의 버튼 세팅
 	UIManager::getInstance()->setAtkBtn((ui::Button*)pl->getChildByName("btn1"));
 	UIManager::getInstance()->setSearchBtn((ui::Button*)pl->getChildByName("btn2"));
@@ -24,4 +25,6 @@ bool LayerUI::init()
 	UIManager::getInstance()->setJoystick(js);
 
 	return true;
+}
+LayerUI::~LayerUI(){
 }
