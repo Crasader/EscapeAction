@@ -34,6 +34,7 @@ private:
 
 	Size win_size;
 	Vec2 pos;
+	bool pos_RL;
 	//스케쥴 업데이트
 	void update(float dt);
 

@@ -58,6 +58,7 @@ bool LayerGame::init()
 void LayerGame::update(float dt)
 {
 	pos = pyer->getChildByName("player_ani")->getPosition();
+	pos_RL = pyer->get_RL_filp();
 	//가구 버튼 test
 	dfur->checkFur(pyer->getRect(), _roomNum);
 
@@ -69,18 +70,31 @@ void LayerGame::update(float dt)
 	if (fu->checkSearch()) {
 		float posX = fu->getPos();
 		float dis_pb = pos.x - posX;
-		if (dis_pb==0) {
+		if (dis_pb<2 && dis_pb>-2) {
 			fu->setStart();
 			pyer->checkFur();
-		}else if(dis_pb<3&&dis_pb>-3){
+			UIManager::getInstance()->setEnable_AtkBtn(false);
+		}
+		else if (dis_pb<5 && dis_pb>-5)
+		{
+			pyer->set_RL_filp(pyer->get_RL_filp(), false, 0);
 			pyer->getChildByName("player_ani")->setPositionX(posX);
 		}
 		else {
 			int i = dis_pb > 0 ? 1 : -1;
-			pyer->getChildByName("player_ani")->setPositionX(pos.x-(i*3));
+			if (i == 1)
+			{
+				pyer->set_RL_filp(true, false,i);
+			}
+			else if (i == -1)
+			{
+				pyer->set_RL_filp(false,false,i);
+			}
+			
 		}
 	}
 	int move = 5;
+
 	pyer->Joy_move_check();
 	/*if (!pyer->getCheckFur() && fu->checkSearch()) {
 		fu->setCancle();//가구 체크 취소
