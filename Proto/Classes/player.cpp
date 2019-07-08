@@ -88,9 +88,9 @@ void player::checkFur()
 	}*/
 
 	if (playerState != player_Move_enum::SEARCH) {
-		playerState = player_Move_enum::SEARCH;
+		src_check = true;
 		check_fur = true;
-		oncheck = true;
+		all_stop = false;
 	}
 }
 void player::make_atk_ani()
@@ -146,6 +146,12 @@ bool player::getCheckFur()
 
 void player::Joy_move_check()
 {
+	if (_player->getPositionX() > _lastPos - (plyer_size.width*0.5) - 6) {
+		_player->setPositionX(_lastPos - (plyer_size.width*0.5) - 6);
+	}
+	else if (_player->getPositionX() < _firstPos + (plyer_size.width*0.5) + 6) {
+		_player->setPositionX(_firstPos + (plyer_size.width*0.5) + 6);
+	}
 	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 	int move = 3;
 
@@ -169,10 +175,10 @@ void player::Joy_move_check()
 			playerState = SEARCH;
 			UIManager::getInstance()->set_src_btn(false);
 			oncheck = true;
-			if (playerState == SEARCH)
-			{
+			//if (playerState == SEARCH)
+			//{
 				SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
-			}
+			//}
 		}
 		else if (player_animetion_move.x > 0) {
 			if (playerState != RMOVE)

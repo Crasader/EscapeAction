@@ -206,6 +206,7 @@ void LevelDataSet::setData()
 			}
 			
 		}
+
 		draw_fur.PushBack(df_fl,df_a);
 
 		draw_wall.PushBack(dw_fl, dw_a);
@@ -222,6 +223,8 @@ void LevelDataSet::setData()
 		ds_fl.AddMember("wall", ds_wall, ds_a);
 		ds_fl.AddMember("door", ds_door, ds_a);
 		draw_struct.PushBack(ds_fl, ds_a);
+		v_flDoor.clear();
+		v_rmNum.clear();
 
 		draw_deco.PushBack(dc_fl, dc_a);
 	}

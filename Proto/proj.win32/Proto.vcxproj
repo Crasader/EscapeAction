@@ -163,6 +163,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="DrawFurniture.cpp" />
     <ClCompile Include="DrawStruct.cpp" />
     <ClCompile Include="Furniture.cpp" />
+    <ClCompile Include="FurnitureUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LevelDataSet.cpp" />
     <ClCompile Include="main.cpp" />
@@ -185,6 +186,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="DrawStruct.h" />
     <ClInclude Include="Enum_collection.h" />
     <ClInclude Include="Furniture.h" />
+    <ClInclude Include="FurnitureUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LevelDataSet.h" />
     <ClInclude Include="main.h" />

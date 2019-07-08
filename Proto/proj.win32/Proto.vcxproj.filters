@@ -71,6 +71,9 @@
     <ClCompile Include="DrawDeco.cpp">
       <Filter>DrawMap</Filter>
     </ClCompile>
+    <ClCompile Include="FurnitureUI.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -125,6 +128,9 @@
       <Filter>DrawMap</Filter>
     </ClInclude>
     <ClInclude Include="DrawDeco.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="FurnitureUI.h">
       <Filter>DrawMap</Filter>
     </ClInclude>
   </ItemGroup>
