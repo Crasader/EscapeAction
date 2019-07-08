@@ -73,17 +73,15 @@ void LevelDataSet::setData()
 	//draw_deco 구조 설정
 	draw_deco.SetArray();
 	Document::AllocatorType& dc_a = draw_deco.GetAllocator();
-
+	//trans_door 구조 설정
+	trans_door.SetArray();
+	Document::AllocatorType& td_a = trans_door.GetAllocator();
 	//데이터 세팅
 	int floor = _msize(floor_rm) / sizeof(int);//층수
 	int flStartPos = 0;
 	int preStartPos = 3;
 	int preEndPos = 0;
-	vector<int> v_flDoor;//문이 들어갈 수 있는 자리
-	vector<int> v_rmNum;//해당 자리의 방번호
-	v_flDoor.clear();
-	v_rmNum.clear();
-
+	int roomNum = 0;
 	log("floor %d", floor);
 	for (int fl = 0; fl < floor; fl++) {
 		int startPos = 0;//층의 앞부분 위치 차이를 위해
@@ -119,6 +117,9 @@ void LevelDataSet::setData()
 		rapidjson::Value dc_fl(kArrayType);//한 층에 해당하는 장식물 "name", "pos"
 		vector<const char*> v_dc;
 		v_dc.clear();
+
+		//한 층에 해당하는 문
+		rapidjson::Value td_fl(kArrayType);
 
 		for (int rm = 0; rm < floor_rm[fl]; rm++) {//각 방 생성
 			//가구 정보
@@ -173,9 +174,6 @@ void LevelDataSet::setData()
 				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
 				df_fur.AddMember("pos", rapidjson::Value().SetFloat(furPos), df_a);
 				df_ecR.PushBack(df_fur, df_a);
-
-				/*층 문 세팅*/
-				
 			}
 			df_fl.PushBack(df_ecR, df_a);
 			
@@ -199,12 +197,20 @@ void LevelDataSet::setData()
 			dw_fl.PushBack(dw_ecR, dw_a);
 			startPos += rmSize + 1;
 			if (rm == floor_rm[fl] - 1) {
-
+				//해당 층의 마지막 방
 			}
 			else {
 				ds_door.PushBack(rapidjson::Value().SetInt(startPos), ds_a);
+				rapidjson::Value td_door(kObjectType);
+				td_door.AddMember("lock", rapidjson::Value().SetBool(true), td_a);
+				td_door.AddMember("leftRoom", rapidjson::Value().SetInt(roomNum), td_a);
+				td_door.AddMember("rightRoom", rapidjson::Value().SetInt(roomNum + 1), td_a);
+				td_door.AddMember("pos", rapidjson::Value().SetInt(startPos), td_a);
+				td_fl.PushBack(td_door, td_a);
 			}
 			
+			//방번호 up
+			roomNum++;
 		}
 
 		draw_fur.PushBack(df_fl,df_a);
@@ -223,10 +229,11 @@ void LevelDataSet::setData()
 		ds_fl.AddMember("wall", ds_wall, ds_a);
 		ds_fl.AddMember("door", ds_door, ds_a);
 		draw_struct.PushBack(ds_fl, ds_a);
-		v_flDoor.clear();
-		v_rmNum.clear();
 
 		draw_deco.PushBack(dc_fl, dc_a);
+
+		//문 array
+		trans_door.PushBack(td_fl, td_a);
 	}
 	rapidjson::Value ds_top(kObjectType);
 	ds_top.AddMember("startPos", rapidjson::Value().SetInt(preStartPos), ds_a);
@@ -267,4 +274,11 @@ void LevelDataSet::setData()
 	draw_deco.Accept(deco_writer);
 	fclose(fp);
 
+	//문  데이터 파일 쓰기
+	strcat(writeBuffer, "");//버퍼 비우기
+	fp = fopen("jsonData/trans/transDoor.json", "wb");
+	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> door_writer(door_os);
+	trans_door.Accept(door_writer);
+	fclose(fp);
 }

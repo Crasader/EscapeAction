@@ -88,9 +88,9 @@ void player::checkFur()
 	}*/
 
 	if (playerState != player_Move_enum::SEARCH) {
-		src_check = true;
+		playerState = player_Move_enum::SEARCH;
 		check_fur = true;
-		all_stop = false;
+		oncheck = true;
 	}
 }
 void player::make_atk_ani()
@@ -163,6 +163,7 @@ void player::Joy_move_check()
 	//CCLOG("_p %f", _player->getPositionX());
 	if (all_stop == false)
 	{
+		
 		if (atk_check == true)
 		{
 			playerState = ATTACK;
@@ -175,10 +176,6 @@ void player::Joy_move_check()
 			playerState = SEARCH;
 			UIManager::getInstance()->set_src_btn(false);
 			oncheck = true;
-			//if (playerState == SEARCH)
-			//{
-				SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
-			//}
 		}
 		else if (player_animetion_move.x > 0) {
 			if (playerState != RMOVE)
@@ -345,6 +342,7 @@ void player::Joy_move_check()
 			}
 			case SEARCH:
 			{
+				SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
 				_player->stopAllActions();
 				_player->setFlipX(RL_filp);
 

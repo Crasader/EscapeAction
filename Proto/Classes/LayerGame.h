@@ -13,6 +13,7 @@
 #include "../proj.win32/DrawField.h"
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawDeco.h"
+#include "../proj.win32/DrawDoor.h"
 
 USING_NS_CC;
 
@@ -26,6 +27,8 @@ private:
 	DrawFurniture* dfur;
 	FurnitureUI* fu;
 	DrawField* df;
+	DrawDoor* ddor;
+	DoorUI* du;
 	int _roomNum;
 
 

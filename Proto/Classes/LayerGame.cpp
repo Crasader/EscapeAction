@@ -17,6 +17,9 @@ bool LayerGame::init()
 	//draw 가구
 	dfur = DrawFurniture::create();
 	this->addChild(dfur);
+	//draw 문
+	ddor = DrawDoor::create();
+	this->addChild(ddor);
 	//draw 구조
 	DrawStruct* ds = DrawStruct::create();
 	this->addChild(ds,10);
@@ -36,6 +39,10 @@ bool LayerGame::init()
 	fu = FurnitureUI::create();
 	this->addChild(fu);
 	dfur->setFurUI(fu);
+	//문 ui 생성
+	du = DoorUI::create();
+	this->addChild(du);
+	ddor->setDoorUI(du);
 
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
@@ -60,12 +67,21 @@ void LayerGame::update(float dt)
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	//가구 버튼 test
 	dfur->checkFur(pyer->getRect(), _roomNum);
+	ddor->checkDoor(pyer->getRect(), 0);
+	
 
+	if (du->moveDoor()) {
+		int next = du->getNextRoom(_roomNum);
+		log(" now : %d next : %d", _roomNum, next);
+		du->setUnMove();
+		_roomNum = next;
+	}
 	if (pyer->getRoomNum() != _roomNum) {
+		pyer->setRoomNum(_roomNum);
 		pyer->setFirst(df->getFirst(_roomNum));
 		pyer->setLast(df->getLast(_roomNum));
+		fu->changeRm();
 	}
-
 	if (fu->checkSearch()) {
 		float posX = fu->getPos();
 		float dis_pb = pos.x - posX;

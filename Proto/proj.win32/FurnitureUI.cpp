@@ -114,9 +114,15 @@ FurnitureUI::~FurnitureUI()
 
 void FurnitureUI::clickBtn(int num)
 {
+	ui::Button* btn = v_btn.at(num);
 	ProgressTimer* progress = v_pro.at(num);
-
+	float percent = progress->getPercentage();
 	if (check_furNum == -1) {//체크중인 가구가 없으면
+		for (auto v : v_chekcBtn) {
+			if (v == btn) {
+				return;
+			}
+		}
 		TintTo* tint = TintTo::create(0.2, Color3B(0, 255, 255));
 		TintTo* tint2 = TintTo::create(0.2, Color3B::WHITE);
 		Sequence* sq = Sequence::create(tint, tint2, NULL);
@@ -133,12 +139,10 @@ void FurnitureUI::clickBtn(int num)
 		TintTo* btn_tint2 = TintTo::create(0.2, Color3B::WHITE);
 		Sequence* btn_sq = Sequence::create(btn_tint, btn_tint2, NULL);
 		RepeatForever* btn_rf = RepeatForever::create(btn_sq);
-		ui::Button* btn = v_btn.at(num);
 		btn->runAction(btn_rf);
 		log("click!");
 	}
-	else if (check_furNum == num) {//클릭하면 더 빨리 탐색
-		float percent = progress->getPercentage();
+	else if (check_furNum == num &&percent<100) {//클릭하면 더 빨리 탐색
 		progress->setPercentage(percent + 5);
 	}
 }
@@ -153,6 +157,7 @@ void FurnitureUI::schedule_clickBtn(float dt)
 		ProgressTimer* progress = v_pro.at(check_furNum);
 		int speed = 30;
 		float percent = progress->getPercentage();
+		log("%f", percent);
 		float nextPercent = percent + speed * dt;
 		progress->setPercentage(nextPercent);
 		if (nextPercent >= 100) {
