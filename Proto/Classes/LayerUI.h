@@ -10,9 +10,9 @@ USING_NS_CC;
 class LayerUI : public cocos2d::Layer
 {
 public:
-	
 	virtual bool init();
     CREATE_FUNC(LayerUI);
+	~LayerUI();
 };
 
 #endif // __LAYER_UI_H__

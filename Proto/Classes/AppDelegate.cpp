@@ -73,7 +73,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
     auto frameSize = glview->getFrameSize();
     register_all_packages();
-
     // create a scene. it's an autorelease object
     auto scene = GameScene::create();
 

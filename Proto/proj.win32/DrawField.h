@@ -11,9 +11,11 @@ class DrawField : public Node
 public:
 	CREATE_FUNC(DrawField);
 	virtual bool init();
-	void setJSON(rapidjson::Document* d);
+	float getFirst(int num);
+	float getLast(int num);
 	~DrawField();
 private:
-	Document field;
+	vector<float> v_first;//∞¢ πÊ¿« first pos
+	vector<float> v_last;//last pos
 };
 

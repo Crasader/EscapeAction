@@ -6,6 +6,12 @@ player::~player()
 
 bool player::init()
 {
+	check_fur = false;
+	_camera = NULL;
+	delayAfterimg = 0;
+	_firstPos = 0;
+	_lastPos = 0;
+
 	//test
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
@@ -25,9 +31,12 @@ bool player::init()
 
 	_player = Sprite::create("I0.png");
 	_player->setAnchorPoint(Vec2(0.5,0));
-	_player->setPosition(0,120);
+
+	_player->setPosition(50,0);
+
 	this->addChild(_player);
 	_player->setName("player_ani");
+	plyer_size = _player->getContentSize();
 
 	_player_anime = Animation::create();
 	_player_anime->setDelayPerUnit(0.5f);
@@ -45,11 +54,6 @@ bool player::init()
 	return true;
 }
 
-void player::setRect(Rect back_rc)
-{
-	rc = back_rc;
-}
-
 void player::ani_pause()
 {
 	playerState = IDLE;
@@ -62,10 +66,33 @@ void player::ani_forward()
 {
 	if (RL_filp == true)
 	{
-		MoveBy::create(0.1, Point(_player->getPositionX()+50,0));
+		MoveBy::create(0.1, Point(_player->getPositionX() + 50, 0));
 	}
 }
+void player::checkFur()
+{
+/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+	//가구 오브젝트랑 만나는것 체크
+	if (player_bounding->getPosition() < win_size*0.5)
+	{
+		if (oncheck == false)
+		{
+			UIManager::getInstance()->setEnable_AtkBtn(true);
+			oncheck = true;
+		}
+	}
+	else if(player_bounding->getPosition() > win_size*0.5)
+	{
+		UIManager::getInstance()->setEnable_AtkBtn(false);
+		oncheck = false;
+	}*/
 
+	if (playerState != player_Move_enum::SEARCH) {
+		playerState = player_Move_enum::SEARCH;
+		check_fur = true;
+		oncheck = true;
+	}
+}
 void player::make_atk_ani()
 {
 	_player->stopAllActions();
@@ -112,9 +139,14 @@ void player::make_atk_ani()
 	}
 }
 
+bool player::getCheckFur()
+{
+	return check_fur;
+}
+
 void player::Joy_move_check()
 {
-	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2()*3;
+	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 	int move = 3;
 
 	atk_ran = RandomHelper::random_int(0, 1);
@@ -138,12 +170,11 @@ void player::Joy_move_check()
 			UIManager::getInstance()->set_src_btn(false);
 			oncheck = true;
 			if (playerState == SEARCH)
-			{				
+			{
 				SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
 			}
 		}
-		else if (player_animetion_move.x > 0)
-		{
+		else if (player_animetion_move.x > 0) {
 			if (playerState != RMOVE)
 			{
 				playerState = RMOVE;
@@ -151,9 +182,9 @@ void player::Joy_move_check()
 				RL_filp = false;
 				SimpleAudioEngine::getInstance()->playEffect("sound/walking_sound.wav", true);
 			}
-			//if (_player->getPositionX() < 780){
-			_player->setPosition(_player->getPosition() + (Point(move, 0)));
-			//}
+			if (_player->getPositionX() < _lastPos - (plyer_size.width*0.5) - 6){
+				_player->setPosition(_player->getPosition() + (Point(move, 0)));
+			}
 		}
 		else if (player_animetion_move.x < 0)
 		{
@@ -164,9 +195,9 @@ void player::Joy_move_check()
 				RL_filp = true;
 				SimpleAudioEngine::getInstance()->playEffect("sound/walking_sound.wav", true);
 			}
-			//if (_player->getPositionX() > -780){
-			_player->setPosition(_player->getPosition() - (Point(move, 0)));			
-			//}
+			if (_player->getPositionX() > _firstPos + (plyer_size.width*0.5) + 6){
+				_player->setPosition(_player->getPosition() - (Point(move, 0)));
+			}
 		}
 		else if (player_animetion_move.x == 0 && playerState != ATTACK && playerState != SEARCH)
 		{
@@ -178,8 +209,7 @@ void player::Joy_move_check()
 			}
 		}
 
-		//_player->setPosition(_player->getPosition() + player_animetion_move);
-
+	
 		if (oncheck == true)
 		{
 			switch (playerState)
@@ -351,6 +381,7 @@ void player::Joy_move_check()
 			}
 		}
 	}
+
 }
 
 void player::onPress(EventKeyboard::KeyCode key)
@@ -365,4 +396,58 @@ void player::onPress(EventKeyboard::KeyCode key)
 
 void player::onRelease(EventKeyboard::KeyCode key)
 {
+}
+
+void player::afterImage(float dt)
+{
+	if (playerState != LMOVE) {
+		delayAfterimg = 0;
+		unscheduleAllSelectors();
+		return;
+	}else if (_player_anime->getDelayPerUnit()<=delayAfterimg) {
+		delayAfterimg = 0;
+		Sprite* spr = Sprite::createWithSpriteFrame(_player->getDisplayFrame());
+		spr->setAnchorPoint(Vec2(0, 0));
+		spr->setPosition(_player->getPosition());
+		spr->setFlipX(true);
+		//action
+		float time = 0.5;
+		DelayTime* delay = DelayTime::create(time);
+		FadeOut* fade = FadeOut::create(time);
+		RemoveSelf* remove = RemoveSelf::create();
+		Spawn* spw = Spawn::create(delay, fade, NULL);
+		Sequence* seq = Sequence::create(spw, remove, NULL);
+		this->addChild(spr,-1);
+		spr->runAction(seq);
+		spr->setCameraMask(_camera->getCameraMask());
+	}
+	else {
+		delayAfterimg += dt*2;
+	}
+}
+
+int player::getRoomNum()
+{
+	return _roomNum;
+}
+
+void player::setRoomNum(int roomNum)
+{
+	_roomNum = roomNum;
+}
+
+void player::setFirst(float first)
+{
+	_firstPos = first;
+}
+
+void player::setLast(float last)
+{
+	_lastPos = last;
+}
+
+Rect player::getRect()
+{
+	//가구 체크할 Rect 설정
+	return _player->getBoundingBox();
 }
