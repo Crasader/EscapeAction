@@ -315,14 +315,27 @@ void player::Joy_move_check()
 				_player_anime = Animation::create();
 				_player_anime->setDelayPerUnit(0.15f);
 
-				_player_anime->addSpriteFrameWithFile("s0.png");
+				/*_player_anime->addSpriteFrameWithFile("s0.png");
 				_player_anime->addSpriteFrameWithFile("s1.png");
 				_player_anime->addSpriteFrameWithFile("s2.png");
 				_player_anime->addSpriteFrameWithFile("s3.png");
 				_player_anime->addSpriteFrameWithFile("s4.png");
 				_player_anime->addSpriteFrameWithFile("s2.png");
 				_player_anime->addSpriteFrameWithFile("s3.png");
-				_player_anime->addSpriteFrameWithFile("s4.png");
+				_player_anime->addSpriteFrameWithFile("s4.png");*/
+
+				_player_anime->addSpriteFrameWithFile("ds2.png");
+				_player_anime->addSpriteFrameWithFile("ds1.png");
+				_player_anime->addSpriteFrameWithFile("ds0.png");
+				_player_anime->addSpriteFrameWithFile("ds3.png");
+				_player_anime->addSpriteFrameWithFile("ds0.png");
+				_player_anime->addSpriteFrameWithFile("ds1.png");
+				_player_anime->addSpriteFrameWithFile("ds2.png");
+				_player_anime->addSpriteFrameWithFile("ds1.png");
+				_player_anime->addSpriteFrameWithFile("ds0.png");
+				_player_anime->addSpriteFrameWithFile("ds3.png");
+				_player_anime->addSpriteFrameWithFile("ds0.png");
+				_player_anime->addSpriteFrameWithFile("ds1.png");
 
 				_player_animat = Animate::create(_player_anime);
 
@@ -343,7 +356,7 @@ void player::Joy_move_check()
 void player::onPress(EventKeyboard::KeyCode key)
 {
 	if (key == EventKeyboard::KeyCode::KEY_UP_ARROW) {
-		_player->setPositionY(_player->getPositionY()+120);
+		_player->setPositionY(_player->getPositionY() + 120);
 	}
 	if (key == EventKeyboard::KeyCode::KEY_DOWN_ARROW) {
 		_player->setPositionY(_player->getPositionY() - 120);
