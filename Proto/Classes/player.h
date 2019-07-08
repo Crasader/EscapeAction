@@ -14,8 +14,6 @@ public:
 	CREATE_FUNC(player);
 	~player();
 	virtual bool init();
-<<<<<<< HEAD
-	void setRect(Rect back_rc);
 
 	UIManager* _UIM;
 
@@ -32,17 +30,18 @@ public:
 	void make_atk_ani();
 	
 	void Joy_move_check();
+	
+	
 	//테스트
 	virtual void onPress(EventKeyboard::KeyCode key);
 	virtual void onRelease(EventKeyboard::KeyCode key);	
-=======
+
+
+
 	Camera* _camera;
 	void checkFur();
 	bool getCheckFur();
-	void Joy_move_check();
-	//테스트
-	virtual void onPress(EventKeyboard::KeyCode key);
-	virtual void onRelease(EventKeyboard::KeyCode key);
+
 	void afterImage(float dt);
 
 	//방관련
@@ -55,7 +54,7 @@ public:
 	
 	//가구 관련
 	Rect getRect();
->>>>>>> JSONtest
+
 
 private : 
 	Rect _playerRect;

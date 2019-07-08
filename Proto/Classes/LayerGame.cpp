@@ -5,8 +5,6 @@ USING_NS_CC;
 
 bool LayerGame::init()
 {
-
-
 	//LevelDataSet 클래스 생성, addChild 필요 없음
 	LevelDataSet* levelData = LevelDataSet::create();
 

@@ -3,6 +3,7 @@
 
 bool DrawStruct::init()
 {
+		Document field;
 	//파일 내용 불러오기
 	FILE* fp = fopen("jsonData/draw/drawStruct.json", "rb");
 	char readBuffer[5000];
@@ -17,7 +18,7 @@ bool DrawStruct::init()
 
 	int fl = 0;
 	for (auto& floor : field.GetArray()) {
-		Color3B color(180,180,150);
+		Color3B color(50,50,50);
 		//문이 있는 벽 그림
 		assert(floor.HasMember("door"));
 		for (auto& dr : floor["door"].GetArray()) {

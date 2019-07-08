@@ -79,6 +79,11 @@ void LevelDataSet::setData()
 	int flStartPos = 0;
 	int preStartPos = 3;
 	int preEndPos = 0;
+	vector<int> v_flDoor;//문이 들어갈 수 있는 자리
+	vector<int> v_rmNum;//해당 자리의 방번호
+	v_flDoor.clear();
+	v_rmNum.clear();
+
 	log("floor %d", floor);
 	for (int fl = 0; fl < floor; fl++) {
 		int startPos = 0;//층의 앞부분 위치 차이를 위해
@@ -104,6 +109,10 @@ void LevelDataSet::setData()
 		
 		rapidjson::Value ds_door(kArrayType);
 		rapidjson::Value ds_wall(kArrayType);
+		rapidjson::Value ds_flDoor(kArrayType);
+		int flDoorCnt = floor_rm[fl] / 2;
+		flDoorCnt = floor_rm[fl] % 2 != 0 ? flDoorCnt + 1 : flDoorCnt;//올림
+
 		ds_wall.PushBack(rapidjson::Value().SetInt(startPos), ds_a);//바깥쪽 벽
 
 		//데코레이션 set
@@ -164,6 +173,9 @@ void LevelDataSet::setData()
 				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
 				df_fur.AddMember("pos", rapidjson::Value().SetFloat(furPos), df_a);
 				df_ecR.PushBack(df_fur, df_a);
+
+				/*층 문 세팅*/
+				
 			}
 			df_fl.PushBack(df_ecR, df_a);
 			

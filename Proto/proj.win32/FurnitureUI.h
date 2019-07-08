@@ -17,8 +17,10 @@ public:
 	float getPos();//서치 중일시 위치 받아오기
 	void setStart();
 	void setCancle();//캐릭터 이동시 탐색 중지
+	void changeRm();
 	~FurnitureUI();
 private:
+	Vector<ui::Button*> v_chekcBtn;
 	Vector<ui::Button*> v_btn;
 	Vector<ProgressTimer*> v_pro;
 	int check_furNum;//체크중인 가구 번호, -1이면 체크 x

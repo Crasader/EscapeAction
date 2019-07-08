@@ -4,6 +4,7 @@
 bool FurnitureUI::init()
 {
 	//변수 초기화
+	v_chekcBtn.clear();
 	v_btn.clear();
 	v_pro.clear();
 	check_furNum = -1;
@@ -60,7 +61,16 @@ bool FurnitureUI::init()
 
 void FurnitureUI::setBtnVisible(int num, bool setbool)
 {
-	v_btn.at(num)->setVisible(setbool);
+	ui::Button* btn = v_btn.at(num);
+	if (setbool == true) {
+		for (auto v : v_chekcBtn) {
+			if (v->getTag() == btn->getTag()) {
+				btn->setVisible(false);
+				return;
+			}
+		}
+	}
+	btn->setVisible(setbool);
 }
 
 bool FurnitureUI::checkSearch()
@@ -93,6 +103,11 @@ void FurnitureUI::setCancle()
 	startSearch = false;
 }
 
+void FurnitureUI::changeRm()
+{
+	v_chekcBtn.clear();
+}
+
 FurnitureUI::~FurnitureUI()
 {
 }
@@ -100,11 +115,13 @@ FurnitureUI::~FurnitureUI()
 void FurnitureUI::clickBtn(int num)
 {
 	ProgressTimer* progress = v_pro.at(num);
+
 	if (check_furNum == -1) {//체크중인 가구가 없으면
-		TintTo* tint = TintTo::create(0.2, Color3B(0,255,255));
+		TintTo* tint = TintTo::create(0.2, Color3B(0, 255, 255));
 		TintTo* tint2 = TintTo::create(0.2, Color3B::WHITE);
 		Sequence* sq = Sequence::create(tint, tint2, NULL);
 		RepeatForever* rf = RepeatForever::create(sq);
+
 		progress->setPercentage(0);
 		progress->setVisible(true);
 		progress->setPercentage(0);
@@ -143,6 +160,7 @@ void FurnitureUI::schedule_clickBtn(float dt)
 			ui::Button* btn = v_btn.at(check_furNum);
 			btn->setColor(Color3B::WHITE);
 			btn->stopAllActions();
+			v_chekcBtn.pushBack(btn);
 			progress->stopAllActions();
 			progress->setVisible(false);
 			check_furNum = -1;

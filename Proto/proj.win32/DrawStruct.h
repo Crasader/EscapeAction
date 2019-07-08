@@ -14,6 +14,6 @@ public:
 	virtual bool init();
 	~DrawStruct();
 private:
-	Document field;
+
 };
 
