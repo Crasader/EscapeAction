@@ -9,6 +9,9 @@ bool player::init()
 	check_fur = false;
 	_camera = NULL;
 	delayAfterimg = 0;
+	_firstPos = 0;
+	_lastPos = 0;
+
 	//test
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
@@ -27,9 +30,10 @@ bool player::init()
 
 	_player = Sprite::create("I0.png");
 	_player->setAnchorPoint(Vec2(0.5,0));
-	_player->setPosition(0,120);
+	_player->setPosition(50,0);
 	this->addChild(_player);
 	_player->setName("player_ani");
+	plyer_size = _player->getContentSize();
 
 	_player_anime = Animation::create();
 	_player_anime->setDelayPerUnit(0.5f);
@@ -42,12 +46,6 @@ bool player::init()
 
 	return true;
 }
-
-void player::setRect(Rect back_rc)
-{
-	rc = back_rc;
-}
-
 
 void player::checkFur()
 {
@@ -82,7 +80,7 @@ bool player::getCheckFur()
 
 void player::Joy_move_check()
 {
-	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2()*3;
+	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 	int move = 3;
 	//CCLOG("_p %f", _player->getPositionX());
 
@@ -93,7 +91,8 @@ void player::Joy_move_check()
 			playerState = RMOVE;
 			oncheck = true;
 		}
-		_player->setPosition(_player->getPosition() + (Point(move, 0)));
+		if(_player->getPositionX()<_lastPos- (plyer_size.width*0.5)-6)
+			_player->setPosition(_player->getPosition() + (Point(move, 0)));
 	}
 	else if (player_animetion_move.x < 0)
 	{
@@ -102,7 +101,8 @@ void player::Joy_move_check()
 			playerState = LMOVE;
 			oncheck = true;
 		}
-		_player->setPosition(_player->getPosition() - (Point(move, 0)));
+		if (_player->getPositionX()>_firstPos +(plyer_size.width*0.5)+6)
+			_player->setPosition(_player->getPosition() - (Point(move, 0)));
 	}
 	else
 	{
@@ -242,9 +242,18 @@ void player::setRoomNum(int roomNum)
 	_roomNum = roomNum;
 }
 
+void player::setFirst(float first)
+{
+	_firstPos = first;
+}
+
+void player::setLast(float last)
+{
+	_lastPos = last;
+}
+
 Rect player::getRect()
 {
 	//가구 체크할 Rect 설정
-
 	return _player->getBoundingBox();
 }

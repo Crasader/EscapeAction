@@ -11,7 +11,7 @@ bool LayerGame::init()
 	LevelDataSet* levelData = LevelDataSet::create();
 
 	//drawField
-	DrawField* df = DrawField::create();
+	df = DrawField::create();
 	this->addChild(df);
 	//draw 장식
 	DrawDeco* ddeco = DrawDeco::create();
@@ -29,6 +29,10 @@ bool LayerGame::init()
 	*/
 	pyer = player::create();
 	this->addChild(pyer);
+	_roomNum = 0;
+	pyer->setRoomNum(_roomNum);
+	pyer->setFirst(df->getFirst(_roomNum));
+	pyer->setLast(df->getLast(_roomNum));
 
 	//가구 ui 생성
 	fu = FurnitureUI::create();
@@ -57,7 +61,13 @@ void LayerGame::update(float dt)
 {
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	//가구 버튼 test
-	dfur->checkFur(pyer->getRect(), 0);
+	dfur->checkFur(pyer->getRect(), _roomNum);
+
+	if (pyer->getRoomNum() != _roomNum) {
+		pyer->setFirst(df->getFirst(_roomNum));
+		pyer->setLast(df->getLast(_roomNum));
+	}
+
 	if (fu->checkSearch()) {
 		float posX = fu->getPos();
 		float dis_pb = pos.x - posX;
@@ -80,59 +90,7 @@ void LayerGame::update(float dt)
 	auto camera_m = this->getChildByName("camera_main");
 
 	camera->setPosition(pos.x, pos.y+60);
-	/*if (camera_move.x > 0)
-	{
-		if (playerState_move_camera != RMOVE)
-		{
-			playerState_move_camera = RMOVE;
-			camera_check = true;
-		}
-		if (camera->getPositionX() < win_size.x*0.17)
-		{
-			if (pos.x > -220)
-			camera->setPosition(camera->getPosition() + (Point(move, 0)));
-		}
-		else
-		{
-			
-		}
-	}
-	else if (camera_move.x < 0)
-	{
-		if (playerState_move_camera != LMOVE)
-		{
-			playerState_move_camera = LMOVE;
-			camera_check = true;
-		}
-		if (camera->getPositionX() > -win_size.x*0.17)
-		{
-			if(pos.x < 220)
-			camera->setPosition(camera->getPosition() - (Point(move, 0)));
-		}
-		else
-		{
-			
-		}
-	}
-	else
-	{
-		if (playerState_move_camera != IDLE)
-		{
-			playerState_move_camera = IDLE;
-			camera_check = true;
-		}
-	}
-	/*if (camera->getPositionX() > win_size.x*0.3)
-	{
-		pyer->setPosition(pyer->getPosition() - (Point(10, 0)));
-	}
-	else if (camera->getPositionX() < win_size.x*0.7)
-	{
-		pyer->setPosition(pyer->getPosition() + (Point(10, 0)));
-	}*/
 
-
-	//camera_move = UIManager::getInstance()->get_Player_m_p1();
 }
 
 

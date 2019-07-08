@@ -34,7 +34,7 @@ bool FurnitureUI::init()
 				//버튼 생성
 				ui::Button* btn = ui::Button::create("fur_button.png");
 				btn->setPosition(Vec2(fur["pos"].GetFloat()*wid, hgt*fl + furni_size.height*0.5));
-				btn->setScale(0.35);
+				btn->setScale(0.4);
 				btn->setTag(furCnt);
 				btn->addClickEventListener(CC_CALLBACK_0(FurnitureUI::clickBtn, this, btn->getTag()));
 				btn->setVisible(false);
@@ -46,7 +46,7 @@ bool FurnitureUI::init()
 				progress->setType(ProgressTimer::Type::RADIAL);
 				progress->setPercentage(0);
 				progress->setVisible(false);
-				progress->setScale(0.35);
+				progress->setScale(0.4);
 				this->addChild(progress);
 				v_pro.pushBack(progress);
 				furCnt++;
@@ -101,7 +101,7 @@ void FurnitureUI::clickBtn(int num)
 {
 	ProgressTimer* progress = v_pro.at(num);
 	if (check_furNum == -1) {//체크중인 가구가 없으면
-		TintTo* tint = TintTo::create(0.2, Color3B::GRAY);
+		TintTo* tint = TintTo::create(0.2, Color3B(0,255,255));
 		TintTo* tint2 = TintTo::create(0.2, Color3B::WHITE);
 		Sequence* sq = Sequence::create(tint, tint2, NULL);
 		RepeatForever* rf = RepeatForever::create(sq);
@@ -111,6 +111,13 @@ void FurnitureUI::clickBtn(int num)
 		progress->runAction(rf);
 		check_furNum = num;
 		this->schedule(schedule_selector(FurnitureUI::schedule_clickBtn));
+
+		TintTo* btn_tint = TintTo::create(0.2, Color3B(0, 255, 255));
+		TintTo* btn_tint2 = TintTo::create(0.2, Color3B::WHITE);
+		Sequence* btn_sq = Sequence::create(btn_tint, btn_tint2, NULL);
+		RepeatForever* btn_rf = RepeatForever::create(btn_sq);
+		ui::Button* btn = v_btn.at(num);
+		btn->runAction(btn_rf);
 		log("click!");
 	}
 	else if (check_furNum == num) {//클릭하면 더 빨리 탐색
@@ -133,6 +140,9 @@ void FurnitureUI::schedule_clickBtn(float dt)
 		progress->setPercentage(nextPercent);
 		if (nextPercent >= 100) {
 			//가구 탐색 완료!
+			ui::Button* btn = v_btn.at(check_furNum);
+			btn->setColor(Color3B::WHITE);
+			btn->stopAllActions();
 			progress->stopAllActions();
 			progress->setVisible(false);
 			check_furNum = -1;

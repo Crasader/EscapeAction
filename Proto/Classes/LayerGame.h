@@ -25,6 +25,9 @@ private:
 	//draw
 	DrawFurniture* dfur;
 	FurnitureUI* fu;
+	DrawField* df;
+	int _roomNum;
+
 
 	player* pyer;
 	Camera* camera;

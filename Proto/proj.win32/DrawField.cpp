@@ -2,6 +2,9 @@
 
 bool DrawField::init()
 {
+	//초기화
+	v_first.clear();
+	v_last.clear();
 
 	Document field;
 	//파일 내용 불러오기
@@ -24,6 +27,7 @@ bool DrawField::init()
 
 		for (auto& rm : floor.GetArray()) {
 			float i = rm["pos"].GetDouble()*wid;
+			v_first.push_back(i);
 			for (auto& wl : rm["tile"].GetArray()) {
 				Sprite* wall = Sprite::create(wl.GetString());
 				wall->setAnchorPoint(Vec2::ZERO);
@@ -31,10 +35,19 @@ bool DrawField::init()
 				this->addChild(wall);
 				i += wall->getContentSize().width;
 			}
+			v_last.push_back(i);
 		}
 		fl++;
 	}
 	return true;
+}
+float DrawField::getFirst(int num)
+{
+	return v_first.at(num);
+}
+float DrawField::getLast(int num)
+{
+	return v_last.at(num);
 }
 DrawField::~DrawField()
 {
