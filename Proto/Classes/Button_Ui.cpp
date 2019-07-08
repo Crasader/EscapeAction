@@ -13,7 +13,7 @@ bool Button_Ui::init()
 	button1->setPosition(Point(win_size.width*0.05,win_size.height*0.8));
 	button1->addClickEventListener(CC_CALLBACK_0(Button_Ui::atkobj, this));
 	button1->setName("btn1");
-	button1->setEnabled(true);
+//	button1->setEnabled(true);
 	this->addChild(button1);
 
 	auto button2 = ui::Button::create("Sreachon.png", "Sreachpush.png", "Sreachoff.png");
