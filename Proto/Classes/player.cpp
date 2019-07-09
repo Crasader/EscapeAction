@@ -285,7 +285,7 @@ void player::Joy_move_check()
 					Sequence* A_player = Sequence::create(p_f_atk, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
 					_player->runAction(A_player);
-
+					
 					oncheck = false;
 					break;
 				}
@@ -447,6 +447,25 @@ void player::setFirst(float first)
 void player::setLast(float last)
 {
 	_lastPos = last;
+}
+
+player_Move_enum player::getState()
+{
+	return playerState;
+}
+
+bool player::setState(player_Move_enum state)
+{
+	/*조건문*/
+	//현재 state가 바껴도 되는 state인가?
+	//이미 실행중인 state는 아닌가?
+	//그렇다면 return false;
+	//위 조건이 아니라면 아래로 진행
+
+
+	/*state 관련 스위치문*/
+	//return true
+	return true;
 }
 
 Rect player::getRect()

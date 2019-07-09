@@ -51,6 +51,10 @@ public:
 	void setFirst(float first);
 	void setLast(float last);
 	
+	//플레이어 State 관련 :: GameManager에서 사용할 것
+	player_Move_enum getState();
+	bool setState(player_Move_enum state);//세팅 성공시 true 반환
+	
 	//가구 관련
 	Rect getRect();
 

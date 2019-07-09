@@ -1,10 +1,11 @@
 #include "LayerGame.h"
 #include "SimpleAudioEngine.h"
-
-USING_NS_CC;
+#include "../proj.win32/GameManager.h"
 
 bool LayerGame::init()
 {
+
+
 	//LevelDataSet 클래스 생성, addChild 필요 없음
 	LevelDataSet* levelData = LevelDataSet::create();
 
@@ -55,6 +56,8 @@ bool LayerGame::init()
 	pyer->_camera = camera;
 	camera_move = Vec2(0, 0);
 
+	//GameManager 세팅
+	GameManager::getInstance()->setPlayer(pyer);
 
 	//스케쥴 실행
 	this->scheduleUpdate();
