@@ -14,6 +14,9 @@ bool LevelDataSet::init()
 	//데이터 세팅
 	setRoomCnt(testLevel);
 	setWallData();
+	setDoorData();
+	setLadderData();
+//	setFurData();
 	//setData();
 
 	return true;
@@ -61,7 +64,9 @@ void LevelDataSet::setRoomCnt(int level)
 	//탈출방 설정
 	escRmfl = new int[escRmCnt];
 	escRmNum = new int[escRmCnt];
+	escRm = new int[escRmCnt];
 	int rm_dis = rmCnt / escRmCnt;
+
 	for (int i = 0; i < escRmCnt; i++) {
 		int min = rm_dis * i;
 		int max;
@@ -79,6 +84,7 @@ void LevelDataSet::setRoomCnt(int level)
 			if (esc_rm < flRm) {
 				escRmfl[i] = j;//층수 대입
 				escRmNum[i] = esc_rm - pre_flRm;//해당 층에 번호 대입
+				escRm[i] = esc_rm + i;
 				break;
 			}
 		}
@@ -420,6 +426,7 @@ void LevelDataSet::setWallData()
 
 			startPos += rmSize + 1;
 		}
+		draw_wall.PushBack(dw_fl, dw_a);
 	}
 
 	//벽 그리기 데이터 파일 쓰기
@@ -430,3 +437,157 @@ void LevelDataSet::setWallData()
 	draw_wall.Accept(wall_writer);
 	fclose(fp);
 }
+
+void LevelDataSet::setDoorData()
+{
+	/*데이터 구조
+	trans_door[fl][door]{  "pos" : 중앙지점 위치::Int,		
+					   "lock" : 잠김 여부::Bool,
+					   "esc" : 탈출방으로 향하는 문 여부 :: Bool
+					   "left" : 왼쪽 방 번호:: Int
+					   "right" : 오른쪽 방번호:: Int
+					 }
+	*/
+	Document::AllocatorType& td_a = trans_door.GetAllocator();
+	trans_door.SetArray();
+
+	int roomNum = 0;
+
+	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	int noset_escR = 0;//체크 안한 탈출 방
+
+	for (auto& fl : draw_wall.GetArray()) {
+		rapidjson::Value td_fl(kArrayType);
+		bool firstCheck = true;
+		for (auto& rm : fl.GetArray()) {
+			if (!firstCheck) {
+				rapidjson::Value td_door(kObjectType);
+
+				rapidjson::Value td_pos(rm["pos"].GetInt());
+				rapidjson::Value td_lock(true);
+				rapidjson::Value td_left(roomNum - 1);
+				rapidjson::Value td_right(roomNum);
+				rapidjson::Value td_esc(false);
+				if (noset_escR < escRmCnt) {
+					if (roomNum - 1 == escRm[noset_escR] || roomNum == escRm[noset_escR]) {
+						td_esc.SetBool(true);
+					}
+				}
+
+				td_door.AddMember("pos", td_pos, td_a);
+				td_door.AddMember("lock", td_lock, td_a);
+				td_door.AddMember("left", td_left, td_a);
+				td_door.AddMember("right", td_right, td_a);
+				td_door.AddMember("esc", td_esc, td_a);
+
+				td_fl.PushBack(td_door, td_a);
+			}
+			roomNum++;
+			firstCheck = false;
+		}
+		trans_door.PushBack(td_fl, td_a);
+	}
+
+	//문  데이터 파일 쓰기
+	FILE* fp = fopen("jsonData/trans/transDoor.json", "wb");
+	char writeBuffer[5000];
+	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> door_writer(door_os);
+	trans_door.Accept(door_writer);
+	fclose(fp);
+}
+
+void LevelDataSet::setLadderData()
+{
+	/*데이터 구조
+	trans_door[fl][door]{  "pos" : 중앙지점 위치::Int,
+					   "lock" : 잠김 여부::Bool,
+					   "esc" : 탈출방으로 향하는 문 여부 :: Bool
+					   "up" : 위 방 번호:: Int
+					   "down" : 아래 방 번호:: Int
+					 }
+	*/
+	Document::AllocatorType& tl_a = trans_ladder.GetAllocator();
+	trans_ladder.SetArray();
+
+	int roomNum = 0;
+	/*
+	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	int noset_escR = 0;//체크 안한 탈출 방
+
+	for (auto& fl : draw_wall.GetArray()) {
+		rapidjson::Value td_fl(kArrayType);
+		bool firstCheck = true;
+		for (auto& rm : fl.GetArray()) {
+			if (!firstCheck) {
+				rapidjson::Value td_door(kObjectType);
+
+				rapidjson::Value td_pos(rm["pos"].GetInt());
+				rapidjson::Value td_lock(true);
+				rapidjson::Value td_left(roomNum - 1);
+				rapidjson::Value td_right(roomNum);
+				rapidjson::Value td_esc(false);
+				if (noset_escR < escRmCnt) {
+					if (roomNum - 1 == escRm[noset_escR] || roomNum == escRm[noset_escR]) {
+						td_esc.SetBool(true);
+					}
+				}
+
+				td_door.AddMember("pos", td_pos, td_a);
+				td_door.AddMember("lock", td_lock, td_a);
+				td_door.AddMember("left", td_left, td_a);
+				td_door.AddMember("right", td_right, td_a);
+				td_door.AddMember("esc", td_esc, td_a);
+
+				td_fl.PushBack(td_door, td_a);
+			}
+			roomNum++;
+			firstCheck = false;
+		}
+		trans_door.PushBack(td_fl, td_a);
+	}
+
+	//문  데이터 파일 쓰기
+	FILE* fp = fopen("jsonData/trans/transDoor.json", "wb");
+	char writeBuffer[5000];
+	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> door_writer(door_os);
+	trans_door.Accept(door_writer);
+	fclose(fp);*/
+}
+
+//void LevelDataSet::setFurData()
+//{
+//	/*데이터 구조
+//	draw_fur[floor][rm][fur]{"name" : 가구 이름::String,
+//							 "pos" : 중앙 지점 위치::Double,
+//							 "size" : 가구 크기::Int }
+//	*/
+//
+//	Document::AllocatorType& df_a = draw_fur.GetAllocator();
+//	draw_fur.SetArray();
+//
+//	for (auto& fl : draw_wall.GetArray()) {
+//		for (auto& rm : fl.GetArray()) {
+//			int startPos = rm["pos"].GetInt();
+//
+//			rapidjson::Value df_rm(kArrayType);//각 방의 가구
+//
+//			//가구 정보
+//			Furniture* furni_name = Furniture::create();
+//			int backPos = startPos;//이전 가구의 끝 위치
+//			int noSet_fur = furni_name->getTotalFntSize();//배치해야할 총 가구 크기
+//			for (auto v : furni_name->v_FntData) {
+//				rapidjson::Value df_fur(kObjectType);//각 가구
+//				//log("fl : %d rm : %d v_FntData : %d", fl, floor_rm[fl], furni_name->v_FntData.size());
+//				int frontPos = RandomHelper::random_int(backPos + 1, startPos + rmSize - noSet_fur + 1);//가구의 앞 위치
+//				backPos = frontPos + v->fnt_size - 1;
+//				noSet_fur -= v->fnt_size;
+//				float furPos = (float)frontPos + ((float)(v->fnt_size - 1) / 2.0);
+//				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
+//				df_fur.AddMember("pos", rapidjson::Value().SetFloat(furPos), df_a);
+//				df_ecR.PushBack(df_fur, df_a);
+//				}
+//		}
+//	}
+//}

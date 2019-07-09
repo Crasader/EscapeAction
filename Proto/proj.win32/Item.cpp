@@ -37,6 +37,5 @@ void Item::Save_ItemData()
 		break;
 	}
 
-
 	return;
 }

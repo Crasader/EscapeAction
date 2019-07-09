@@ -8,12 +8,13 @@
 #include "UIManager.h"
 
 #include "../proj.win32/Enum_collection.h"
-#include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/LevelDataSet.h"
 #include "../proj.win32/DrawField.h"
+#include "../proj.win32/DrawDoor.h"
+/*#include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawDeco.h"
-#include "../proj.win32/DrawDoor.h"
+*/
 
 USING_NS_CC;
 
@@ -24,13 +25,14 @@ public:
     CREATE_FUNC(LayerGame);
 private:
 	//draw
-	DrawFurniture* dfur;
+/*	DrawFurniture* dfur;
 	FurnitureUI* fu;
+	
+	DoorUI* du;
+	;*/
 	DrawField* df;
 	DrawDoor* ddor;
-	DoorUI* du;
 	int _roomNum;
-
 
 	player* pyer;
 	Camera* camera;

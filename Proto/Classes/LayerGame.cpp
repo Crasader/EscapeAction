@@ -5,22 +5,22 @@
 bool LayerGame::init()
 {
 
-
 	//LevelDataSet 클래스 생성, addChild 필요 없음
 	LevelDataSet* levelData = LevelDataSet::create();
 
 	//drawField
 	df = DrawField::create();
 	this->addChild(df);
+	//draw 문
+	ddor = DrawDoor::create();
+	this->addChild(ddor);
 /*	//draw 장식
 	DrawDeco* ddeco = DrawDeco::create();
 	this->addChild(ddeco);
 	//draw 가구
 	dfur = DrawFurniture::create();
 	this->addChild(dfur);
-	//draw 문
-	ddor = DrawDoor::create();
-	this->addChild(ddor);
+
 	//draw 구조
 	DrawStruct* ds = DrawStruct::create();
 	this->addChild(ds,10);
@@ -32,25 +32,25 @@ bool LayerGame::init()
 	pyer = player::create();
 	this->addChild(pyer);
 	_roomNum = 0;
-	pyer->setRoomNum(_roomNum);
-	pyer->setFirst(df->getFirst(_roomNum));
-	pyer->setLast(df->getLast(_roomNum));
+//	pyer->setRoomNum(_roomNum);
+//	pyer->setFirst(df->getFirst(_roomNum));
+//	pyer->setLast(df->getLast(_roomNum));
 
-	//가구 ui 생성
+/*	//가구 ui 생성
 	fu = FurnitureUI::create();
 	this->addChild(fu);
 	dfur->setFurUI(fu);
 	//문 ui 생성
 	du = DoorUI::create();
 	this->addChild(du);
-	ddor->setDoorUI(du);
+	ddor->setDoorUI(du);*/
 
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setName("camera_main");
 	this->addChild(camera);
-	camera->setPosition3D(Vec3(0, 0,200));
+	camera->setPosition3D(Vec3(0, 0,1000));
 
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
 	pyer->_camera = camera;
@@ -69,7 +69,7 @@ void LayerGame::update(float dt)
 {
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	pos_RL = pyer->get_RL_filp();
-	//가구 버튼 test
+/*	//가구 버튼 test
 	dfur->checkFur(pyer->getRect(), _roomNum);
 	ddor->checkDoor(pyer->getRect(), 0);
 	
@@ -112,15 +112,15 @@ void LayerGame::update(float dt)
 			
 		}
 	}
-	int move = 5;
+	int move = 5;*/
 
-	pyer->Joy_move_check();
+	//pyer->Joy_move_check();
 	/*if (!pyer->getCheckFur() && fu->checkSearch()) {
 		fu->setCancle();//가구 체크 취소
 	}*/
 	auto camera_m = this->getChildByName("camera_main");
 
-	camera->setPosition(pos.x, pos.y+60);
+	camera->setPosition(pos.x+300, pos.y+60);
 
 }
 

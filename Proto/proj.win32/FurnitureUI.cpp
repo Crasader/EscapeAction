@@ -130,7 +130,6 @@ void FurnitureUI::clickBtn(int num)
 
 		progress->setPercentage(0);
 		progress->setVisible(true);
-		progress->setPercentage(0);
 		progress->runAction(rf);
 		check_furNum = num;
 		this->schedule(schedule_selector(FurnitureUI::schedule_clickBtn));

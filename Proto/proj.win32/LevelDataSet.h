@@ -26,6 +26,9 @@ private:
 	//함수
 	void setRoomCnt(int level);//방, 층 갯수 설정, 탈출 방 위치 설정
 	void setWallData();
+	void setDoorData();
+	void setLadderData();
+	//void setFurData();
 	//void setData();
 	//변수
 	int testLevel;  ///*실제 레벨 받아오는 걸로 변경!*///
@@ -35,9 +38,16 @@ private:
 	int fl_minRm;//층수당 최소 방갯수
 
 	int* escRmfl;//탈출방 층수
-	int* escRmNum;//탈출방 위치
-	
+	int* escRmNum;//해당 층에서 탈출방 번호
+	int* escRm;//모든 방중 탈출방 번호
+
 	//Documents
 	Document draw_wall;
+	Document draw_fur;
+
+	Document trans_item;
+	Document trans_door;
+	Document trans_ladder;
+	
 };
 
