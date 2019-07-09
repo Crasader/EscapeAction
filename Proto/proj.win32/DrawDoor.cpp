@@ -5,6 +5,7 @@ bool DrawDoor::init()
 	v_doorCnt.clear();
 	v_spr.clear();
 	_du = NULL;
+
 	//파일 내용 불러오기
 	FILE* fp = fopen("jsonData/trans/transDoor.json", "rb");
 	char readBuffer[5000];

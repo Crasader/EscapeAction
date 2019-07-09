@@ -74,6 +74,16 @@
     <ClCompile Include="FurnitureUI.cpp">
       <Filter>DrawMap</Filter>
     </ClCompile>
+    <ClCompile Include="DrawDoor.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorUI.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="DrawLadder.cpp">
+      <Filter>DrawMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -131,6 +141,16 @@
       <Filter>DrawMap</Filter>
     </ClInclude>
     <ClInclude Include="FurnitureUI.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDoor.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorUI.h">
+      <Filter>DrawMap</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="DrawLadder.h">
       <Filter>DrawMap</Filter>
     </ClInclude>
   </ItemGroup>

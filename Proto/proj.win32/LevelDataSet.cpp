@@ -442,10 +442,11 @@ void LevelDataSet::setDoorData()
 {
 	/*데이터 구조
 	trans_door[fl][door]{  "pos" : 중앙지점 위치::Int,		
-					   "lock" : 잠김 여부::Bool,
-					   "esc" : 탈출방으로 향하는 문 여부 :: Bool
-					   "left" : 왼쪽 방 번호:: Int
-					   "right" : 오른쪽 방번호:: Int
+						   "lock" : 잠김 여부::Bool,
+						   "esc" : 탈출방으로 향하는 문 여부 :: Bool,
+						   "left" : 왼쪽 방 번호:: Int,
+						   "right" : 오른쪽 방번호:: Int,
+						   "hp" : 문의 hp ::Int
 					 }
 	*/
 	Document::AllocatorType& td_a = trans_door.GetAllocator();
@@ -458,7 +459,7 @@ void LevelDataSet::setDoorData()
 
 	for (auto& fl : draw_wall.GetArray()) {
 		rapidjson::Value td_fl(kArrayType);
-		bool firstCheck = true;
+		bool firstCheck = true;//첫번째 방인지 체크
 		for (auto& rm : fl.GetArray()) {
 			if (!firstCheck) {
 				rapidjson::Value td_door(kObjectType);
@@ -468,6 +469,7 @@ void LevelDataSet::setDoorData()
 				rapidjson::Value td_left(roomNum - 1);
 				rapidjson::Value td_right(roomNum);
 				rapidjson::Value td_esc(false);
+				rapidjson::Value td_hp(100);
 				if (noset_escR < escRmCnt) {
 					if (roomNum - 1 == escRm[noset_escR] || roomNum == escRm[noset_escR]) {
 						td_esc.SetBool(true);
@@ -479,6 +481,7 @@ void LevelDataSet::setDoorData()
 				td_door.AddMember("left", td_left, td_a);
 				td_door.AddMember("right", td_right, td_a);
 				td_door.AddMember("esc", td_esc, td_a);
+				td_door.AddMember("hp", td_hp, td_a);
 
 				td_fl.PushBack(td_door, td_a);
 			}
@@ -500,60 +503,82 @@ void LevelDataSet::setDoorData()
 void LevelDataSet::setLadderData()
 {
 	/*데이터 구조
-	trans_door[fl][door]{  "pos" : 중앙지점 위치::Int,
-					   "lock" : 잠김 여부::Bool,
-					   "esc" : 탈출방으로 향하는 문 여부 :: Bool
-					   "up" : 위 방 번호:: Int
-					   "down" : 아래 방 번호:: Int
-					 }
+	trans_door[fl][ladder]{  "pos" : 중앙지점 위치::Int,
+						     "lock" : 잠김 여부::Bool,
+						     "esc" : 탈출방으로 향하는 문 여부 :: Bool,
+						     "up" : 위 방 번호:: Int,
+						     "down" : 아래 방 번호:: Int,
+						     "hp" : 문의 hp ::Int
+						 }
 	*/
 	Document::AllocatorType& tl_a = trans_ladder.GetAllocator();
 	trans_ladder.SetArray();
 
 	int roomNum = 0;
-	/*
-	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
-	int noset_escR = 0;//체크 안한 탈출 방
 
+	int floorCnt = _msize(floor_rm) / sizeof(int);//층수
+	//int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	//int noset_escR = 0;//체크 안한 탈출 방
+
+	int floor = 0;//현재 층수
+	int upRmNum = 0;//위층 첫 방 번호
 	for (auto& fl : draw_wall.GetArray()) {
-		rapidjson::Value td_fl(kArrayType);
-		bool firstCheck = true;
+		if (floor == floorCnt - 1) {
+			break;//마지막 층이면 for문 stop
+		}
+		upRmNum += floor_rm[floor];
+		rapidjson::Value tl_fl(kArrayType);
 		for (auto& rm : fl.GetArray()) {
-			if (!firstCheck) {
-				rapidjson::Value td_door(kObjectType);
-
-				rapidjson::Value td_pos(rm["pos"].GetInt());
-				rapidjson::Value td_lock(true);
-				rapidjson::Value td_left(roomNum - 1);
-				rapidjson::Value td_right(roomNum);
-				rapidjson::Value td_esc(false);
-				if (noset_escR < escRmCnt) {
-					if (roomNum - 1 == escRm[noset_escR] || roomNum == escRm[noset_escR]) {
-						td_esc.SetBool(true);
-					}
+			int minNow = rm["pos"].GetInt();
+			int maxNow = rm["size"].GetInt()+minNow;
+			minNow++;
+			maxNow--;
+			for (int i = 0; i < floor_rm[floor + 1]; i++) {
+				int minSet = draw_wall[floor + 1][i]["pos"].GetInt();
+				int maxSet = draw_wall[floor + 1][i]["size"].GetInt() + minSet;
+				minSet++;
+				maxSet--;
+				minSet = minNow > minSet ? minNow : minSet;
+				maxSet = maxNow < maxSet ? maxNow : maxSet;
+				if (minSet > maxSet) {
+					continue;
 				}
+				else {
+					//ladder 세팅 가능
+					int ladder_pos = RandomHelper::random_int(minSet, maxSet);
+					rapidjson::Value tl_la(kObjectType);
 
-				td_door.AddMember("pos", td_pos, td_a);
-				td_door.AddMember("lock", td_lock, td_a);
-				td_door.AddMember("left", td_left, td_a);
-				td_door.AddMember("right", td_right, td_a);
-				td_door.AddMember("esc", td_esc, td_a);
+					rapidjson::Value tl_pos(ladder_pos);
+					rapidjson::Value tl_lock(true);
+					rapidjson::Value tl_up(upRmNum+i);
+					rapidjson::Value tl_down(roomNum);
+					rapidjson::Value tl_esc(false);
+					rapidjson::Value tl_hp(100);
 
-				td_fl.PushBack(td_door, td_a);
+					tl_la.AddMember("pos", tl_pos, tl_a);
+					tl_la.AddMember("lock", tl_lock, tl_a);
+					tl_la.AddMember("up", tl_up, tl_a);
+					tl_la.AddMember("down", tl_down, tl_a);
+					tl_la.AddMember("esc", tl_esc, tl_a);
+					tl_la.AddMember("hp", tl_hp, tl_a);
+
+					tl_fl.PushBack(tl_la, tl_a);
+
+				}
 			}
 			roomNum++;
-			firstCheck = false;
 		}
-		trans_door.PushBack(td_fl, td_a);
+		trans_ladder.PushBack(tl_fl, tl_a);
+		floor++;
 	}
 
 	//문  데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/trans/transDoor.json", "wb");
+	FILE* fp = fopen("jsonData/trans/transLadder.json", "wb");
 	char writeBuffer[5000];
 	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> door_writer(door_os);
-	trans_door.Accept(door_writer);
-	fclose(fp);*/
+	trans_ladder.Accept(door_writer);
+	fclose(fp);
 }
 
 //void LevelDataSet::setFurData()

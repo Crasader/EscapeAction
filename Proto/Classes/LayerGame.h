@@ -11,6 +11,7 @@
 #include "../proj.win32/LevelDataSet.h"
 #include "../proj.win32/DrawField.h"
 #include "../proj.win32/DrawDoor.h"
+#include "../proj.win32/DrawLadder.h"
 /*#include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawDeco.h"
@@ -32,6 +33,7 @@ private:
 	;*/
 	DrawField* df;
 	DrawDoor* ddor;
+	DrawLadder* dlad;
 	int _roomNum;
 
 	player* pyer;

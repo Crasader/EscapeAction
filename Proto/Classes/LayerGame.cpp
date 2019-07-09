@@ -14,6 +14,11 @@ bool LayerGame::init()
 	//draw 문
 	ddor = DrawDoor::create();
 	this->addChild(ddor);
+
+	//draw 문
+	dlad = DrawLadder::create();
+	this->addChild(dlad);
+
 /*	//draw 장식
 	DrawDeco* ddeco = DrawDeco::create();
 	this->addChild(ddeco);
