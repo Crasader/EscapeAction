@@ -20,10 +20,12 @@ struct FurnitureData
 {
 	string fnt_img;
 	int fnt_size;
+	float pos;
+	bool deco;
 	//int fnt_sprite; //가구 종류 랜덤 지정
 	//ItemData* F_ItemData; //아이템 클래스에서 데이터 받아옴
 	int item_num; //각각 저장된 아이템 번호(0:weapon, 1:key, 2:trap, 3:no_item)
-	bool search; //탐색 여부(true: 탐색했음 / false: 탐색 안 했음)
+	//bool search; //탐색 여부(true: 탐색했음 / false: 탐색 안 했음)
 
 }typedef FntData;
 
@@ -32,28 +34,32 @@ struct FurnitureData
 class Furniture : public Node
 {
 public:
+	static Furniture* create(int left, int right);
 	~Furniture();
 
-	bool init();
-	
+	virtual bool init();
+	virtual bool init(int left, int right);
 	vector<FntData*> v_FntData;
+	vector<int> v_fntKind;
+	vector<FntData*> v_FntData_l;
+	vector<FntData*> v_FntData_r;
 
 	Size win_size;
 
 	//Vec2 Ary_fnt_wall_pos[8]; //Vec2 위치값 저장 배열 <안씀
-	int getTotalFntSize();
 	void Create_Furniture(); //가구 생성
 	void Touch_React(); //가구 터치시 반응
 	//virtual bool onTouchBegan(Touch* touch, Event* unused_event);
 	//virtual void onTouchEnded(Touch* touch, Event* unused_event);
 	bool isselect;
 	Sprite* select;
-
+	
 	CREATE_FUNC(Furniture);
 
 private:
 	//int fnt_num; //가구 개수(방 크기 결정)
-	int total_fntSize;
+	int totalLeft;
+	int totalRight;
 };
 
 #endif // __FURNITURE_H__

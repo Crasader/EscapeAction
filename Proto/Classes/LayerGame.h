@@ -12,10 +12,9 @@
 #include "../proj.win32/DrawField.h"
 #include "../proj.win32/DrawDoor.h"
 #include "../proj.win32/DrawLadder.h"
-/*#include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/DrawStruct.h"
+#include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/DrawDeco.h"
-*/
 
 USING_NS_CC;
 
@@ -26,11 +25,11 @@ public:
     CREATE_FUNC(LayerGame);
 private:
 	//draw
-/*	DrawFurniture* dfur;
+/*	
 	FurnitureUI* fu;
-	
-	DoorUI* du;
 	;*/
+	DrawFurniture* dfur;
+	DoorUI* du;
 	DrawField* df;
 	DrawDoor* ddor;
 	DrawLadder* dlad;

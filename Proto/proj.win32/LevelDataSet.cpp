@@ -6,7 +6,7 @@ bool LevelDataSet::init()
 	testLevel = 5;
 	int bal = (int)((float)testLevel *0.2);//밸런스를 위함
 	fl_maxRm = 3+bal;//한 층에 올 수 있는 최대 방갯수 = 5
-	fl_maxWl = fl_maxRm * 5;//한 층에 올 수 있는 최대 벽갯수, 최대 방갯수*가구 total크기 최댓값
+	fl_maxWl = fl_maxRm * 6;//한 층에 올 수 있는 최대 벽갯수, 최대 방갯수*가구 total크기 최댓값
 	fl_minRm = 2+bal;// 한 층에 올 수 있는 최소 방갯수 = 2(마지막 층 제외)
 	//Document 초기화
 	draw_wall = NULL;
@@ -16,7 +16,9 @@ bool LevelDataSet::init()
 	setWallData();
 	setDoorData();
 	setLadderData();
-//	setFurData();
+	setFurData();
+	setStructData();
+	setDeco();
 	//setData();
 
 	return true;
@@ -27,6 +29,7 @@ LevelDataSet::~LevelDataSet()
 	delete[] floor_rm;
 	delete[] escRmfl;
 	delete[] escRmNum;
+	delete[] ladfl;
 }
 
 void LevelDataSet::setRoomCnt(int level)
@@ -88,6 +91,11 @@ void LevelDataSet::setRoomCnt(int level)
 				break;
 			}
 		}
+	}
+	//층당 사다리 갯수 동적 할당, 초기화
+	ladfl = new int[floor];
+	for (int i = 0; i < floor; i++) {
+		ladfl[i] = 0;
 	}
 }
 /*
@@ -337,8 +345,8 @@ void LevelDataSet::setWallData()
 	Document::AllocatorType& dw_a = draw_wall.GetAllocator();
 	draw_wall.SetArray();
 
-	int floor = _msize(floor_rm) / sizeof(int);//층수
-	int escRnCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	const int floor = _msize(floor_rm) / sizeof(int);//층수
+	const int escRnCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
 	int noset_escR = 0;//세팅 안한 탈출 방
 
 	for (int fl = 0; fl < floor; fl++) {
@@ -428,7 +436,10 @@ void LevelDataSet::setWallData()
 		}
 		draw_wall.PushBack(dw_fl, dw_a);
 	}
-
+	//층당 방 갯수에 esc rm 갯수 더하기
+	for (int i = 0; i < escRnCnt; i++) {
+		floor_rm[escRmfl[i]]++;
+	}
 	//벽 그리기 데이터 파일 쓰기
 	FILE* fp = fopen("jsonData/draw/drawWall.json", "wb");
 	char writeBuffer[5000];
@@ -505,7 +516,6 @@ void LevelDataSet::setLadderData()
 	/*데이터 구조
 	trans_door[fl][ladder]{  "pos" : 중앙지점 위치::Int,
 						     "lock" : 잠김 여부::Bool,
-						     "esc" : 탈출방으로 향하는 문 여부 :: Bool,
 						     "up" : 위 방 번호:: Int,
 						     "down" : 아래 방 번호:: Int,
 						     "hp" : 문의 hp ::Int
@@ -517,8 +527,7 @@ void LevelDataSet::setLadderData()
 	int roomNum = 0;
 
 	int floorCnt = _msize(floor_rm) / sizeof(int);//층수
-	//int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
-	//int noset_escR = 0;//체크 안한 탈출 방
+	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
 
 	int floor = 0;//현재 층수
 	int upRmNum = 0;//위층 첫 방 번호
@@ -528,12 +537,24 @@ void LevelDataSet::setLadderData()
 		}
 		upRmNum += floor_rm[floor];
 		rapidjson::Value tl_fl(kArrayType);
+		bool haveLadder = false;//해당층에 사다리가 1개 이상 있는가?
 		for (auto& rm : fl.GetArray()) {
 			int minNow = rm["pos"].GetInt();
 			int maxNow = rm["size"].GetInt()+minNow;
 			minNow++;
 			maxNow--;
 			for (int i = 0; i < floor_rm[floor + 1]; i++) {
+				//탈출방으로 향하는 방이라면 사다리 만들지 않음
+				bool goEsc = false;
+				for (int esc = 0; esc < escRmCnt; esc++) {
+					if (escRm[esc] == roomNum || escRm[esc] == upRmNum + i) {
+						goEsc = true;
+						break;
+					}
+				}
+				if (goEsc) {
+					continue;
+				}
 				int minSet = draw_wall[floor + 1][i]["pos"].GetInt();
 				int maxSet = draw_wall[floor + 1][i]["size"].GetInt() + minSet;
 				minSet++;
@@ -544,6 +565,10 @@ void LevelDataSet::setLadderData()
 					continue;
 				}
 				else {
+					if (haveLadder&&RandomHelper::random_int(0, 1) == 1) {
+							break;
+					}
+					haveLadder = true;
 					//ladder 세팅 가능
 					int ladder_pos = RandomHelper::random_int(minSet, maxSet);
 					rapidjson::Value tl_la(kObjectType);
@@ -552,18 +577,17 @@ void LevelDataSet::setLadderData()
 					rapidjson::Value tl_lock(true);
 					rapidjson::Value tl_up(upRmNum+i);
 					rapidjson::Value tl_down(roomNum);
-					rapidjson::Value tl_esc(false);
 					rapidjson::Value tl_hp(100);
 
 					tl_la.AddMember("pos", tl_pos, tl_a);
 					tl_la.AddMember("lock", tl_lock, tl_a);
 					tl_la.AddMember("up", tl_up, tl_a);
 					tl_la.AddMember("down", tl_down, tl_a);
-					tl_la.AddMember("esc", tl_esc, tl_a);
 					tl_la.AddMember("hp", tl_hp, tl_a);
 
 					tl_fl.PushBack(tl_la, tl_a);
-
+					ladfl[floor]++;
+					break;//한 방에 사다리 1개
 				}
 			}
 			roomNum++;
@@ -581,38 +605,239 @@ void LevelDataSet::setLadderData()
 	fclose(fp);
 }
 
-//void LevelDataSet::setFurData()
-//{
-//	/*데이터 구조
-//	draw_fur[floor][rm][fur]{"name" : 가구 이름::String,
-//							 "pos" : 중앙 지점 위치::Double,
-//							 "size" : 가구 크기::Int }
-//	*/
-//
-//	Document::AllocatorType& df_a = draw_fur.GetAllocator();
-//	draw_fur.SetArray();
-//
-//	for (auto& fl : draw_wall.GetArray()) {
-//		for (auto& rm : fl.GetArray()) {
-//			int startPos = rm["pos"].GetInt();
-//
-//			rapidjson::Value df_rm(kArrayType);//각 방의 가구
-//
-//			//가구 정보
-//			Furniture* furni_name = Furniture::create();
-//			int backPos = startPos;//이전 가구의 끝 위치
-//			int noSet_fur = furni_name->getTotalFntSize();//배치해야할 총 가구 크기
-//			for (auto v : furni_name->v_FntData) {
-//				rapidjson::Value df_fur(kObjectType);//각 가구
-//				//log("fl : %d rm : %d v_FntData : %d", fl, floor_rm[fl], furni_name->v_FntData.size());
-//				int frontPos = RandomHelper::random_int(backPos + 1, startPos + rmSize - noSet_fur + 1);//가구의 앞 위치
-//				backPos = frontPos + v->fnt_size - 1;
-//				noSet_fur -= v->fnt_size;
-//				float furPos = (float)frontPos + ((float)(v->fnt_size - 1) / 2.0);
-//				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
-//				df_fur.AddMember("pos", rapidjson::Value().SetFloat(furPos), df_a);
-//				df_ecR.PushBack(df_fur, df_a);
-//				}
-//		}
-//	}
-//}
+void LevelDataSet::setFurData()
+{
+	/*데이터 구조
+	draw_fur[floor][rm][fur]{"name" : 가구 이름::String,
+							 "pos" : 중앙 지점 위치::Double,
+							 "size" : 가구 크기::Int }
+	*/
+
+	Document::AllocatorType& cb_a = draw_fur.GetAllocator();
+	check_blank.SetArray();//deco 넣을 공간 확인
+
+	Document::AllocatorType& df_a = draw_fur.GetAllocator();
+	draw_fur.SetArray();
+	
+	//사다리를 피해 가구 세팅
+	int floorCnt = _msize(floor_rm) / sizeof(int);//층수
+	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	int noCheck_esc = 0;//체크 안한 탈출방
+
+	int floor = 0;//현재 층
+	for (auto& fl : draw_wall.GetArray()) {
+		rapidjson::Value df_fl(kArrayType);//각 층의 가구
+		rapidjson::Value cb_fl(kArrayType);//각 층의 blank
+		int room = 0;//현재 방
+		int noCheck_lad = 0;//해당 층의 사다리
+		for (auto& rm : fl.GetArray()) {
+			rapidjson::Value df_rm(kArrayType);//각 방의 가구
+
+			rapidjson::Value cb_rm(kArrayType);//각 방의 blank
+
+			//탈출 방이면 가구 세팅 안함
+			if (noCheck_esc <= escRmCnt) {
+				if (escRmfl[noCheck_esc] == floor && escRmNum[noCheck_esc] == room) {
+					cb_rm.PushBack(false, cb_a);
+					cb_fl.PushBack(cb_rm, cb_a);
+
+					log("no set escape room");
+					df_fl.PushBack(df_rm, df_a);
+					room++;
+					noCheck_esc++;
+					continue;
+				}
+			}
+			int startPos = rm["pos"].GetInt();
+			int lastPos = rm["size"].GetInt()+startPos;
+			//방 초기화
+			for (int i = 0; i < rm["size"].GetInt() - 1; i++) {
+				cb_rm.PushBack(true, cb_a);
+			}
+			startPos++;
+			lastPos--;
+			int left = rm["size"].GetInt() - 1;
+			int right = 0;
+			if (noCheck_lad < ladfl[floor]) {
+				int ladPos = trans_ladder[floor][noCheck_lad]["pos"].GetInt();
+				if (ladPos >= startPos && ladPos <= lastPos) {
+					left = ladPos - startPos;
+					right = lastPos - ladPos;
+					noCheck_lad++;
+					cb_rm[left] = false;
+				}
+			}
+
+
+			//가구 정보
+			Furniture* furni_name = Furniture::create(left,right);
+			//사다리 왼쪽
+			for (auto v : furni_name->v_FntData_l) {
+				rapidjson::Value df_fur(kObjectType);//각 가구
+				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
+				df_fur.AddMember("pos", rapidjson::Value().SetFloat(v->pos+startPos-1), df_a);
+				df_fur.AddMember("size", rapidjson::Value().SetInt(v->fnt_size), df_a);
+				df_rm.PushBack(df_fur, df_a);
+				int first = (int)(v->pos - (v->fnt_size - 1)*0.5)-1;
+				for (int i = 0; i < v->fnt_size; i++) {
+					cb_rm[first] = v->deco;
+					first++;
+				}
+
+			}
+			//사다리 오른쪽
+			for (auto v : furni_name->v_FntData_r) {
+				rapidjson::Value df_fur(kObjectType);//각 가구
+				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
+				df_fur.AddMember("pos", rapidjson::Value().SetFloat(v->pos+left+startPos), df_a);
+				df_fur.AddMember("size", rapidjson::Value().SetInt(v->fnt_size), df_a);
+				df_rm.PushBack(df_fur, df_a);
+				int first = (int)(v->pos - (double)(v->fnt_size - 1)*0.5)-1;
+				for (int i = 0; i < v->fnt_size; i++) {
+					cb_rm[first] = v->deco;
+					first++;
+				}
+			}
+			cb_fl.PushBack(cb_rm, cb_a);
+
+			room++;
+			df_fl.PushBack(df_rm, df_a);
+		}
+		check_blank.PushBack(cb_fl, cb_a);
+
+		draw_fur.PushBack(df_fl, df_a);
+		floor++;
+	}
+
+	//가구 그리기 데이터 파일 쓰기
+	FILE* fp = fopen("jsonData/draw/drawFur.json", "wb");
+	char writeBuffer[5000];
+	FileWriteStream fur_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> fur_writer(fur_os);
+	draw_fur.Accept(fur_writer);
+	fclose(fp);
+
+	//가구 그리기 데이터 파일 쓰기
+	FILE* fp2 = fopen("jsonData/draw/check.json", "wb");
+	char writeBuffer2[5000];
+	FileWriteStream fur_os2(fp2, writeBuffer2, sizeof(writeBuffer2));
+	Writer<FileWriteStream> fur_writer2(fur_os2);
+	check_blank.Accept(fur_writer2);
+	fclose(fp2);
+
+}
+
+void LevelDataSet::setStructData()
+{
+	/*데이터 구조
+	draw_struct[floor]{	"startPos"  : 첫 위치::Int(Anchor 0.5,0),
+						"lastPos" : 마지막 위치::Int(Anchor 0.5,0),
+						"ladder" : [사다리 위치::Int],
+						"door" : [문 위치 :: Int],
+						"wall" : [벽 위치 :: Int]
+						  }
+	*/
+	
+	draw_struct.SetArray();
+	Document::AllocatorType& ds_a = draw_struct.GetAllocator();
+
+	//데이터 세팅
+	int floor= 0;//현재 층
+	int prePos = 3;//이전 층의 시작 점
+	int prePos_l = -3;//이전 층의 끝 점
+	for (auto& fl : draw_wall.GetArray()) {
+		//한 층에 해당하는 구조
+		rapidjson::Value ds_fl(kObjectType);
+		//"startPos"
+		const int startPos = fl[0]["pos"].GetInt() + 1;
+		prePos = startPos > prePos ? prePos : startPos;
+		ds_fl.AddMember("startPos", rapidjson::Value().SetInt(prePos), ds_a);
+		prePos = startPos;
+		//"lastPos"
+		int frc = floor_rm[floor]-1;//해당 층의 마지막 방
+		const int lastPos = fl[frc]["pos"].GetInt() + fl[frc]["size"].GetInt()-1;
+		prePos_l = lastPos < prePos_l ? prePos_l : lastPos;
+		ds_fl.AddMember("lastPos", rapidjson::Value().SetInt(prePos_l), ds_a);
+		prePos_l = lastPos;
+		//문 위치 세팅 "door"
+		rapidjson::Value ds_door(kArrayType);
+		for (auto& dor : trans_door[floor].GetArray()) {
+			ds_door.PushBack(dor["pos"].GetInt(), ds_a);
+		}
+		ds_fl.AddMember("door", ds_door, ds_a);
+		//사다리 위치 세팅 "ladder"
+		rapidjson::Value ds_ladder(kArrayType);
+		if (floor != 0) {
+			for (auto& lad : trans_ladder[floor - 1].GetArray()) {
+				ds_ladder.PushBack(lad["pos"].GetInt(), ds_a);
+			}
+		}
+		ds_fl.AddMember("ladder", ds_ladder, ds_a);
+		//벽 위치 세팅 "wall"
+		rapidjson::Value ds_wall(kArrayType);
+		ds_wall.PushBack(rapidjson::Value().SetInt(startPos -1), ds_a);
+		ds_wall.PushBack(rapidjson::Value().SetInt(lastPos +1), ds_a);
+		ds_fl.AddMember("wall", ds_wall, ds_a);
+
+		draw_struct.PushBack(ds_fl, ds_a);
+		floor++;
+	}
+	//상단 struct
+	rapidjson::Value ds_top(kObjectType);
+	ds_top.AddMember("startPos", prePos, ds_a);
+	ds_top.AddMember("lastPos", prePos_l, ds_a);
+	ds_top.AddMember("door", rapidjson::Value().SetArray(), ds_a);
+	ds_top.AddMember("ladder", rapidjson::Value().SetArray(), ds_a);
+	ds_top.AddMember("wall", rapidjson::Value().SetArray(), ds_a);
+	draw_struct.PushBack(ds_top, ds_a);
+
+	//구조  데이터 파일 쓰기
+	FILE* fp = fopen("jsonData/draw/drawStruct.json", "wb");
+	char writeBuffer[5000];
+	FileWriteStream struct_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> struct_writer(struct_os);
+	draw_struct.Accept(struct_writer);
+	fclose(fp);
+}
+
+void LevelDataSet::setDeco()
+{
+	/*데이터 구조
+	draw_deco[floor][deco]{"name" : 가구 이름::String,
+						   "pos" : 중앙 지점 위치::int}
+	*/
+
+	draw_deco.SetArray();
+	Document::AllocatorType& dd_a = draw_deco.GetAllocator();
+	int floor = 0;
+	for (auto& fl : draw_wall.GetArray()) {
+		rapidjson::Value dd_fl(kArrayType);
+		int room = 0;
+		for (auto& rm : fl.GetArray()) {
+			int first = rm["pos"].GetInt() + 1;
+			for (auto& db : check_blank[floor][room].GetArray()) {
+				if (db == true) {
+					rapidjson::Value dd_deco(kObjectType);
+					RandomDeco* deco_name = RandomDeco::create();
+					dd_deco.AddMember("name", rapidjson::Value().SetString(deco_name->getDecoName().c_str(),dd_a), dd_a);
+					dd_deco.AddMember("pos", rapidjson::Value().SetInt(first), dd_a);
+					dd_fl.PushBack(dd_deco, dd_a);
+				}
+				first++;
+			}
+			room++;
+		}
+		draw_deco.PushBack(dd_fl, dd_a);
+		floor++;
+	}
+
+	//장식 그리기 데이터 파일 쓰기
+	FILE* fp = fopen("jsonData/draw/drawDeco.json", "wb");
+	char writeBuffer[5000];
+	FileWriteStream deco_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> deco_writer(deco_os);
+	draw_deco.Accept(deco_writer);
+	fclose(fp);
+	
+
+}

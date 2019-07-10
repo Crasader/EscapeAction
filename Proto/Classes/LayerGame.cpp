@@ -19,21 +19,25 @@ bool LayerGame::init()
 	dlad = DrawLadder::create();
 	this->addChild(dlad);
 
-/*	//draw 장식
-	DrawDeco* ddeco = DrawDeco::create();
-	this->addChild(ddeco);
 	//draw 가구
 	dfur = DrawFurniture::create();
 	this->addChild(dfur);
 
-	//draw 구조
-	DrawStruct* ds = DrawStruct::create();
-	this->addChild(ds,10);
+	//draw 장식
+	DrawDeco* ddeco = DrawDeco::create();
+	this->addChild(ddeco);
+
+/*	
+
 	/*
 	//JSONtest 클래스 생성
 	jt = JSONtest::create();
 	this->addChild(jt);
 	*/
+	//draw 구조
+	DrawStruct* ds = DrawStruct::create();
+	this->addChild(ds, 10);
+
 	pyer = player::create();
 	this->addChild(pyer);
 	_roomNum = 0;
@@ -45,11 +49,11 @@ bool LayerGame::init()
 	fu = FurnitureUI::create();
 	this->addChild(fu);
 	dfur->setFurUI(fu);
+*/
 	//문 ui 생성
 	du = DoorUI::create();
 	this->addChild(du);
-	ddor->setDoorUI(du);*/
-
+	ddor->setDoorUI(du);
 	Size winSize = Director::getInstance()->getWinSize();
 	camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 1, 1000);
 	camera->setCameraFlag(CameraFlag::USER1);

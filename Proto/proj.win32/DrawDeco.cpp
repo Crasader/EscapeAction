@@ -15,7 +15,6 @@ bool DrawDeco::init()
 	int hgt = 120;
 	int wid = 48;
 
-
 	int fl = 0;
 	for (auto& floor : draw_deco.GetArray()) {
 			for (auto& deco : floor.GetArray()) {

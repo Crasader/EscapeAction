@@ -1,1 +1,1 @@
-[{"startPos":0,"count":28,"wall":[0,28],"door":[7,15,22]},{"startPos":0,"count":28,"wall":[2,26],"door":[10,18]},{"startPos":0,"count":28,"wall":[0,28],"door":[8,14,21]},{"startPos":0,"count":28,"wall":[0,8],"door":[]},{"startPos":0,"count":8,"wall":[],"door":[]}]
+[{"startPos":1,"lastPos":30,"door":[9,16,24],"ladder":[],"wall":[0,31]},{"startPos":0,"lastPos":30,"door":[6,14,16,23],"ladder":[2,11,26],"wall":[-1,31]},{"startPos":-1,"lastPos":32,"door":[0,9,16,24],"ladder":[2,8,25],"wall":[-2,33]},{"startPos":-1,"lastPos":32,"door":[],"ladder":[],"wall":[]}]

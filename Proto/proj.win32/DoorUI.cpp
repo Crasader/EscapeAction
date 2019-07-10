@@ -27,8 +27,8 @@ bool DoorUI::init()
 			//버튼 생성
 			ui::Button* btn = ui::Button::create("fur_button.png");
 			btn->setPosition(Vec2(dr["pos"].GetInt()*wid, hgt*fl+(hgt*0.3)));
-			v_left.push_back(dr["leftRoom"].GetInt());
-			v_right.push_back(dr["rightRoom"].GetInt());
+			v_left.push_back(dr["left"].GetInt());
+			v_right.push_back(dr["right"].GetInt());
 			btn->setScale(0.4);
 			btn->setTag(furCnt);
 			btn->addClickEventListener(CC_CALLBACK_0(DoorUI::clickBtn, this, btn->getTag()));

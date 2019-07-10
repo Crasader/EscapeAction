@@ -1,26 +1,32 @@
 [
   {
     "name": "fur/jang.png",
-    "size": 1
+    "size": 1,
+    "deco" :  false
   },
   {
     "name": "fur/sofa.png",
-    "size": 3
+    "size": 3,
+    "deco": true
   },
   {
     "name": "fur/stand.png",
-    "size": 1
+    "size": 1,
+    "deco": true
   },
   {
     "name": "fur/flower.png",
-    "size": 1
+    "size": 1,
+    "deco": true
   },
   {
     "name": "fur/chair.png",
-    "size": 1
+    "size": 1,
+    "deco": true
   },
   {
     "name": "fur/bed.png",
-    "size": 2
+    "size": 2,
+    "deco": true
   }
 ]
