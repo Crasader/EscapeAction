@@ -79,6 +79,7 @@ void LayerGame::update(float dt)
 		log(" now : %d next : %d", _roomNum, next);
 		du->setUnMove();
 		_roomNum = next;
+		fu->changeRm();
 	}
 	if (pyer->getRoomNum() != _roomNum) {
 		pyer->setRoomNum(_roomNum);

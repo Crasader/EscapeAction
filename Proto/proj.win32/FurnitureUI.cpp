@@ -105,6 +105,9 @@ void FurnitureUI::setCancle()
 
 void FurnitureUI::changeRm()
 {
+	for (auto v : v_btn) {
+		v->setVisible(false);
+	}
 	v_chekcBtn.clear();
 }
 
