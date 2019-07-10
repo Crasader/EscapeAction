@@ -88,6 +88,6 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 	umj->setVisible(false);
 	mj->setVisible(false);
 
-	if (GameManager::getInstance()->getPlayerState() != SEARCH && GameManager::getInstance()->getPlayerState() != ATTACK)
+	if (GameManager::getInstance()->getPlayerState() != SEARCH && GameManager::getInstance()->getPlayerState() != ATTACK && GameManager::getInstance()->getPlayerState() != UMOVE)
 	GameManager::getInstance()->setState(IDLE);
 }

@@ -39,8 +39,10 @@ bool Button_Ui::init()
 
 void Button_Ui::atkobj()
 {
-	if(GameManager::getInstance()->getPlayerState() == IDLE)
-	GameManager::getInstance()->setState(ATTACK);
+	if (GameManager::getInstance()->getPlayerState() == IDLE) {
+		GameManager::getInstance()->setState(ATTACK);
+		UIManager::getInstance()->setEnable_AtkBtn(false);
+	}
 }
 
 void Button_Ui::searchobj()
