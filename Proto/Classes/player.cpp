@@ -58,6 +58,7 @@ void player::ani_pause()
 {
 	setState(IDLE);
 	SimpleAudioEngine::getInstance()->stopAllEffects();
+	UIManager::getInstance()->setEnable_AtkBtn(true);
 }
 
 void player::ani_move()
@@ -398,6 +399,11 @@ void player::onPress(EventKeyboard::KeyCode key)
 	if (key == EventKeyboard::KeyCode::KEY_DOWN_ARROW) {
 		_player->setPositionY(_player->getPositionY() - 120);
 	}
+	if (key == EventKeyboard::KeyCode::KEY_SPACE)
+	{
+		if(playerState == IDLE)
+		setState(ATTACK);
+	}
 }
 
 void player::onRelease(EventKeyboard::KeyCode key)
@@ -464,11 +470,12 @@ bool player::setState(player_Move_enum state)
 	//이미 실행중인 state는 아닌가?
 	//그렇다면 return false;
 	//위 조건이 아니라면 아래로 진행
+	
 	if (playerState == state)
 	{
 		return false;
 	}
-	playerState = state;
+	playerState = state;	
 	switch (playerState)
 	{
 	case NONE:
@@ -513,6 +520,7 @@ bool player::setState(player_Move_enum state)
 	case ATTACK:
 	{
 		atk_ran = RandomHelper::random_int(0, 2);
+		UIManager::getInstance()->setEnable_AtkBtn(false);
 		if (atk_ran == 0)
 		{
 			make_atk_ani();
