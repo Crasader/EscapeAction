@@ -98,240 +98,6 @@ void LevelDataSet::setRoomCnt(int level)
 		ladfl[i] = 0;
 	}
 }
-/*
-void LevelDataSet::setData()
-{
-	Document draw_struct;
-	Document draw_wall;
-	Document draw_fur;
-	Document draw_door;
-	Document draw_deco;
-
-	Document trans_door;
-	Document item;
-
-	//draw_wall 구조 설정
-	Document::AllocatorType& dw_a = draw_wall.GetAllocator();
-	draw_wall.SetArray();
-	//draw_fur 구조 설정
-	Document::AllocatorType& df_a = draw_fur.GetAllocator();
-	draw_fur.SetArray();
-	//draw_struct 구조 설정
-	draw_struct.SetArray();
-	Document::AllocatorType& ds_a = draw_struct.GetAllocator();
-	//draw_deco 구조 설정
-	draw_deco.SetArray();
-	Document::AllocatorType& dc_a = draw_deco.GetAllocator();
-	//trans_door 구조 설정
-	trans_door.SetArray();
-	Document::AllocatorType& td_a = trans_door.GetAllocator();
-	//데이터 세팅
-	int floor = _msize(floor_rm) / sizeof(int);//층수
-	int flStartPos = 0;
-	int preStartPos = 3;
-	int preEndPos = 0;
-	int roomNum = 0;
-	log("floor %d", floor);
-	for (int fl = 0; fl < floor; fl++) {
-		int startPos = 0;//층의 앞부분 위치 차이를 위해
-		if (floor_rm[fl] == fl_maxRm) {
-			startPos = RandomHelper::random_int(0, 2) - 2;
-		}
-		else if (floor_rm[fl] == fl_minRm) {
-			startPos = RandomHelper::random_int(0, 2);
-		}
-		rapidjson::Value dw_fl(kArrayType);//한 층에 해당하는 벽 arr
-		rapidjson::Value df_fl(kArrayType);//한 층에 해당하는 가구 arr
-		
-		//한 층에 해당하는 구조
-		rapidjson::Value ds_fl(kObjectType);
-		if (preStartPos > startPos) {
-			flStartPos = startPos;
-		}
-		else {
-			flStartPos = preStartPos;
-		}
-		ds_fl.AddMember("startPos", rapidjson::Value().SetInt(flStartPos), ds_a);
-		preStartPos = startPos;
-		
-		rapidjson::Value ds_door(kArrayType);
-		rapidjson::Value ds_wall(kArrayType);
-		rapidjson::Value ds_flDoor(kArrayType);
-		int flDoorCnt = floor_rm[fl] / 2;
-		flDoorCnt = floor_rm[fl] % 2 != 0 ? flDoorCnt + 1 : flDoorCnt;//올림
-
-		ds_wall.PushBack(rapidjson::Value().SetInt(startPos), ds_a);//바깥쪽 벽
-
-		//데코레이션 set
-		rapidjson::Value dc_fl(kArrayType);//한 층에 해당하는 장식물 "name", "pos"
-		vector<const char*> v_dc;
-		v_dc.clear();
-
-		//한 층에 해당하는 문
-		rapidjson::Value td_fl(kArrayType);
-
-		for (int rm = 0; rm < floor_rm[fl]; rm++) {//각 방 생성
-			//가구 정보
-			Furniture* furni_name = Furniture::create();
-
-			int wl_min = fl_maxWl % floor_rm[fl] == 0 ? fl_maxWl / floor_rm[fl] : fl_maxWl / floor_rm[fl] + 1;
-			int wl_max = (fl_maxWl / fl_minRm)+1;
-			
-			//방 크기
-			int rmSize = RandomHelper::random_int(wl_min, wl_min+2);
-			rmSize = rmSize > wl_max ? wl_max : rmSize;
-
-			//가구 데이터
-			rapidjson::Value df_ecR(kArrayType);
-			//가구 배치&데코 배치
-			int backPos = startPos;//이전 가구의 끝 위치
-			int noSet_fur = furni_name->getTotalFntSize();//배치해야할 총 가구 크기
-			for (auto v : furni_name->v_FntData) {
-				rapidjson::Value df_fur(kObjectType);
-				log("fl : %d rm : %d v_FntData : %d", fl, floor_rm[fl], furni_name->v_FntData.size());
-				int frontPos = RandomHelper::random_int(backPos +1, startPos+rmSize-noSet_fur+1);//가구의 앞 위치
-				/*-----------------(deco set)------------------------*/
-				//backPos : 이전 가구의 뒤 위치, frontPos : 현재 가구의 앞 
-				
-/*				int blank = frontPos - backPos;//여백 크기
-				for (int bp = 1; bp < blank; bp++) {
-					if (RandomHelper::random_int(0, 1) == 0) {
-						rapidjson::Value dc_deco(kObjectType);
-						RandomDeco* deco_name = RandomDeco::create();
-						if (deco_name->getDecoCount() == v_dc.size()) {
-							break;
-						}
-						//장식물이 겹치지 않도록 조치
-					    Vector<const char*>::iterator iter;
-						for (iter = v_dc.begin(); iter != v_dc.end();++iter) {
-							if (*iter == deco_name->getDecoName().c_str()) {
-								deco_name->randDecoAgain();
-								iter = v_dc.begin();
-							}
-						}
-						dc_deco.AddMember("pos", rapidjson::Value().SetInt(backPos + bp),dc_a);
-						dc_deco.AddMember("name", rapidjson::Value().SetString(deco_name->getDecoName().c_str(), dc_a), dc_a);
-						v_dc.push_back(deco_name->getDecoName().c_str());
-						dc_fl.PushBack(dc_deco, dc_a);
-
-					}
-				}
-				/*------------------(/deco set)-----------------------*/
-/*				backPos = frontPos + v->fnt_size - 1; 
-				noSet_fur -= v->fnt_size;
-				float furPos = (float)frontPos + ((float)(v->fnt_size - 1) / 2.0);
-				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
-				df_fur.AddMember("pos", rapidjson::Value().SetFloat(furPos), df_a);
-				df_ecR.PushBack(df_fur, df_a);
-			}
-			df_fl.PushBack(df_ecR, df_a);
-			
-			//벽 정보
-			RandomWall* wall_name = RandomWall::create();
-			rapidjson::Value dw_ecR(kObjectType);
-			rapidjson::Value dw_pos(startPos);
-			//방 1개의 벽 resource Array
-			rapidjson::Value dw_rm(kArrayType);
-			//방의 왼쪽
-			dw_rm.PushBack(rapidjson::Value().SetString((wall_name->getWallEdgeName()).c_str(), dw_a), dw_a);
-			//방 중앙부 
-			for (int setwall = 0; setwall < rmSize; setwall++) {
-				dw_rm.PushBack(rapidjson::Value().SetString((wall_name->getWallName()).c_str(), dw_a), dw_a);
-			}
-			//방 오른쪽
-			dw_rm.PushBack(rapidjson::Value().SetString((wall_name->getWallEdgeName()).c_str(), dw_a), dw_a);
-
-			dw_ecR.AddMember("tile", dw_rm, dw_a);
-			dw_ecR.AddMember("pos", dw_pos , dw_a);
-			dw_fl.PushBack(dw_ecR, dw_a);
-			startPos += rmSize + 1;
-			if (rm == floor_rm[fl] - 1) {
-				//해당 층의 마지막 방
-			}
-			else {
-				ds_door.PushBack(rapidjson::Value().SetInt(startPos), ds_a);
-				rapidjson::Value td_door(kObjectType);
-				td_door.AddMember("lock", rapidjson::Value().SetBool(true), td_a);
-				td_door.AddMember("leftRoom", rapidjson::Value().SetInt(roomNum), td_a);
-				td_door.AddMember("rightRoom", rapidjson::Value().SetInt(roomNum + 1), td_a);
-				td_door.AddMember("pos", rapidjson::Value().SetInt(startPos), td_a);
-				td_fl.PushBack(td_door, td_a);
-			}
-			
-			//방번호 up
-			roomNum++;
-		}
-
-		draw_fur.PushBack(df_fl,df_a);
-
-		draw_wall.PushBack(dw_fl, dw_a);
-
-		if (preEndPos < startPos) {
-			ds_fl.AddMember("count", rapidjson::Value().SetInt(startPos - flStartPos), ds_a);//한 층 너비 구하기 위함
-		}
-		else {
-			ds_fl.AddMember("count", rapidjson::Value().SetInt(preEndPos - flStartPos), ds_a);//한 층 너비 구하기 위함
-		}
-		ds_wall.PushBack(rapidjson::Value().SetInt(startPos), ds_a);//바깥쪽 벽
-		preEndPos = startPos;
-
-		ds_fl.AddMember("wall", ds_wall, ds_a);
-		ds_fl.AddMember("door", ds_door, ds_a);
-		draw_struct.PushBack(ds_fl, ds_a);
-
-		draw_deco.PushBack(dc_fl, dc_a);
-
-		//문 array
-		trans_door.PushBack(td_fl, td_a);
-	}
-	rapidjson::Value ds_top(kObjectType);
-	ds_top.AddMember("startPos", rapidjson::Value().SetInt(preStartPos), ds_a);
-	ds_top.AddMember("count", rapidjson::Value().SetInt(preEndPos - preStartPos), ds_a);
-	ds_top.AddMember("wall", rapidjson::Value().SetArray(), ds_a);
-	ds_top.AddMember("door", rapidjson::Value().SetArray(), ds_a);
-	draw_struct.PushBack(ds_top, ds_a);
-
-	//벽 그리기 데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/draw/drawWall.json", "wb");
-	char writeBuffer[5000];
-	FileWriteStream wall_os(fp, writeBuffer, sizeof(writeBuffer));
-	Writer<FileWriteStream> wall_writer(wall_os);
-	draw_wall.Accept(wall_writer);
-	fclose(fp);
-
-	//가구 그리기 데이터 파일 쓰기
-	strcat(writeBuffer, "");//버퍼 비우기
-	fp = fopen("jsonData/draw/drawFur.json", "wb");
-	FileWriteStream fur_os(fp, writeBuffer, sizeof(writeBuffer));
-	Writer<FileWriteStream> fur_writer(fur_os);
-	draw_fur.Accept(fur_writer);
-	fclose(fp);
-
-	//구조 그리기 데이터 파일 쓰기
-	strcat(writeBuffer, "");//버퍼 비우기
-	fp = fopen("jsonData/draw/drawStruct.json", "wb");
-	FileWriteStream sct_os(fp, writeBuffer, sizeof(writeBuffer));
-	Writer<FileWriteStream> sct_writer(sct_os);
-	draw_struct.Accept(sct_writer);
-	fclose(fp);
-
-	//장식 그리기 데이터 파일 쓰기
-	strcat(writeBuffer, "");//버퍼 비우기
-	fp = fopen("jsonData/draw/drawDeco.json", "wb");
-	FileWriteStream deco_os(fp, writeBuffer, sizeof(writeBuffer));
-	Writer<FileWriteStream> deco_writer(deco_os);
-	draw_deco.Accept(deco_writer);
-	fclose(fp);
-
-	//문  데이터 파일 쓰기
-	strcat(writeBuffer, "");//버퍼 비우기
-	fp = fopen("jsonData/trans/transDoor.json", "wb");
-	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
-	Writer<FileWriteStream> door_writer(door_os);
-	trans_door.Accept(door_writer);
-	fclose(fp);
-}
-*/
 
 void LevelDataSet::setWallData()
 {
@@ -465,37 +231,24 @@ void LevelDataSet::setDoorData()
 
 	int roomNum = 0;
 
-	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
-	int noset_escR = 0;//체크 안한 탈출 방
-
 	for (auto& fl : draw_wall.GetArray()) {
 		rapidjson::Value td_fl(kArrayType);
 		bool firstCheck = true;//첫번째 방인지 체크
+		bool check_esc = false;//이전 방이 탈출방으로 향하는 문인지 체크
 		for (auto& rm : fl.GetArray()) {
 			if (!firstCheck) {
 				rapidjson::Value td_door(kObjectType);
 
-				rapidjson::Value td_pos(rm["pos"].GetInt());
-				rapidjson::Value td_lock(true);
-				rapidjson::Value td_left(roomNum - 1);
-				rapidjson::Value td_right(roomNum);
-				rapidjson::Value td_esc(false);
-				rapidjson::Value td_hp(100);
-				if (noset_escR < escRmCnt) {
-					if (roomNum - 1 == escRm[noset_escR] || roomNum == escRm[noset_escR]) {
-						td_esc.SetBool(true);
-					}
-				}
-
-				td_door.AddMember("pos", td_pos, td_a);
-				td_door.AddMember("lock", td_lock, td_a);
-				td_door.AddMember("left", td_left, td_a);
-				td_door.AddMember("right", td_right, td_a);
-				td_door.AddMember("esc", td_esc, td_a);
-				td_door.AddMember("hp", td_hp, td_a);
+				td_door.AddMember("pos", rapidjson::Value().SetInt(rm["pos"].GetInt()), td_a);
+				td_door.AddMember("lock", true, td_a);
+				td_door.AddMember("left", roomNum - 1, td_a);
+				td_door.AddMember("right", roomNum, td_a);
+				td_door.AddMember("esc", check_esc||rm["esc"].GetBool()?true:false , td_a);//이전 방 or 현재 방이 탈출방이면 true
+				td_door.AddMember("hp", rapidjson::Value().SetInt(100), td_a);
 
 				td_fl.PushBack(td_door, td_a);
 			}
+			check_esc = rm["esc"].GetBool();
 			roomNum++;
 			firstCheck = false;
 		}
@@ -526,8 +279,7 @@ void LevelDataSet::setLadderData()
 
 	int roomNum = 0;
 
-	int floorCnt = _msize(floor_rm) / sizeof(int);//층수
-	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
+	int floorCnt = draw_wall.GetArray().Size();//층수
 
 	int floor = 0;//현재 층수
 	int upRmNum = 0;//위층 첫 방 번호
@@ -535,60 +287,58 @@ void LevelDataSet::setLadderData()
 		if (floor == floorCnt - 1) {
 			break;//마지막 층이면 for문 stop
 		}
-		upRmNum += floor_rm[floor];
+		upRmNum += fl.GetArray().Size();
 		rapidjson::Value tl_fl(kArrayType);
 		bool haveLadder = false;//해당층에 사다리가 1개 이상 있는가?
 		for (auto& rm : fl.GetArray()) {
+			//현재 방이 탈출 방이면 사다리 만들지 않음
+			if (rm["esc"].GetBool()) {
+				continue;
+			}
 			int minNow = rm["pos"].GetInt();
 			int maxNow = rm["size"].GetInt()+minNow;
 			minNow++;
 			maxNow--;
-			for (int i = 0; i < floor_rm[floor + 1]; i++) {
-				//탈출방으로 향하는 방이라면 사다리 만들지 않음
-				bool goEsc = false;
-				for (int esc = 0; esc < escRmCnt; esc++) {
-					if (escRm[esc] == roomNum || escRm[esc] == upRmNum + i) {
-						goEsc = true;
-						break;
-					}
-				}
-				if (goEsc) {
+			//위층 방들
+			int i = -1;
+			for (auto& upRm : draw_wall[floor + 1].GetArray()) {
+				i++;
+				//위층 방이 탈출 방이라면 사다리 만들지 않음
+				if (upRm["esc"].GetBool()) {
 					continue;
 				}
-				int minSet = draw_wall[floor + 1][i]["pos"].GetInt();
-				int maxSet = draw_wall[floor + 1][i]["size"].GetInt() + minSet;
+				int minSet = upRm["pos"].GetInt();
+				int maxSet = upRm["size"].GetInt() + minSet;
 				minSet++;
 				maxSet--;
-				minSet = minNow > minSet ? minNow : minSet;
-				maxSet = maxNow < maxSet ? maxNow : maxSet;
-				if (minSet > maxSet) {
+				//위치가 맞지 않는 경우
+				if (minNow > maxSet) {//위층 방이 현재 방의 앞에 위치
 					continue;
 				}
+				else if (maxNow < minSet) {//위층 방이 현재 방의 뒤에 위치
+					break;
+				}
 				else {
+					minSet = minNow > minSet ? minNow : minSet;
+					maxSet = maxNow < maxSet ? maxNow : maxSet;
 					if (haveLadder&&RandomHelper::random_int(0, 1) == 1) {
-							break;
+						break;
 					}
 					haveLadder = true;
 					//ladder 세팅 가능
 					int ladder_pos = RandomHelper::random_int(minSet, maxSet);
 					rapidjson::Value tl_la(kObjectType);
 
-					rapidjson::Value tl_pos(ladder_pos);
-					rapidjson::Value tl_lock(true);
-					rapidjson::Value tl_up(upRmNum+i);
-					rapidjson::Value tl_down(roomNum);
-					rapidjson::Value tl_hp(100);
-
-					tl_la.AddMember("pos", tl_pos, tl_a);
-					tl_la.AddMember("lock", tl_lock, tl_a);
-					tl_la.AddMember("up", tl_up, tl_a);
-					tl_la.AddMember("down", tl_down, tl_a);
-					tl_la.AddMember("hp", tl_hp, tl_a);
+					tl_la.AddMember("pos", ladder_pos, tl_a);
+					tl_la.AddMember("lock", true, tl_a);
+					tl_la.AddMember("up", upRmNum + i, tl_a);
+					tl_la.AddMember("down", roomNum, tl_a);
+					tl_la.AddMember("hp", 100, tl_a);
 
 					tl_fl.PushBack(tl_la, tl_a);
-					ladfl[floor]++;
 					break;//한 방에 사다리 1개
 				}
+
 			}
 			roomNum++;
 		}
@@ -610,100 +360,78 @@ void LevelDataSet::setFurData()
 	/*데이터 구조
 	draw_fur[floor][rm][fur]{"name" : 가구 이름::String,
 							 "pos" : 중앙 지점 위치::Double,
-							 "size" : 가구 크기::Int }
+							 "size" : 가구 크기::Int}
 	*/
+	Document::AllocatorType& df_a = draw_fur.GetAllocator();
+	draw_fur.SetArray();
 
 	Document::AllocatorType& cb_a = draw_fur.GetAllocator();
 	check_blank.SetArray();//deco 넣을 공간 확인
-
-	Document::AllocatorType& df_a = draw_fur.GetAllocator();
-	draw_fur.SetArray();
-	
 	//사다리를 피해 가구 세팅
-	int floorCnt = _msize(floor_rm) / sizeof(int);//층수
-	int escRmCnt = _msize(escRmfl) / sizeof(int);//탈출 방 갯수
-	int noCheck_esc = 0;//체크 안한 탈출방
 
 	int floor = 0;//현재 층
+	int roomNum = 0;//전체 방에대한 방 번호
 	for (auto& fl : draw_wall.GetArray()) {
 		rapidjson::Value df_fl(kArrayType);//각 층의 가구
 		rapidjson::Value cb_fl(kArrayType);//각 층의 blank
-		int room = 0;//현재 방
-		int noCheck_lad = 0;//해당 층의 사다리
 		for (auto& rm : fl.GetArray()) {
 			rapidjson::Value df_rm(kArrayType);//각 방의 가구
-
 			rapidjson::Value cb_rm(kArrayType);//각 방의 blank
 
 			//탈출 방이면 가구 세팅 안함
-			if (noCheck_esc <= escRmCnt) {
-				if (escRmfl[noCheck_esc] == floor && escRmNum[noCheck_esc] == room) {
-					cb_rm.PushBack(false, cb_a);
-					cb_fl.PushBack(cb_rm, cb_a);
-
-					log("no set escape room");
-					df_fl.PushBack(df_rm, df_a);
-					room++;
-					noCheck_esc++;
-					continue;
-				}
+			if (rm["esc"].GetBool()) {
+				cb_fl.PushBack(cb_rm,cb_a);
+				continue;
 			}
-			int startPos = rm["pos"].GetInt();
-			int lastPos = rm["size"].GetInt()+startPos;
-			//방 초기화
-			for (int i = 0; i < rm["size"].GetInt() - 1; i++) {
-				cb_rm.PushBack(true, cb_a);
-			}
-			startPos++;
-			lastPos--;
+			
 			int left = rm["size"].GetInt() - 1;
 			int right = 0;
-			if (noCheck_lad < ladfl[floor]) {
-				int ladPos = trans_ladder[floor][noCheck_lad]["pos"].GetInt();
-				if (ladPos >= startPos && ladPos <= lastPos) {
-					left = ladPos - startPos;
-					right = lastPos - ladPos;
-					noCheck_lad++;
-					cb_rm[left] = false;
+			for (auto& lad : trans_ladder[floor].GetArray()) {
+				if (roomNum == lad["down"].GetInt()) {
+					const int ladPos = lad["pos"].GetInt() - rm["pos"].GetInt();
+					right = left - ladPos;
+					left = ladPos - 1;
+					break;
 				}
 			}
-
-
+			
 			//가구 정보
 			Furniture* furni_name = Furniture::create(left,right);
 			//사다리 왼쪽
 			for (auto v : furni_name->v_FntData_l) {
 				rapidjson::Value df_fur(kObjectType);//각 가구
 				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
-				df_fur.AddMember("pos", rapidjson::Value().SetFloat(v->pos+startPos-1), df_a);
-				df_fur.AddMember("size", rapidjson::Value().SetInt(v->fnt_size), df_a);
+				df_fur.AddMember("pos", v->pos+(float)rm["pos"].GetInt(), df_a);
+				df_fur.AddMember("size", v->fnt_size, df_a);
 				df_rm.PushBack(df_fur, df_a);
-				int first = (int)(v->pos - (v->fnt_size - 1)*0.5)-1;
-				for (int i = 0; i < v->fnt_size; i++) {
-					cb_rm[first] = v->deco;
-					first++;
+				
+				if (v->deco) {
+					int first = (int)v->pos-(int)((v->fnt_size-1)*0.5f);
+					for (int i = 0; i < v->fnt_size; i++) {
+						cb_rm.PushBack(first, cb_a);
+						first++;
+					}
 				}
-
 			}
 			//사다리 오른쪽
 			for (auto v : furni_name->v_FntData_r) {
 				rapidjson::Value df_fur(kObjectType);//각 가구
 				df_fur.AddMember("name", rapidjson::Value().SetString((v->fnt_img).c_str(), df_a), df_a);
-				df_fur.AddMember("pos", rapidjson::Value().SetFloat(v->pos+left+startPos), df_a);
-				df_fur.AddMember("size", rapidjson::Value().SetInt(v->fnt_size), df_a);
+				df_fur.AddMember("pos", v->pos + left+ (float)rm["pos"].GetInt(), df_a);
+				df_fur.AddMember("size", v->fnt_size, df_a);
 				df_rm.PushBack(df_fur, df_a);
-				int first = (int)(v->pos - (double)(v->fnt_size - 1)*0.5)-1;
+				/*int first = (int)(v->pos - (double)(v->fnt_size - 1)*0.5)-1;
 				for (int i = 0; i < v->fnt_size; i++) {
-					cb_rm[first] = v->deco;
+					//cb_rm[first] = v->deco;
 					first++;
-				}
+				}*/
 			}
 			cb_fl.PushBack(cb_rm, cb_a);
-
-			room++;
+			roomNum++;
+			//room++;
 			df_fl.PushBack(df_rm, df_a);
 		}
-		check_blank.PushBack(cb_fl, cb_a);
+		//check_blank.PushBack(cb_fl, cb_a);
 
 		draw_fur.PushBack(df_fl, df_a);
 		floor++;
@@ -717,13 +445,13 @@ void LevelDataSet::setFurData()
 	draw_fur.Accept(fur_writer);
 	fclose(fp);
 
-	//가구 그리기 데이터 파일 쓰기
+	/*//가구 그리기 데이터 파일 쓰기
 	FILE* fp2 = fopen("jsonData/draw/check.json", "wb");
 	char writeBuffer2[5000];
 	FileWriteStream fur_os2(fp2, writeBuffer2, sizeof(writeBuffer2));
 	Writer<FileWriteStream> fur_writer2(fur_os2);
 	check_blank.Accept(fur_writer2);
-	fclose(fp2);
+	fclose(fp2);*/
 
 }
 
@@ -809,12 +537,13 @@ void LevelDataSet::setDeco()
 
 	draw_deco.SetArray();
 	Document::AllocatorType& dd_a = draw_deco.GetAllocator();
+	
 	int floor = 0;
 	for (auto& fl : draw_wall.GetArray()) {
 		rapidjson::Value dd_fl(kArrayType);
 		int room = 0;
 		for (auto& rm : fl.GetArray()) {
-			int first = rm["pos"].GetInt() + 1;
+			/*int first = rm["pos"].GetInt() + 1;
 			for (auto& db : check_blank[floor][room].GetArray()) {
 				if (db == true) {
 					rapidjson::Value dd_deco(kObjectType);
@@ -824,7 +553,8 @@ void LevelDataSet::setDeco()
 					dd_fl.PushBack(dd_deco, dd_a);
 				}
 				first++;
-			}
+			}*/
+			
 			room++;
 		}
 		draw_deco.PushBack(dd_fl, dd_a);
@@ -836,8 +566,8 @@ void LevelDataSet::setDeco()
 	char writeBuffer[5000];
 	FileWriteStream deco_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> deco_writer(deco_os);
-	draw_deco.Accept(deco_writer);
-	fclose(fp);
+	draw_deco.Acce(deco_writer);
+	fclose(fp);*/
 	
 
 }
