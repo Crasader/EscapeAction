@@ -49,7 +49,7 @@ bool player::init()
 
 	_UIM = UIManager::getInstance();
 
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3", true);
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background_rain.mp3", true);
 	return true;
 }
 
@@ -584,7 +584,9 @@ bool player::setState(player_Move_enum state)
 	}
 	case SEARCH:
 	{
-		SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
+		SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound.mp3", true);
+		//SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound1.mp3", true);
+		SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound2.mp3", true);
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
 
