@@ -1,4 +1,5 @@
 #include "Joystick.h"
+#include "../proj.win32/GameManager.h"
 
 bool Joystick::init()
 {
@@ -49,7 +50,7 @@ bool Joystick::onTouchBegan(Touch * touch, Event * unused_event)
 		mj->setPosition(Point(Umj_Touch_p));
 
 		umj->setVisible(true);
-		mj->setVisible(true);
+		mj->setVisible(true);		
 	}
 	else
 	{
@@ -69,6 +70,16 @@ void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 	{
 		Move_p_joy1 = Mj_Touch_p - Umj_Touch_p;
 		Move_p_joy2 = Move_p_joy1.getNormalized();
+		if (Move_p_joy2.x > 0)
+		{
+			if(GameManager::getInstance()->getPlayerState() != SEARCH)
+			GameManager::getInstance()->setState(RMOVE);
+		}
+		if (Move_p_joy2.x < 0)
+		{
+			if (GameManager::getInstance()->getPlayerState() != SEARCH)
+			GameManager::getInstance()->setState(LMOVE);
+		}
 	}
 }
 
@@ -82,4 +93,7 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 
 	umj->setVisible(false);
 	mj->setVisible(false);
+
+	if (GameManager::getInstance()->getPlayerState() != SEARCH)
+	GameManager::getInstance()->setState(IDLE);
 }

@@ -1,7 +1,7 @@
 #include "GameManager.h"
+#include "UIManager.h"
+
 static GameManager* pGameManager = NULL;
-
-
 
 GameManager::GameManager()
 {
@@ -33,11 +33,16 @@ bool GameManager::setPlayer(player * player)
 
 player_Move_enum GameManager::getPlayerState()
 {
-	return _player->getState();
+	if (_player != NULL) {
+		return _player->getState();
+	}
+	return NONE;
 }
 
 bool GameManager::setState(player_Move_enum state)
 {
-	return _player->setState(state);//state가 제대로 들어갔을때 true 반환
+	if (_player != NULL) {
+		return _player->setState(state);
+	}//state가 제대로 들어갔을때 true 반환
+	return false;
 }
-

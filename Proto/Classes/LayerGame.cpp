@@ -72,9 +72,9 @@ void LayerGame::update(float dt)
 	//가구 버튼 test
 	dfur->checkFur(pyer->getRect(), _roomNum);
 	ddor->checkDoor(pyer->getRect(), 0);
-	
 
 	if (du->moveDoor()) {
+		GameManager::getInstance()->setState(OPEN);
 		int next = du->getNextRoom(_roomNum);
 		log(" now : %d next : %d", _roomNum, next);
 		du->setUnMove();
@@ -89,32 +89,32 @@ void LayerGame::update(float dt)
 	if (fu->checkSearch()) {
 		float posX = fu->getPos();
 		float dis_pb = pos.x - posX;
-		if (dis_pb<2 && dis_pb>-2) {
+		if (dis_pb<5 && dis_pb>-5) {
 			fu->setStart();
 			pyer->checkFur();
 			UIManager::getInstance()->setEnable_AtkBtn(false);
 		}
-		else if (dis_pb<5 && dis_pb>-5)
+		else if (dis_pb<10 && dis_pb>-10)
 		{
-			pyer->set_RL_filp(pyer->get_RL_filp(), false, 0);
+			pyer->set_RL_filp(pyer->get_RL_filp());
 			pyer->getChildByName("player_ani")->setPositionX(posX);
+			GameManager::getInstance()->setState(SEARCH);
 		}
 		else {
 			int i = dis_pb > 0 ? 1 : -1;
 			if (i == 1)
 			{
-				pyer->set_RL_filp(true, false,i);
+				GameManager::getInstance()->setState(LMOVE);		
 			}
 			else if (i == -1)
 			{
-				pyer->set_RL_filp(false,false,i);
-			}
-			
+				GameManager::getInstance()->setState(RMOVE);							
+			}			
 		}
 	}
 	int move = 5;
-
 	pyer->Joy_move_check();
+	
 	/*if (!pyer->getCheckFur() && fu->checkSearch()) {
 		fu->setCancle();//가구 체크 취소
 	}*/

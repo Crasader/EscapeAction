@@ -56,10 +56,23 @@ bool player::init()
 
 void player::ani_pause()
 {
-	playerState = IDLE;
-	oncheck = true;
-	all_stop = false;
+	setState(IDLE);
 	SimpleAudioEngine::getInstance()->stopAllEffects();
+}
+
+void player::ani_move()
+{
+	_player_anime = Animation::create();
+	_player_anime->setDelayPerUnit(0.125f);
+
+	_player_anime->addSpriteFrameWithFile("rr0.png");
+	_player_anime->addSpriteFrameWithFile("rr1.png");
+	_player_anime->addSpriteFrameWithFile("rr2.png");
+	_player_anime->addSpriteFrameWithFile("rr3.png");
+	_player_anime->addSpriteFrameWithFile("rr4.png");
+	_player_anime->addSpriteFrameWithFile("rr5.png");
+
+	_player_animat = Animate::create(_player_anime);
 }
 
 void player::checkFur()
@@ -91,6 +104,7 @@ void player::checkFur()
 		oncheck = true;
 	}
 }
+
 void player::make_atk_ani()
 {
 	_player->stopAllActions();
@@ -103,18 +117,9 @@ void player::make_atk_ani()
 	_player_anime->addSpriteFrameWithFile("pa1.png");
 	_player_anime->addSpriteFrameWithFile("pa2.png");
 	_player_anime->addSpriteFrameWithFile("pa3.png");
-	_player_anime->addSpriteFrameWithFile("pa4.png");
-	//_player_anime->addSpriteFrameWithFile("tumyung.png");
+	_player_anime->addSpriteFrameWithFile("pa4.png");	
 	_player_anime->addSpriteFrameWithFile("pa5.png");
-	/*_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");
-	_player_anime->addSpriteFrameWithFile("tumyung.png");*/
 	_player_anime->addSpriteFrameWithFile("pa6.png");
-	//_player_anime->addSpriteFrameWithFile("tumyung.png");
 	_player_anime->addSpriteFrameWithFile("pa7.png");
 	_player_anime->addSpriteFrameWithFile("pa8.png");
 	_player_anime->addSpriteFrameWithFile("pa9.png");
@@ -150,19 +155,19 @@ void player::Joy_move_check()
 	else if (_player->getPositionX() < _firstPos + (plyer_size.width*0.5) + 6) {
 		_player->setPositionX(_firstPos + (plyer_size.width*0.5) + 6);
 	}
-	player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
-	int move = 3;
 
-	atk_ran = RandomHelper::random_int(0, 2);
+	//player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 
-	atk_check = UIManager::getInstance()->get_atk_btn();
-	src_check = UIManager::getInstance()->get_src_btn();
+	//int move = 3;
 
-	_player->setFlippedX(get_RL_filp());//가구서치 방향getset
+	//atk_check = UIManager::getInstance()->get_atk_btn();
+	//src_check = UIManager::getInstance()->get_src_btn();
 
-	if (all_stop == false)
+	//_player->setFlippedX(get_RL_filp());//가구서치 방향getset
+
+	/*if (all_stop == false)
 	{
-		
+
 		if (atk_check == true)
 		{
 			playerState = ATTACK;
@@ -209,182 +214,180 @@ void player::Joy_move_check()
 				oncheck = true;
 				SimpleAudioEngine::getInstance()->stopAllEffects();
 			}
-		}
-
+		}*/
 	
-		if (oncheck == true)
-		{
-			switch (playerState)
-			{
-			case NONE:
+	//if (oncheck == true)
+	//{
+	//	switch (playerState)
+	//	{
+	//	case NONE:
 
-				break;
-			case IDLE:
-				_player->stopAllActions();
-				_player_anime = Animation::create();
-				_player_anime->setDelayPerUnit(0.5f);
+	//		break;
+	//	case IDLE:
+	//		_player->stopAllActions();
+	//		_player_anime = Animation::create();
+	//		_player_anime->setDelayPerUnit(0.5f);
 
-				_player_anime->addSpriteFrameWithFile("I1.png");
-				_player_anime->addSpriteFrameWithFile("I0.png");
+	//		_player_anime->addSpriteFrameWithFile("I1.png");
+	//		_player_anime->addSpriteFrameWithFile("I0.png");
 
-				_player_animat = Animate::create(_player_anime);
-				rep_player = RepeatForever::create(_player_animat);
+	//		_player_animat = Animate::create(_player_anime);
+	//		rep_player = RepeatForever::create(_player_animat);
 
-				_player->runAction(rep_player);
+	//		_player->runAction(rep_player);
 
-				oncheck = false;
-				break;
-			case LMOVE:
-				_player->stopAllActions();
-				_player->setFlipX(RL_filp);
+	//		oncheck = false;
+	//		break;
+	//	case LMOVE:
+	//		_player->stopAllActions();
+	//		_player->setFlipX(RL_filp);
 
-				_player_anime = Animation::create();
-				_player_anime->setDelayPerUnit(0.125f);
+	//		_player_anime = Animation::create();
+	//		_player_anime->setDelayPerUnit(0.125f);
 
 
-				_player_anime->addSpriteFrameWithFile("rr0.png");
-				_player_anime->addSpriteFrameWithFile("rr1.png");
-				_player_anime->addSpriteFrameWithFile("rr2.png");
-				_player_anime->addSpriteFrameWithFile("rr3.png");
-				_player_anime->addSpriteFrameWithFile("rr4.png");
-				_player_anime->addSpriteFrameWithFile("rr5.png");
+	//		_player_anime->addSpriteFrameWithFile("rr0.png");
+	//		_player_anime->addSpriteFrameWithFile("rr1.png");
+	//		_player_anime->addSpriteFrameWithFile("rr2.png");
+	//		_player_anime->addSpriteFrameWithFile("rr3.png");
+	//		_player_anime->addSpriteFrameWithFile("rr4.png");
+	//		_player_anime->addSpriteFrameWithFile("rr5.png");
 
-				_player_animat = Animate::create(_player_anime);
-				rep_player = RepeatForever::create(_player_animat);
+	//		_player_animat = Animate::create(_player_anime);
+	//		rep_player = RepeatForever::create(_player_animat);
 
-				_player->runAction(rep_player);
+	//		_player->runAction(rep_player);
 
-				oncheck = false;
-				break;
-			case RMOVE:
-				_player->stopAllActions();
-				_player->setFlipX(RL_filp);
+	//		oncheck = false;
+	//		break;
+	//	case RMOVE:
+	//		_player->stopAllActions();
+	//		_player->setFlipX(RL_filp);
 
-				_player_anime = Animation::create();
-				_player_anime->setDelayPerUnit(0.125f);
+	//		_player_anime = Animation::create();
+	//		_player_anime->setDelayPerUnit(0.125f);
 
-				_player_anime->addSpriteFrameWithFile("rr0.png");
-				_player_anime->addSpriteFrameWithFile("rr1.png");
-				_player_anime->addSpriteFrameWithFile("rr2.png");
-				_player_anime->addSpriteFrameWithFile("rr3.png");
-				_player_anime->addSpriteFrameWithFile("rr4.png");
-				_player_anime->addSpriteFrameWithFile("rr5.png");
+	//		_player_anime->addSpriteFrameWithFile("rr0.png");
+	//		_player_anime->addSpriteFrameWithFile("rr1.png");
+	//		_player_anime->addSpriteFrameWithFile("rr2.png");
+	//		_player_anime->addSpriteFrameWithFile("rr3.png");
+	//		_player_anime->addSpriteFrameWithFile("rr4.png");
+	//		_player_anime->addSpriteFrameWithFile("rr5.png");
 
-				_player_animat = Animate::create(_player_anime);
-				rep_player = RepeatForever::create(_player_animat);
+	//		_player_animat = Animate::create(_player_anime);
+	//		rep_player = RepeatForever::create(_player_animat);
 
-				_player->runAction(rep_player);
-				oncheck = false;
-				break;
-			case ATTACK:
-			{
-				if (atk_ran == 0)
-				{
-					make_atk_ani();
+	//		_player->runAction(rep_player);
+	//		oncheck = false;
+	//		break;
+	//	case ATTACK:
+	//	{
+	//		atk_ran = RandomHelper::random_int(0, 2);
+	//		if (atk_ran == 0)
+	//		{
+	//			make_atk_ani();
 
-					Sequence* A_player = Sequence::create(p_f_atk, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+	//			Sequence* A_player = Sequence::create(p_f_atk, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
-					_player->runAction(A_player);
-					
-					oncheck = false;
-					break;
-				}
-				else if (atk_ran == 1)
-				{
-					_player->stopAllActions();
-					_player->setFlipX(RL_filp);
+	//			_player->runAction(A_player);
 
-					_player_anime = Animation::create();
-					_player_anime->setDelayPerUnit(0.1f);
+	//			oncheck = false;
+	//			break;
+	//		}
+	//		else if (atk_ran == 1)
+	//		{
+	//			_player->stopAllActions();
+	//			_player->setFlipX(RL_filp);
 
-					_player_anime->addSpriteFrameWithFile("a6.png");
-					_player_anime->addSpriteFrameWithFile("a5.png");
-					_player_anime->addSpriteFrameWithFile("a4.png");
-					_player_anime->addSpriteFrameWithFile("a3.png");
-					_player_anime->addSpriteFrameWithFile("a2.png");
-					_player_anime->addSpriteFrameWithFile("a1.png");
-					_player_anime->addSpriteFrameWithFile("a0.png");
-					_player_animat = Animate::create(_player_anime);
+	//			_player_anime = Animation::create();
+	//			_player_anime->setDelayPerUnit(0.1f);
 
-					Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+	//			_player_anime->addSpriteFrameWithFile("a6.png");
+	//			_player_anime->addSpriteFrameWithFile("a5.png");
+	//			_player_anime->addSpriteFrameWithFile("a4.png");
+	//			_player_anime->addSpriteFrameWithFile("a3.png");
+	//			_player_anime->addSpriteFrameWithFile("a2.png");
+	//			_player_anime->addSpriteFrameWithFile("a1.png");
+	//			_player_anime->addSpriteFrameWithFile("a0.png");
+	//			_player_animat = Animate::create(_player_anime);
 
-					_player->runAction(A_player);
+	//			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
-					oncheck = false;
-					break;
-				}
-				else if (atk_ran == 2)
-				{
-					_player->stopAllActions();
-					_player->setFlipX(RL_filp);
+	//			_player->runAction(A_player);
 
-					_player_anime = Animation::create();
-					_player_anime->setDelayPerUnit(0.1f);
+	//			oncheck = false;
+	//			break;
+	//		}
+	//		else if (atk_ran == 2)
+	//		{
+	//			_player->stopAllActions();
+	//			_player->setFlipX(RL_filp);
 
-					_player_anime->addSpriteFrameWithFile("a0.png");
-					_player_anime->addSpriteFrameWithFile("a1.png");
-					_player_anime->addSpriteFrameWithFile("a2.png");
-					_player_anime->addSpriteFrameWithFile("a3.png");
-					_player_anime->addSpriteFrameWithFile("a4.png");
-					_player_anime->addSpriteFrameWithFile("a5.png");
-					_player_anime->addSpriteFrameWithFile("a6.png");
+	//			_player_anime = Animation::create();
+	//			_player_anime->setDelayPerUnit(0.1f);
 
-					_player_animat = Animate::create(_player_anime);
+	//			_player_anime->addSpriteFrameWithFile("a0.png");
+	//			_player_anime->addSpriteFrameWithFile("a1.png");
+	//			_player_anime->addSpriteFrameWithFile("a2.png");
+	//			_player_anime->addSpriteFrameWithFile("a3.png");
+	//			_player_anime->addSpriteFrameWithFile("a4.png");
+	//			_player_anime->addSpriteFrameWithFile("a5.png");
+	//			_player_anime->addSpriteFrameWithFile("a6.png");
 
-					Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+	//			_player_animat = Animate::create(_player_anime);
 
-					_player->runAction(A_player);
+	//			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
-					oncheck = false;
-					break;
-				}
-			}
-			case SEARCH:
-			{
-				SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
-				_player->stopAllActions();
-				_player->setFlipX(RL_filp);
+	//			_player->runAction(A_player);
 
-				_player_anime = Animation::create();
-				_player_anime->setDelayPerUnit(0.15f);
+	//			oncheck = false;
+	//			break;
+	//		}
+	//	}
+	//	case SEARCH:
+	//	{
+	//		SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
+	//		_player->stopAllActions();
+	//		_player->setFlipX(RL_filp);
 
-				/*_player_anime->addSpriteFrameWithFile("s0.png");
-				_player_anime->addSpriteFrameWithFile("s1.png");
-				_player_anime->addSpriteFrameWithFile("s2.png");
-				_player_anime->addSpriteFrameWithFile("s3.png");
-				_player_anime->addSpriteFrameWithFile("s4.png");
-				_player_anime->addSpriteFrameWithFile("s2.png");
-				_player_anime->addSpriteFrameWithFile("s3.png");
-				_player_anime->addSpriteFrameWithFile("s4.png");*/
+	//		_player_anime = Animation::create();
+	//		_player_anime->setDelayPerUnit(0.15f);
 
-				_player_anime->addSpriteFrameWithFile("ds2.png");
-				_player_anime->addSpriteFrameWithFile("ds1.png");
-				_player_anime->addSpriteFrameWithFile("ds0.png");
-				_player_anime->addSpriteFrameWithFile("ds3.png");
-				_player_anime->addSpriteFrameWithFile("ds0.png");
-				_player_anime->addSpriteFrameWithFile("ds1.png");
-				_player_anime->addSpriteFrameWithFile("ds2.png");
-				_player_anime->addSpriteFrameWithFile("ds1.png");
-				_player_anime->addSpriteFrameWithFile("ds0.png");
-				_player_anime->addSpriteFrameWithFile("ds3.png");
-				_player_anime->addSpriteFrameWithFile("ds0.png");
-				_player_anime->addSpriteFrameWithFile("ds1.png");
+	//		/*_player_anime->addSpriteFrameWithFile("s0.png");
+	//		_player_anime->addSpriteFrameWithFile("s1.png");
+	//		_player_anime->addSpriteFrameWithFile("s2.png");
+	//		_player_anime->addSpriteFrameWithFile("s3.png");
+	//		_player_anime->addSpriteFrameWithFile("s4.png");
+	//		_player_anime->addSpriteFrameWithFile("s2.png");
+	//		_player_anime->addSpriteFrameWithFile("s3.png");
+	//		_player_anime->addSpriteFrameWithFile("s4.png");*/
 
-				_player_animat = Animate::create(_player_anime);
+	//		_player_anime->addSpriteFrameWithFile("ds2.png");
+	//		_player_anime->addSpriteFrameWithFile("ds1.png");
+	//		_player_anime->addSpriteFrameWithFile("ds0.png");
+	//		_player_anime->addSpriteFrameWithFile("ds3.png");
+	//		_player_anime->addSpriteFrameWithFile("ds0.png");
+	//		_player_anime->addSpriteFrameWithFile("ds1.png");
+	//		_player_anime->addSpriteFrameWithFile("ds2.png");
+	//		_player_anime->addSpriteFrameWithFile("ds1.png");
+	//		_player_anime->addSpriteFrameWithFile("ds0.png");
+	//		_player_anime->addSpriteFrameWithFile("ds3.png");
+	//		_player_anime->addSpriteFrameWithFile("ds0.png");
+	//		_player_anime->addSpriteFrameWithFile("ds1.png");
 
-				Sequence* S_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+	//		_player_animat = Animate::create(_player_anime);
 
-				_player->runAction(S_player);
+	//		Sequence* S_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
-				oncheck = false;
-				break;
-			}
-			default:
-				break;
-			}
-		}
-	}
+	//		_player->runAction(S_player);
 
+	//		oncheck = false;
+	//		break;
+	//	}
+	//	default:
+	//		break;
+	//	}
+	//}
 }
 
 void player::onPress(EventKeyboard::KeyCode key)
@@ -461,8 +464,218 @@ bool player::setState(player_Move_enum state)
 	//이미 실행중인 state는 아닌가?
 	//그렇다면 return false;
 	//위 조건이 아니라면 아래로 진행
+	if (playerState == state)
+	{
+		return false;
+	}
+	playerState = state;
+	switch (playerState)
+	{
+	case NONE:
+		break;
+	case IDLE:
+	{
+		_player->stopAllActions();
+		_player->setFlipX(RL_filp);
+		_player_anime = Animation::create();
+		_player_anime->setDelayPerUnit(0.5f);
 
+		_player_anime->addSpriteFrameWithFile("I1.png");
+		_player_anime->addSpriteFrameWithFile("I0.png");
 
+		_player_animat = Animate::create(_player_anime);
+		rep_player = RepeatForever::create(_player_animat);
+
+		_player->runAction(rep_player);
+		break;
+	}
+	case LMOVE:
+	{	RL_filp = true;
+	_player->stopAllActions();
+	_player->setFlipX(RL_filp);
+	ani_move();
+	Spawn* A_player = Spawn::create(_player_animat, MoveBy::create(0.75, Point(-80, 0)), NULL);
+	rep_player = RepeatForever::create(A_player);
+	_player->runAction(rep_player);
+	break;
+	}
+	case RMOVE:
+	{
+		RL_filp = false;
+		_player->stopAllActions();
+		_player->setFlipX(RL_filp);
+		ani_move();
+		Spawn* A_player = Spawn::create(_player_animat, MoveBy::create(0.75, Point(80, 0)), NULL);
+		rep_player = RepeatForever::create(A_player);
+		_player->runAction(rep_player);
+		break;
+	}
+	case ATTACK:
+	{
+		atk_ran = RandomHelper::random_int(0, 2);
+		if (atk_ran == 0)
+		{
+			make_atk_ani();
+
+			Sequence* A_player = Sequence::create(p_f_atk, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+
+			_player->runAction(A_player);
+			break;
+		}
+		else if (atk_ran == 1)
+		{
+			_player->stopAllActions();
+			_player->setFlipX(RL_filp);
+
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.1f);
+
+			_player_anime->addSpriteFrameWithFile("a6.png");
+			_player_anime->addSpriteFrameWithFile("a5.png");
+			_player_anime->addSpriteFrameWithFile("a4.png");
+			_player_anime->addSpriteFrameWithFile("a3.png");
+			_player_anime->addSpriteFrameWithFile("a2.png");
+			_player_anime->addSpriteFrameWithFile("a1.png");
+			_player_anime->addSpriteFrameWithFile("a0.png");
+			_player_animat = Animate::create(_player_anime);
+
+			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+
+			_player->runAction(A_player);
+			break;
+		}
+		else if (atk_ran == 2)
+		{
+			_player->stopAllActions();
+			_player->setFlipX(RL_filp);
+
+			_player_anime = Animation::create();
+			_player_anime->setDelayPerUnit(0.1f);
+
+			_player_anime->addSpriteFrameWithFile("a0.png");
+			_player_anime->addSpriteFrameWithFile("a1.png");
+			_player_anime->addSpriteFrameWithFile("a2.png");
+			_player_anime->addSpriteFrameWithFile("a3.png");
+			_player_anime->addSpriteFrameWithFile("a4.png");
+			_player_anime->addSpriteFrameWithFile("a5.png");
+			_player_anime->addSpriteFrameWithFile("a6.png");
+
+			_player_animat = Animate::create(_player_anime);
+
+			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+
+			_player->runAction(A_player);
+			break;
+		}
+	}
+	case SEARCH:
+	{
+		SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
+		_player->stopAllActions();
+		_player->setFlipX(RL_filp);
+
+		_player_anime = Animation::create();
+		_player_anime->setDelayPerUnit(0.15f);
+
+		_player_anime->addSpriteFrameWithFile("ds2.png");
+		_player_anime->addSpriteFrameWithFile("ds1.png");
+		_player_anime->addSpriteFrameWithFile("ds0.png");
+		_player_anime->addSpriteFrameWithFile("ds3.png");
+		_player_anime->addSpriteFrameWithFile("ds0.png");
+		_player_anime->addSpriteFrameWithFile("ds1.png");
+		_player_anime->addSpriteFrameWithFile("ds2.png");
+		_player_anime->addSpriteFrameWithFile("ds1.png");
+		_player_anime->addSpriteFrameWithFile("ds0.png");
+		_player_anime->addSpriteFrameWithFile("ds3.png");
+		_player_anime->addSpriteFrameWithFile("ds0.png");
+		_player_anime->addSpriteFrameWithFile("ds1.png");
+
+		_player_animat = Animate::create(_player_anime);
+
+		//Sequence* S_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+		rep_player = RepeatForever::create(_player_animat);
+		_player->runAction(rep_player);
+		break;
+	}
+	case OPEN:
+	{
+		SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
+		_player->stopAllActions();
+		_player->setFlipX(RL_filp);
+
+		_player_anime = Animation::create();
+		_player_anime->setDelayPerUnit(0.15f);
+
+		_player_anime->addSpriteFrameWithFile("op0.png");
+		_player_anime->addSpriteFrameWithFile("op1.png");
+		_player_anime->addSpriteFrameWithFile("op2.png");
+		_player_anime->addSpriteFrameWithFile("op3.png");
+		_player_anime->addSpriteFrameWithFile("op2.png");
+		_player_anime->addSpriteFrameWithFile("op1.png");
+		/*
+		_player_anime->addSpriteFrameWithFile("op4.png");
+		_player_anime->addSpriteFrameWithFile("op5.png");
+		_player_anime->addSpriteFrameWithFile("op6.png");
+		_player_anime->addSpriteFrameWithFile("op7.png");
+		_player_anime->addSpriteFrameWithFile("op8.png");*/
+
+		_player_animat = Animate::create(_player_anime);
+		Spawn* O_player = Spawn::create(_player_animat, MoveBy::create(0.65, Point(10, 0)), NULL);
+		Sequence* OD_player = Sequence::create(O_player, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+		_player->runAction(OD_player);
+
+		break;
+	}
+	case UMOVE:
+	{
+		_player->stopAllActions();
+		_player->setFlipX(RL_filp);
+		_player_anime = Animation::create();
+		_player_anime->setDelayPerUnit(0.15f);
+
+		_player_anime->addSpriteFrameWithFile("U0.png");
+		_player_anime->addSpriteFrameWithFile("U1.png");
+		_player_anime->addSpriteFrameWithFile("U2.png");
+		_player_anime->addSpriteFrameWithFile("U3.png");
+		_player_anime->addSpriteFrameWithFile("U4.png");
+		_player_anime->addSpriteFrameWithFile("U5.png");
+
+		_player_animat = Animate::create(_player_anime);
+
+		_player_UD_anime = Animation::create();
+		_player_UD_anime->setDelayPerUnit(0.1f);
+
+		_player_UD_anime->addSpriteFrameWithFile("ue0.png");
+		_player_UD_anime->addSpriteFrameWithFile("ue1.png");
+		_player_UD_anime->addSpriteFrameWithFile("ue2.png");
+		_player_UD_anime->addSpriteFrameWithFile("ue3.png");
+		_player_UD_anime->addSpriteFrameWithFile("ue4.png");
+		
+
+		_player_UD_animat = Animate::create(_player_UD_anime);
+
+		_player_E_anime = Animation::create();
+		_player_E_anime->setDelayPerUnit(0.1f);
+
+		_player_E_anime->addSpriteFrameWithFile("ue5.png");
+		_player_E_anime->addSpriteFrameWithFile("ue6.png");
+		_player_E_anime->addSpriteFrameWithFile("ue7.png");
+		_player_E_anime->addSpriteFrameWithFile("ue8.png");
+
+		_player_E_animat = Animate::create(_player_E_anime);		
+
+		Spawn* U_player = Spawn::create(_player_animat, MoveBy::create(0.9, Point(0, 65)), NULL);		
+		Spawn* E_player = Spawn::create(_player_E_animat, MoveBy::create(0.4, Point(0, 55)), NULL);
+
+		Sequence* UE_player = Sequence::create(U_player, _player_UD_animat, E_player, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
+
+		_player->runAction(UE_player);
+		break;
+	}		
+	default:
+		break;
+	}
+	
 	/*state 관련 스위치문*/
 	//return true
 	return true;
@@ -474,11 +687,9 @@ Rect player::getRect()
 	return _player->getBoundingBox();
 }
 
-void player::set_RL_filp(bool RL, bool A_Stop, int Joy_m)
+void player::set_RL_filp(bool RL)
 {
 	RL_filp = RL;
-	all_stop = A_Stop;
-	player_fs_move = Joy_m;
 }
 
 bool player::get_RL_filp()
