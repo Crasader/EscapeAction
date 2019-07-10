@@ -158,12 +158,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\player.cpp" />
     <ClCompile Include="..\Classes\Room.cpp" />
     <ClCompile Include="..\Classes\UIManager.cpp" />
+    <ClCompile Include="DoorUI.cpp" />
     <ClCompile Include="DrawDeco.cpp" />
+    <ClCompile Include="DrawDoor.cpp" />
     <ClCompile Include="DrawField.cpp" />
     <ClCompile Include="DrawFurniture.cpp" />
     <ClCompile Include="DrawStruct.cpp" />
     <ClCompile Include="Furniture.cpp" />
     <ClCompile Include="FurnitureUI.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LevelDataSet.cpp" />
     <ClCompile Include="main.cpp" />
@@ -180,18 +183,22 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\player.h" />
     <ClInclude Include="..\Classes\Room.h" />
     <ClInclude Include="..\Classes\UIManager.h" />
+    <ClInclude Include="DoorUI.h" />
     <ClInclude Include="DrawDeco.h" />
+    <ClInclude Include="DrawDoor.h" />
     <ClInclude Include="DrawField.h" />
     <ClInclude Include="DrawFurniture.h" />
     <ClInclude Include="DrawStruct.h" />
     <ClInclude Include="Enum_collection.h" />
     <ClInclude Include="Furniture.h" />
     <ClInclude Include="FurnitureUI.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LevelDataSet.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="RandomDeco.h" />
     <ClInclude Include="RandomWall.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
