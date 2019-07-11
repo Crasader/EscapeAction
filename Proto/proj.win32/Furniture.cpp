@@ -1,5 +1,5 @@
 #include "Furniture.h"
-
+#include "DataManager.h"
 
 Furniture::~Furniture()
 {
@@ -9,15 +9,7 @@ Furniture::~Furniture()
 bool Furniture::init()
 {
 	
-	Document fur_name;
-	//파일 오픈 & 파싱
-	FILE* fp = fopen("jsonData/name/nameFur.json", "rb");
-	char readBuffer[5000];
-	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-	fur_name.ParseStream(is);
-	fclose(fp);
-
-	srand(time(NULL));
+	/*srand(time(NULL));
 	win_size = Director::getInstance()->getWinSize();
 	
 	int total_fntSize = 0;
@@ -117,7 +109,7 @@ bool Furniture::init()
 
 	//Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listner, 2);
 
-
+	*/
 	return true;
 }
 
@@ -126,14 +118,6 @@ bool Furniture::init(int left, int right, bool ladder)
 	//초기화
 	v_FntData.clear();
 	v_fntKind.clear();
-
-	//파일 오픈 & 파싱
-	Document fur_name;
-	FILE* fp = fopen("jsonData/name/nameFur.json", "rb");
-	char readBuffer[5000];
-	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-	fur_name.ParseStream(is);
-	fclose(fp);
 
 	win_size = Director::getInstance()->getWinSize();
 
@@ -146,8 +130,7 @@ bool Furniture::init(int left, int right, bool ladder)
 	v_FntData_l.clear();
 	v_FntData_r.clear();
 
-	assert(fur_name.IsArray());
-	const int arr_count = fur_name.GetArray().Size();//가구 종류 갯수
+	const int arr_count = DataManager::getInstance()->getFurData()->GetArray().Size();//가구 종류 갯수
 	for (int i = 0; i < arr_count; i++) {
 		v_fntKind.push_back(i);
 	}
@@ -200,9 +183,7 @@ bool Furniture::init(int left, int right, bool ladder)
 			int order = RandomHelper::random_int(0, furKindCnt-1);
 			int fur_rand = v_fntKind.at(order);
 
-			assert(fur_name[fur_rand].HasMember("size"));
-			assert(fur_name[fur_rand]["size"].IsInt());
-			Sfnt->fnt_size = fur_name[fur_rand]["size"].GetInt();
+			Sfnt->fnt_size = DataManager::getInstance()->getFurData()->GetArray()[fur_rand]["size"].GetInt();
 			int fur_max = cnt == 0 ? left : right;
 			int nowSize = cnt == 0 ? totalLeft : totalRight;
 			if (nowSize + Sfnt->fnt_size > fur_max) {//방에 들어 갈 수 있는 가구 total 크기 최댓값;
@@ -210,11 +191,10 @@ bool Furniture::init(int left, int right, bool ladder)
 			}
 			v_fntKind.erase(v_fntKind.begin() + order);
 
-			assert(fur_name[fur_rand].HasMember("name"));
-			assert(fur_name[fur_rand]["name"].IsString());
-			Sfnt->fnt_img = fur_name[fur_rand]["name"].GetString();
 
-			Sfnt->deco = fur_name[fur_rand]["deco"].GetBool();
+			Sfnt->fnt_img = DataManager::getInstance()->getFurData()->GetArray()[fur_rand]["name"].GetString();
+
+			Sfnt->deco = DataManager::getInstance()->getFurData()->GetArray()[fur_rand]["deco"].GetBool();
 			//가구 탐색 bool 초기화
 			//Sfnt->search = false;
 			

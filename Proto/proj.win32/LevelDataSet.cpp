@@ -19,7 +19,6 @@ bool LevelDataSet::init()
 	setFurData();
 	setStructData();
 	setDeco();
-	//setData();
 
 	return true;
 }
@@ -207,8 +206,8 @@ void LevelDataSet::setWallData()
 		floor_rm[escRmfl[i]]++;
 	}
 	//벽 그리기 데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/draw/drawWall.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/draw/drawWall.json", "wb");
 	FileWriteStream wall_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> wall_writer(wall_os);
 	draw_wall.Accept(wall_writer);
@@ -256,8 +255,8 @@ void LevelDataSet::setDoorData()
 	}
 
 	//문  데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/trans/transDoor.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/trans/transDoor.json", "wb");
 	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> door_writer(door_os);
 	trans_door.Accept(door_writer);
@@ -348,8 +347,8 @@ void LevelDataSet::setLadderData()
 	}
 
 	//문  데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/trans/transLadder.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/trans/transLadder.json", "wb");
 	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> door_writer(door_os);
 	trans_ladder.Accept(door_writer);
@@ -440,20 +439,12 @@ void LevelDataSet::setFurData()
 	}
 
 	//가구 그리기 데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/draw/drawFur.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/draw/drawFur.json", "wb");
 	FileWriteStream fur_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> fur_writer(fur_os);
 	draw_fur.Accept(fur_writer);
 	fclose(fp);
-
-	/*//가구 그리기 데이터 파일 쓰기
-	FILE* fp2 = fopen("jsonData/draw/check.json", "wb");
-	char writeBuffer2[5000];
-	FileWriteStream fur_os2(fp2, writeBuffer2, sizeof(writeBuffer2));
-	Writer<FileWriteStream> fur_writer2(fur_os2);
-	check_blank.Accept(fur_writer2);
-	fclose(fp2);*/
 
 }
 
@@ -522,8 +513,8 @@ void LevelDataSet::setStructData()
 	draw_struct.PushBack(ds_top, ds_a);
 
 	//구조  데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/draw/drawStruct.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/draw/drawStruct.json", "wb");
 	FileWriteStream struct_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> struct_writer(struct_os);
 	draw_struct.Accept(struct_writer);
@@ -569,8 +560,8 @@ void LevelDataSet::setDeco()
 	}
 
 	//장식 그리기 데이터 파일 쓰기
-	FILE* fp = fopen("jsonData/draw/drawDeco.json", "wb");
-	char writeBuffer[5000];
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/draw/drawDeco.json", "wb");
 	FileWriteStream deco_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> deco_writer(deco_os);
 	draw_deco.Accept(deco_writer);

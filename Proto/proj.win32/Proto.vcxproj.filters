@@ -84,6 +84,7 @@
     <ClCompile Include="DrawLadder.cpp">
       <Filter>DrawMap</Filter>
     </ClCompile>
+    <ClCompile Include="DataManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -153,6 +154,7 @@
     <ClInclude Include="DrawLadder.h">
       <Filter>DrawMap</Filter>
     </ClInclude>
+    <ClInclude Include="DataManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -1,0 +1,44 @@
+diff a/Proto/Classes/player.cpp b/Proto/Classes/player.cpp	(rejected hunks)
+@@ -62,27 +62,26 @@
+ 	SimpleAudioEngine::getInstance()->stopAllEffects();
+ }
+ 
+-void player::ani_forward()
+-{
+-	if (RL_filp == true)
+-	{
+-		MoveBy::create(0.1, Point(_player->getPositionX() + 50, 0));
+-	}
+-}
+ void player::checkFur()
+ {
+-/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+-	//���� ������Ʈ�� �����°� üũ
+-	if (player_bounding->getPosition() < win_size*0.5)
+-	{
+-		if (oncheck == false)
++	/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
++		//���� ������Ʈ�� �����°� üũ
++		if (player_bounding->getPosition() < win_size*0.5)
+ 		{
+-			UIManager::getInstance()->setEnable_AtkBtn(true);
+-			oncheck = true;
++			if (oncheck == false)
++			{
++				UIManager::getInstance()->setEnable_AtkBtn(true);
++				oncheck = true;
++			}
+ 		}
+-	}
+-	else if(player_bounding->getPosition() > win_size*0.5)
++		else if(player_bounding->getPosition() > win_size*0.5)
++		{
++			UIManager::getInstance()->setEnable_AtkBtn(false);
++			oncheck = false;
++		}*/
++	if (playerState != player_Move_enum::SEARCH)
+ 	{
++<<<<<<< HEAD
+ 		UIManager::getInstance()->setEnable_AtkBtn(false);
+ 		oncheck = false;
+ 	}*/

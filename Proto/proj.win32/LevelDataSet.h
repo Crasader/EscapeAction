@@ -23,6 +23,9 @@ public:
 	virtual bool init();
 	~LevelDataSet();
 private:
+	FILE* fp;
+	char writeBuffer[5000];
+
 	//함수
 	void setRoomCnt(int level);//방, 층 갯수 설정, 탈출 방 위치 설정
 	void setWallData();
