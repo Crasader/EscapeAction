@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [[{"pos":5,"name":"decoration/deco2.png"},{"pos":19,"name":"decoration/deco1.png"}],[{"pos":2,"name":"decoration/deco1.png"},{"pos":3,"name":"decoration/deco2.png"}],[{"pos":2,"name":"decoration/deco2.png"}],[{"pos":3,"name":"decoration/deco2.png"},{"pos":4,"name":"decoration/deco2.png"}]]
+=======
+[[{"pos":0,"name":"decoration/deco1.png"},{"pos":8,"name":"decoration/deco2.png"}],[{"pos":-1,"name":"decoration/deco1.png"},{"pos":0,"name":"decoration/deco1.png"}],[{"pos":2,"name":"decoration/deco1.png"},{"pos":10,"name":"decoration/deco2.png"}],[]]
+>>>>>>> e8b33af69e4f7f1251a280c7be68688a1887658c

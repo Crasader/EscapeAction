@@ -151,6 +151,7 @@ void FurnitureUI::schedule_clickBtn(float dt)
 {
 	if (check_furNum == -1) {
 		this->unscheduleAllSelectors();
+		UIManager::getInstance()->setEnable_AtkBtn(true);
 		return;
 	}
 	else if (startSearch) {

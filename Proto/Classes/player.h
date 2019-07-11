@@ -22,7 +22,6 @@ public:
 	bool atk_check;
 
 	void ani_pause();
-	void ani_forward();
 
 	bool RL_filp;
 
@@ -55,6 +54,9 @@ public:
 	//가구 관련
 	Rect getRect();
 
+	//가구서치시 애니메이션 설정
+	void set_RL_filp(bool RL , bool A_Stop, int Joy_m);
+	bool get_RL_filp();
 
 private : 
 	Rect _playerRect;
@@ -68,9 +70,9 @@ private :
 	Size plyer_size;
 	Rect rc;
 
-	Vec2 Move_joy_player;
-
 	Sprite* _player;
+	Vec2 player_animetion_move;
+	int player_fs_move;
 	
 	Animate* _player_animat;
 	Animation* _player_anime;

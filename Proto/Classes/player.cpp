@@ -62,27 +62,26 @@ void player::ani_pause()
 	SimpleAudioEngine::getInstance()->stopAllEffects();
 }
 
-void player::ani_forward()
-{
-	if (RL_filp == true)
-	{
-		MoveBy::create(0.1, Point(_player->getPositionX() + 50, 0));
-	}
-}
 void player::checkFur()
 {
-/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
-	//가구 오브젝트랑 만나는것 체크
-	if (player_bounding->getPosition() < win_size*0.5)
-	{
-		if (oncheck == false)
+	/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+		//가구 오브젝트랑 만나는것 체크
+		if (player_bounding->getPosition() < win_size*0.5)
 		{
-			UIManager::getInstance()->setEnable_AtkBtn(true);
-			oncheck = true;
+			if (oncheck == false)
+			{
+				UIManager::getInstance()->setEnable_AtkBtn(true);
+				oncheck = true;
+			}
 		}
-	}
-	else if(player_bounding->getPosition() > win_size*0.5)
+		else if(player_bounding->getPosition() > win_size*0.5)
+		{
+			UIManager::getInstance()->setEnable_AtkBtn(false);
+			oncheck = false;
+		}*/
+	if (playerState != player_Move_enum::SEARCH)
 	{
+<<<<<<< HEAD
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 		oncheck = false;
 	}*/
@@ -91,6 +90,11 @@ void player::checkFur()
 		playerState = player_Move_enum::SEARCH;
 		check_fur = true;
 		oncheck = true;
+=======
+		playerState = SEARCH;
+		UIManager::getInstance()->set_src_btn(true);
+		check_fur = true;
+>>>>>>> e8b33af69e4f7f1251a280c7be68688a1887658c
 	}
 }
 void player::make_atk_ani()
@@ -152,15 +156,16 @@ void player::Joy_move_check()
 	else if (_player->getPositionX() < _firstPos + (plyer_size.width*0.5) + 6) {
 		_player->setPositionX(_firstPos + (plyer_size.width*0.5) + 6);
 	}
-	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
+	player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 	int move = 3;
 
-	atk_ran = RandomHelper::random_int(0, 1);
+	atk_ran = RandomHelper::random_int(0, 2);
 
 	atk_check = UIManager::getInstance()->get_atk_btn();
 	src_check = UIManager::getInstance()->get_src_btn();
 
-	//CCLOG("_p %f", _player->getPositionX());
+	_player->setFlippedX(get_RL_filp());//가구서치 방향getset
+
 	if (all_stop == false)
 	{
 		
@@ -176,8 +181,12 @@ void player::Joy_move_check()
 			playerState = SEARCH;
 			UIManager::getInstance()->set_src_btn(false);
 			oncheck = true;
+<<<<<<< HEAD
+=======
+			SimpleAudioEngine::getInstance()->playEffect("sound/Search_soung.wav", true);
+>>>>>>> e8b33af69e4f7f1251a280c7be68688a1887658c
 		}
-		else if (player_animetion_move.x > 0) {
+		else if (player_animetion_move.x > 0|| player_fs_move==-1) {
 			if (playerState != RMOVE)
 			{
 				playerState = RMOVE;
@@ -189,7 +198,7 @@ void player::Joy_move_check()
 				_player->setPosition(_player->getPosition() + (Point(move, 0)));
 			}
 		}
-		else if (player_animetion_move.x < 0)
+		else if (player_animetion_move.x < 0|| player_fs_move==1)
 		{
 			if (playerState != LMOVE)
 			{
@@ -454,4 +463,16 @@ Rect player::getRect()
 {
 	//가구 체크할 Rect 설정
 	return _player->getBoundingBox();
+}
+
+void player::set_RL_filp(bool RL, bool A_Stop, int Joy_m)
+{
+	RL_filp = RL;
+	all_stop = A_Stop;
+	player_fs_move = Joy_m;
+}
+
+bool player::get_RL_filp()
+{
+	return RL_filp;
 }
