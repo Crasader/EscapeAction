@@ -1,7 +1,6 @@
 #include "LayerGame.h"
 #include "SimpleAudioEngine.h"
 #include "../proj.win32/GameManager.h"
-
 bool LayerGame::init()
 {
 
@@ -24,6 +23,8 @@ bool LayerGame::init()
 	//draw 구조
 	DrawStruct* ds = DrawStruct::create();
 	this->addChild(ds,10);
+	//audio
+	audio = AudioManager::getInstance();
 	/*
 	//JSONtest 클래스 생성
 	jt = JSONtest::create();
@@ -61,12 +62,17 @@ bool LayerGame::init()
 
 	//스케쥴 실행
 	this->scheduleUpdate();
-
+	
     return true;
 }
 
 void LayerGame::update(float dt)
 {
+	Thunder_ran = RandomHelper::random_int(0, 10);
+	if (Thunder_ran == 0)
+	{
+		AudioManager::getInstance()->set_Effect("sound/thunder.mp3");
+	}
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	pos_RL = pyer->get_RL_filp();
 	//가구 버튼 test
@@ -75,6 +81,7 @@ void LayerGame::update(float dt)
 
 	if (du->moveDoor()) {
 		GameManager::getInstance()->setState(OPEN);
+		UIManager::getInstance()->setEnable_AtkBtn(false);
 		int next = du->getNextRoom(_roomNum);
 		log(" now : %d next : %d", _roomNum, next);
 		du->setUnMove();
@@ -116,9 +123,6 @@ void LayerGame::update(float dt)
 	int move = 5;
 	pyer->Joy_move_check();
 	
-	/*if (!pyer->getCheckFur() && fu->checkSearch()) {
-		fu->setCancle();//가구 체크 취소
-	}*/
 	auto camera_m = this->getChildByName("camera_main");
 
 	camera->setPosition(pos.x, pos.y+60);

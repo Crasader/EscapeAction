@@ -49,14 +49,12 @@ bool player::init()
 
 	_UIM = UIManager::getInstance();
 
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background_rain.mp3", true);
 	return true;
 }
 
 void player::ani_pause()
 {
 	setState(IDLE);
-	SimpleAudioEngine::getInstance()->stopAllEffects();
 	UIManager::getInstance()->setEnable_AtkBtn(true);
 }
 
@@ -475,13 +473,13 @@ bool player::setState(player_Move_enum state)
 		return false;
 	}
 	playerState = state;
-	SimpleAudioEngine::getInstance()->stopAllEffects();
 	switch (playerState)
 	{
 	case NONE:
 		break;
 	case IDLE:
 	{
+		AudioManager::getInstance()->set_Effect("sound/hreat.mp3");
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
 		_player_anime = Animation::create();
@@ -498,6 +496,7 @@ bool player::setState(player_Move_enum state)
 	}
 	case LMOVE:
 	{
+		AudioManager::getInstance()->set_Effect("sound/walking_sound.mp3");
 		RL_filp = true;
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
@@ -505,11 +504,11 @@ bool player::setState(player_Move_enum state)
 		Spawn* A_player = Spawn::create(_player_animat, MoveBy::create(0.75, Point(-80, 0)), NULL);
 		rep_player = RepeatForever::create(A_player);
 		_player->runAction(rep_player);
-		SimpleAudioEngine::getInstance()->playEffect("sound/walking_sound.wav",true);
 		break;
 	}
 	case RMOVE:
 	{
+		AudioManager::getInstance()->set_Effect("sound/walking_sound.mp3");
 		RL_filp = false;
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
@@ -517,7 +516,6 @@ bool player::setState(player_Move_enum state)
 		Spawn* A_player = Spawn::create(_player_animat, MoveBy::create(0.75, Point(80, 0)), NULL);
 		rep_player = RepeatForever::create(A_player);
 		_player->runAction(rep_player);
-		auto walk = SimpleAudioEngine::getInstance()->playEffect("sound/walking_sound.wav", true);
 		break;
 	}
 	case ATTACK:
@@ -525,17 +523,18 @@ bool player::setState(player_Move_enum state)
 		atk_ran = RandomHelper::random_int(0, 2);
 		if (atk_ran == 0)
 		{
+			AudioManager::getInstance()->set_Effect("sound/attak1.mp3");
 			make_atk_ani();
 
 			Sequence* A_player = Sequence::create(p_f_atk, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
 			_player->runAction(A_player);
-
-			SimpleAudioEngine::getInstance()->playEffect("sound/attak1.mp3");
 			break;
 		}
 		else if (atk_ran == 1)
 		{
+
+			AudioManager::getInstance()->set_Effect("sound/attak2.mp3");
 			_player->stopAllActions();
 			_player->setFlipX(RL_filp);
 
@@ -554,11 +553,12 @@ bool player::setState(player_Move_enum state)
 			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
 			_player->runAction(A_player);
-			SimpleAudioEngine::getInstance()->playEffect("sound/attak2.mp3");
 			break;
 		}
 		else if (atk_ran == 2)
 		{
+
+			AudioManager::getInstance()->set_Effect("sound/attak3.mp3");
 			_player->stopAllActions();
 			_player->setFlipX(RL_filp);
 
@@ -578,15 +578,14 @@ bool player::setState(player_Move_enum state)
 			Sequence* A_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 
 			_player->runAction(A_player);
-			SimpleAudioEngine::getInstance()->playEffect("sound/attak3.mp3");
 			break;
 		}
 	}
 	case SEARCH:
 	{
-		SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound.mp3", true);
-		//SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound1.mp3", true);
-		SimpleAudioEngine::getInstance()->playEffect("sound/Sreach_sound2.mp3", true);
+		AudioManager::getInstance()->set_Effect("sound/Sreach_sound.mp3");
+		//AudioManager::getInstance()->set_Effect("sound/Sreach_sound1.mp3");
+		AudioManager::getInstance()->set_Effect("sound/Sreach_sound2.mp3");
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
 
@@ -608,14 +607,13 @@ bool player::setState(player_Move_enum state)
 
 		_player_animat = Animate::create(_player_anime);
 
-		//Sequence* S_player = Sequence::create(_player_animat, CallFunc::create(CC_CALLBACK_0(player::ani_pause, this)), NULL);
 		rep_player = RepeatForever::create(_player_animat);
 		_player->runAction(rep_player);
 		break;
 	}
 	case OPEN:
 	{
-		SimpleAudioEngine::getInstance()->playEffect("sound/opendoor.mp3", true);
+		AudioManager::getInstance()->set_Effect("sound/opendoor.mp3");
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);
 
@@ -644,7 +642,7 @@ bool player::setState(player_Move_enum state)
 	}
 	case UMOVE:
 	{
-		SimpleAudioEngine::getInstance()->playEffect("sound/UDsound.mp3", true);
+		AudioManager::getInstance()->set_Effect("sound/UDsound.mp3");
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 		_player->stopAllActions();
 		_player->setFlipX(RL_filp);

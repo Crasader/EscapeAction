@@ -62,7 +62,7 @@ void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 
 	Mj_Touch_p = mj_p->getPosition();
 
-	if (max_touch.x > Win_size.width *0.15 && GameManager::getInstance()->getPlayerState() == IDLE)
+	if (max_touch.x > Win_size.width *0.15 && GameManager::getInstance()->getPlayerState() == IDLE|| GameManager::getInstance()->getPlayerState() == LMOVE|| GameManager::getInstance()->getPlayerState() == RMOVE)
 	{
 		Move_p_joy1 = Mj_Touch_p - Umj_Touch_p;
 		Move_p_joy2 = Move_p_joy1.getNormalized();

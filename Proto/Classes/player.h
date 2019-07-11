@@ -2,10 +2,9 @@
 #include "cocos2d.h"
 #include "UIManager.h"
 #include "../proj.win32/Enum_collection.h"
-#include "SimpleAudioEngine.h"
+#include "../proj.win32/AudioManager.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
 
 class player:public Node
 {
