@@ -105,6 +105,9 @@ void FurnitureUI::setCancle()
 
 void FurnitureUI::changeRm()
 {
+	for (auto v : v_btn) {
+		v->setVisible(false);
+	}
 	v_chekcBtn.clear();
 }
 
@@ -123,6 +126,9 @@ void FurnitureUI::clickBtn(int num)
 				return;
 			}
 		}
+		//플레이어 상태 변경
+		GameManager::getInstance()->setState(SEARCH);
+
 		TintTo* tint = TintTo::create(0.2, Color3B(0, 255, 255));
 		TintTo* tint2 = TintTo::create(0.2, Color3B::WHITE);
 		Sequence* sq = Sequence::create(tint, tint2, NULL);
@@ -151,6 +157,8 @@ void FurnitureUI::schedule_clickBtn(float dt)
 	if (check_furNum == -1) {
 		this->unscheduleAllSelectors();
 		UIManager::getInstance()->setEnable_AtkBtn(true);
+		//플레이어 상태 변경
+		GameManager::getInstance()->setState(IDLE);
 		return;
 	}
 	else if (startSearch) {
@@ -161,6 +169,8 @@ void FurnitureUI::schedule_clickBtn(float dt)
 		float nextPercent = percent + speed * dt;
 		progress->setPercentage(nextPercent);
 		if (nextPercent >= 100) {
+			//플레이어 상태 변경
+			GameManager::getInstance()->setState(IDLE);
 			//가구 탐색 완료!
 			ui::Button* btn = v_btn.at(check_furNum);
 			btn->setColor(Color3B::WHITE);
