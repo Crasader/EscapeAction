@@ -24,13 +24,20 @@ public:
 	~LevelDataSet();
 private:
 	//함수
-	void setRoomCnt(int level);//방, 층 갯수 설정
-	void setData();
+	void setRoomCnt(int level);//방, 층 갯수 설정, 탈출 방 위치 설정
+	void setWallData();
+	//void setData();
 	//변수
 	int testLevel;  ///*실제 레벨 받아오는 걸로 변경!*///
 	int* floor_rm;//층수당 방 갯수
 	int fl_maxWl;//층수당 최대 벽 갯수
 	int fl_maxRm;//층수당 최대 방갯수
 	int fl_minRm;//층수당 최소 방갯수
+
+	int* escRmfl;//탈출방 층수
+	int* escRmNum;//탈출방 위치
+	
+	//Documents
+	Document draw_wall;
 };
 

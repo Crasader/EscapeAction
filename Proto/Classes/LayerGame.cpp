@@ -11,7 +11,7 @@ bool LayerGame::init()
 	//drawField
 	df = DrawField::create();
 	this->addChild(df);
-	//draw 장식
+/*	//draw 장식
 	DrawDeco* ddeco = DrawDeco::create();
 	this->addChild(ddeco);
 	//draw 가구

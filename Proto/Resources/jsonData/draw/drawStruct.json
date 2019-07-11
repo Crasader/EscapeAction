@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"startPos":0,"count":26,"wall":[0,26],"door":[6,12,20]},{"startPos":-2,"count":28,"wall":[-2,26],"door":[6,12,18]},{"startPos":-2,"count":28,"wall":[2,26],"door":[10,18]},{"startPos":0,"count":26,"wall":[0,8],"door":[]},{"startPos":0,"count":8,"wall":[],"door":[]}]
+=======
+[{"startPos":0,"count":28,"wall":[0,28],"door":[7,15,22]},{"startPos":0,"count":28,"wall":[2,26],"door":[10,18]},{"startPos":0,"count":28,"wall":[0,28],"door":[8,14,21]},{"startPos":0,"count":28,"wall":[0,8],"door":[]},{"startPos":0,"count":8,"wall":[],"door":[]}]
+>>>>>>> 981ecdd2fb9e356ea9beb4350ae74af27cddeb8e
