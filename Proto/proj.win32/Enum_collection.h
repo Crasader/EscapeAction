@@ -8,5 +8,6 @@ enum player_Move_enum
 	RMOVE,
 	SEARCH,
 	ATTACK,
-	//SEARCH,
+	OPEN,
+	UMOVE,
 };

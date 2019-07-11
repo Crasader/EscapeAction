@@ -22,6 +22,7 @@ public:
 	bool atk_check;
 
 	void ani_pause();
+	void ani_move();
 
 	bool RL_filp;
 
@@ -59,7 +60,7 @@ public:
 	Rect getRect();
 
 	//가구서치시 애니메이션 설정
-	void set_RL_filp(bool RL , bool A_Stop, int Joy_m);
+	void set_RL_filp(bool RL);
 	bool get_RL_filp();
 
 private : 
@@ -80,6 +81,13 @@ private :
 	
 	Animate* _player_animat;
 	Animation* _player_anime;
+
+	Animate* _player_UD_animat;
+	Animation* _player_UD_anime;
+
+	Animate* _player_E_animat;
+	Animation* _player_E_anime;
+
 	RepeatForever* rep_player;
 
 	Spawn* p_f_atk;

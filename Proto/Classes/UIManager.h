@@ -17,8 +17,8 @@ private:
 	ui::Button* _search;
 	ui::Button* _key;
 	ui::Button* _trap;
-	Joystick* _joystick;
 	Button_Ui* _btn_ui;
+	Joystick* _joystick;
 	
 public:
 	static UIManager* getInstance();
