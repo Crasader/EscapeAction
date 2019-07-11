@@ -26,8 +26,9 @@ public:
 private:
 	//draw
 /*	
-	FurnitureUI* fu;
+	
 	;*/
+	FurnitureUI* fu;
 	DrawFurniture* dfur;
 	DoorUI* du;
 	DrawField* df;

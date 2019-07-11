@@ -1,6 +1,6 @@
 [
   {
-    "name": "fur/jang.png",
+    "name": "fur/closet.png",
     "size": 1,
     "deco" :  false
   },
@@ -27,6 +27,46 @@
   {
     "name": "fur/bed.png",
     "size": 2,
+    "deco": true
+  },
+  {
+    "name": "fur/bookshelf.png",
+    "size": 1,
+    "deco": false
+  },
+  {
+    "name": "fur/piano.png",
+    "size": 2,
+    "deco": false
+  },
+  {
+    "name": "fur/makeupdesk.png",
+    "size": 2,
+    "deco": true
+  },
+  {
+    "name": "fur/desk.png",
+    "size": 2,
+    "deco": true
+  },
+  {
+    "name": "fur/hanger.png",
+    "size": 2,
+    "deco": false
+  },
+  {
+    "name": "fur/drawer.png",
+    "size": 1,
+    "deco": true
+  },
+  {
+    "name": "fur/die.png",
+    "size": 2,
+    "deco": true
+  },
+  {
+    "name": "fur/die2.png",
+    "size": 1,
     "deco": true
   }
 ]

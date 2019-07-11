@@ -41,15 +41,16 @@ bool LayerGame::init()
 	pyer = player::create();
 	this->addChild(pyer);
 	_roomNum = 0;
-//	pyer->setRoomNum(_roomNum);
-//	pyer->setFirst(df->getFirst(_roomNum));
-//	pyer->setLast(df->getLast(_roomNum));
+	pyer->setRoomNum(_roomNum);
+	pyer->setFirst(df->getFirst(_roomNum));
+	pyer->setLast(df->getLast(_roomNum));
 
-/*	//啊备 ui 积己
+/*	
+*/
+//啊备 ui 积己
 	fu = FurnitureUI::create();
 	this->addChild(fu);
 	dfur->setFurUI(fu);
-*/
 	//巩 ui 积己
 	du = DoorUI::create();
 	this->addChild(du);
@@ -78,7 +79,7 @@ void LayerGame::update(float dt)
 {
 	pos = pyer->getChildByName("player_ani")->getPosition();
 	pos_RL = pyer->get_RL_filp();
-/*	//啊备 滚瓢 test
+	//啊备 滚瓢 test
 	dfur->checkFur(pyer->getRect(), _roomNum);
 	ddor->checkDoor(pyer->getRect(), 0);
 
@@ -121,7 +122,7 @@ void LayerGame::update(float dt)
 				GameManager::getInstance()->setState(RMOVE);							
 			}			
 		}
-	}*/
+	}
 	int move = 5;
 	pyer->Joy_move_check();
 	
@@ -130,7 +131,7 @@ void LayerGame::update(float dt)
 	}*/
 	auto camera_m = this->getChildByName("camera_main");
 
-	camera->setPosition(pos.x+300, pos.y+60);
+	camera->setPosition(pos.x, pos.y+60);
 
 }
 
