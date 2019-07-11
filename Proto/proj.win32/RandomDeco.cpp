@@ -2,44 +2,59 @@
 
 
 
-bool RandomDeco::init()
+bool RandomDeco::init(int cnt)
 {
-	name_deco;
+	Document draw_deco;
 	FILE* fp = fopen("jsonData/name/nameDeco.json", "rb");
 	char readBuffer[5000];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-	name_deco.ParseStream(is);
+	draw_deco.ParseStream(is);
 	fclose(fp);
 
-	assert(name_deco.IsArray());
-	resCnt = -1;
-	for (auto& wl : name_deco.GetArray()) {
-		resCnt++;
+	int resCnt = draw_deco.GetArray().Size();
+	for (int i = 0; i < resCnt; i++) {
+		deco_res.push_back(i);
 	}
-	int rand = RandomHelper::random_int(0, resCnt);
-	assert(name_deco[rand].IsString());
-	deco = name_deco[rand].GetString();
-
+	//cnt = 개수
+	cnt = cnt > resCnt ? resCnt : cnt;//전체 리소스 개수보다 cnt가 적은 경우
+	_cnt = cnt;
+	for (int i = 0; i < cnt; i++) {
+		int max = deco_res.size() - 1;
+		int index = RandomHelper::random_int(0, max);
+		int rand_res = deco_res.at(index);
+		deco_res.erase(deco_res.begin() + index);//데이터 삭제
+		deco_name.push_back(draw_deco[rand_res].GetString());
+	}
 	return true;
+
 }
 
 RandomDeco::~RandomDeco()
 {
 }
 
-int RandomDeco::getDecoCount()
+string RandomDeco::getDecoName(int index)
 {
-	return resCnt+1;
+	return deco_name.at(index);
 }
 
-string RandomDeco::getDecoName()
+int RandomDeco::getDecoCnt()
 {
-	return deco;
+	return _cnt;
 }
 
-void RandomDeco::randDecoAgain()
+RandomDeco * RandomDeco::create(int cnt)
 {
-	int rand = RandomHelper::random_int(0, resCnt);
-	assert(name_deco[rand].IsString());
-	deco = name_deco[rand].GetString();
+	RandomDeco* deco = new(std::nothrow) RandomDeco();
+	if (deco&&deco->init(cnt)) {
+		deco->autorelease();
+		return deco;
+	}
+	CC_SAFE_DELETE(deco);
+	return nullptr;
+}
+
+bool RandomDeco::init()
+{
+	return false;
 }

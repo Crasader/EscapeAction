@@ -11,17 +11,17 @@ using namespace rapidjson;
 class RandomDeco : public Node
 {
 public:
-	CREATE_FUNC(RandomDeco);
+	static RandomDeco* create(int cnt);
 	virtual bool init();
+	virtual bool init(int cnt);
+	CREATE_FUNC(RandomDeco);
 	~RandomDeco();
 
-	int getDecoCount();//장식 리소스 갯수 반환
-	string getDecoName();
-	void randDecoAgain();
+	string getDecoName(int index);
+	int getDecoCnt();
 private:
-	Document name_deco;
-
-	int resCnt;
-	string deco;
+	vector<int> deco_res;
+	vector<string> deco_name;
+	int _cnt;
 };
 
