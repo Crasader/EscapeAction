@@ -60,7 +60,7 @@ bool LayerGame::init()
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setName("camera_main");
 	this->addChild(camera);
-	camera->setPosition3D(Vec3(0, 0,1000));
+	camera->setPosition3D(Vec3(0, 0,200));
 
 	this->setCameraMask((unsigned short)CameraFlag::USER1, true);
 	pyer->_camera = camera;

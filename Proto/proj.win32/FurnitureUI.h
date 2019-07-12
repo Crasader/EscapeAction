@@ -6,6 +6,9 @@
 #include "ui/CocosGUI.h"
 #include "UIManager.h"
 #include "GameManager.h"
+#include "Button_Ui.h"
+#include "Item.h"
+
 USING_NS_CC;
 using namespace std;
 using namespace rapidjson;
@@ -20,6 +23,7 @@ public:
 	void setStart();
 	void setCancle();//캐릭터 이동시 탐색 중지
 	void changeRm();
+
 	~FurnitureUI();
 private:
 	Vector<ui::Button*> v_chekcBtn;
@@ -30,6 +34,5 @@ private:
 	//함수
 	void clickBtn(int num);
 	void schedule_clickBtn(float dt);
-
 };
 

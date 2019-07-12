@@ -154,6 +154,9 @@ void FurnitureUI::clickBtn(int num)
 
 void FurnitureUI::schedule_clickBtn(float dt)
 {
+	Item* It = Item::create();
+	Button_Ui* Btnui = Button_Ui::create();
+
 	if (check_furNum == -1) {
 		this->unscheduleAllSelectors();
 		UIManager::getInstance()->setEnable_AtkBtn(true);
@@ -180,6 +183,36 @@ void FurnitureUI::schedule_clickBtn(float dt)
 			progress->setVisible(false);
 			check_furNum = -1;
 			startSearch = false;
+			
+			//왜 안 될까 고통
+			/*
+			if (It->v_item.back() == 0)
+			{
+				CCLOG("++++++++YOU GOT THE WEAPON++++++++");
+				//F_itemdata->v_FntData_item.pop_back(); //0(무기) 제거
+				//F_itemdata->v_FntData_item.push_back(3); //3(없음) 추가
+			}
+			if (It->v_item.back() == 1)
+			{
+				CCLOG("++++++++YOU GOT THE kEY++++++++");
+				//F_itemdata->v_FntData_item.pop_back(); //1(열쇠) 제거
+				//F_itemdata->v_FntData_item.push_back(3); //3(없음) 추가
+				Btnui->key_count += 1;
+			}
+			if (It->v_item.back() == 2)
+			{
+				CCLOG("++++++++YOU GOT THE TRAP++++++++");
+				//F_itemdata->v_FntData_item.pop_back(); //2(트랩) 제거
+				//F_itemdata->v_FntData_item.push_back(3); //3(없음) 추가
+			}
+			if (It->v_item.back() == 3)
+			{
+				CCLOG("++++++++YOU DIDN'T GET ANYTHING++++++++");
+				//F_itemdata->v_FntData_item.pop_back(); //3(없음) 제거
+				//F_itemdata->v_FntData_item.push_back(3); //3(없음) 추가(데이터 ㅅ)
+			}
+			*/
+			CCLOG("WHY... vector size : %d", It->v_item.size());
 		}
 	}
 }

@@ -17,9 +17,8 @@ bool LayerUI::init()
 
 	//UIManager에 4개의 버튼 세팅
 	UIManager::getInstance()->setAtkBtn((ui::Button*)pl->getChildByName("btn1"));
-	UIManager::getInstance()->setSearchBtn((ui::Button*)pl->getChildByName("btn2"));
-	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn3"));
-	UIManager::getInstance()->setTrapBtn((ui::Button*)pl->getChildByName("btn4"));
+	UIManager::getInstance()->setKeyBtn((ui::Button*)pl->getChildByName("btn2"));
+	UIManager::getInstance()->setTrapBtn((ui::Button*)pl->getChildByName("btn3"));
 
 	//UIManager에 joystick 세팅
 	UIManager::getInstance()->setJoystick(js);

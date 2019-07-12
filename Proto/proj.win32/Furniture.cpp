@@ -5,7 +5,7 @@ Furniture::~Furniture()
 {
 
 }
-//190701
+//190712
 bool Furniture::init()
 {
 	
@@ -158,27 +158,35 @@ bool Furniture::init(int left, int right, bool ladder)
 
 			FntData* Sfnt = new FntData;
 
+			It->v_item.clear();
+
 			//각 아이템 데이터 true 확인
 			if (It->itm->weapon)
 			{
 				Sfnt->item_num = 0;
-				//CCLOG("Weapon True");
+				It->v_item.push_back(0);
+				CCLOG("Weapon True");
 			}
 			if (It->itm->key)
 			{
 				Sfnt->item_num = 1;
-				//CCLOG("Key True");
+				It->v_item.push_back(1);
+				CCLOG("Key True");
 			}
 			if (It->itm->trap)
 			{
 				Sfnt->item_num = 2;
-				//CCLOG("Trap True");
+				It->v_item.push_back(2);
+				CCLOG("Trap True");
 			}
 			if (It->itm->no_item)
 			{
 				Sfnt->item_num = 3;
-				//CCLOG("No_Item True");
+				It->v_item.push_back(3);
+				CCLOG("No_Item True");
 			}
+		
+
 			int furKindCnt = v_fntKind.size();
 			int order = RandomHelper::random_int(0, furKindCnt-1);
 			int fur_rand = v_fntKind.at(order);
@@ -195,8 +203,7 @@ bool Furniture::init(int left, int right, bool ladder)
 			Sfnt->fnt_img = DataManager::getInstance()->getFurData()->GetArray()[fur_rand]["name"].GetString();
 
 			Sfnt->deco = DataManager::getInstance()->getFurData()->GetArray()[fur_rand]["deco"].GetBool();
-			//가구 탐색 bool 초기화
-			//Sfnt->search = false;
+			
 			
 			if (cnt == 0) {
 				totalLeft += Sfnt->fnt_size;
@@ -206,8 +213,13 @@ bool Furniture::init(int left, int right, bool ladder)
 				totalRight += Sfnt->fnt_size;
 				v_FntData_r.push_back(Sfnt);
 			}
+			CCLOG("vector back : %d", It->v_item.back());
+			CCLOG("v_item size : %d", It->v_item.size());
 		}
+		
 	}
+
+	
 
 	//pos 지정
 	int preFurPos = 0;//이전 가구 끝 위치
@@ -233,77 +245,8 @@ bool Furniture::init(int left, int right, bool ladder)
 		totalRight -= fur_r->fnt_size;
 		v_FntData.push_back(fur_r);
 	}
+
 	return true;
-}
-void Furniture::Create_Furniture()
-{
-	/*
-	//방 가운데 가구 배치
-	Sprite* fnt_middle1 = (Sprite*)this->getChildByName("Furniture_middle1");
-	Rect Rec_middle1 = fnt_middle1->getBoundingBox();
-	fnt_middle1->addComponent(It->Save_ItemData());
-	fnt_middle1->setPosition(100 + rand() % (int)win_size.width*0.5, 150 + rand() % (int)win_size.height*0.5);
-	
-	Sprite* fnt_middle2 = (Sprite*)this->getChildByName("Furniture_middle2");
-	Rect Rec_middle2 = fnt_middle2->getBoundingBox();
-	fnt_middle2->setPosition(400 + rand() % (int)win_size.width*0.5, 250 + rand() % (int)win_size.height*0.5);
-
-	//==================rand에 따른 벽 가구 배치 6가지의 경우의 수=======================
-	int randnum = rand() % 6;
-
-	//벽-북쪽 가구 배치
-	Sprite* fnt_wall1 = (Sprite*)this->getChildByName("Furniture_wall1");
-	Rect Rec_wall1 = fnt_wall1->getBoundingBox();
-	fnt_wall1->setPosition(Ary_fnt_wall_pos[rand() % 2]);
-
-	//벽-서쪽 가구 배치
-	Sprite* fnt_wall2 = (Sprite*)this->getChildByName("Furniture_wall2");
-	Rect Rec_wall2 = fnt_wall2->getBoundingBox();
-	fnt_wall2->setPosition(Ary_fnt_wall_pos[rand() % 2 + 2]);
-
-	//벽-동쪽 가구 배치
-	Sprite* fnt_wall3 = (Sprite*)this->getChildByName("Furniture_wall3");
-	Rect Rec_wall3 = fnt_wall3->getBoundingBox();
-	fnt_wall3->setPosition(Ary_fnt_wall_pos[rand() % 2 + 4]);
-
-	//벽-남쪽 가구 배치
-	Sprite* fnt_wall4 = (Sprite*)this->getChildByName("Furniture_wall4");
-	Rect Rec_wall4 = fnt_wall4->getBoundingBox();
-	fnt_wall4->setPosition(Ary_fnt_wall_pos[rand() % 2 + 6]);
-
-	if (randnum == 0)
-	{
-		fnt_wall1->setVisible(true);
-		fnt_wall2->setVisible(true);
-	}
-	else if (randnum == 1)
-	{
-		fnt_wall1->setVisible(true);
-		fnt_wall3->setVisible(true);
-	}
-	else if (randnum == 2)
-	{
-		fnt_wall1->setVisible(true);
-		fnt_wall4->setVisible(true);
-	}
-	else if (randnum == 3)
-	{
-		fnt_wall2->setVisible(true);
-		fnt_wall3->setVisible(true);
-	}
-	else if (randnum == 4)
-	{
-		fnt_wall2->setVisible(true);
-		fnt_wall4->setVisible(true);
-	}
-	else if (randnum == 5)
-	{
-		fnt_wall3->setVisible(true);
-		fnt_wall4->setVisible(true);
-	}
-	//==================rand에 따른 벽 가구 배치 6가지의 경우의 수=======================
-	*/
-
 }
 
 Furniture * Furniture::create(int left, int right, bool ladder)
