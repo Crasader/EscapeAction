@@ -1,6 +1,6 @@
 [
   {
-    "name": "fur/closet.png",
+    "name": "fur/jang.png",
     "size": 1
   },
   {
@@ -22,37 +22,5 @@
   {
     "name": "fur/bed.png",
     "size": 2
-  },
-  {
-    "name": "fur/bookshelf.png",
-    "size": 1
-  },
-  {
-    "name": "fur/piano.png",
-    "size": 2
-  },
-  {
-    "name": "fur/makeupdesk.png",
-    "size": 2
-  },
-  {
-    "name": "fur/desk.png",
-    "size": 2
-  },
-  {
-    "name": "fur/hanger.png",
-    "size": 2
-  },
-  {
-    "name": "fur/drawer.png",
-    "size": 1
-  },
-  {
-    "name": "fur/die.png",
-    "size": 2
-  },
-  {
-    "name": "fur/die2.png",
-    "size": 1
   }
 ]
