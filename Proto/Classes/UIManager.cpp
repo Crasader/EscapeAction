@@ -78,22 +78,23 @@ bool UIManager::setJoystick(Joystick * joystick)
 
 void UIManager::setEnable_AtkBtn(bool enable)
 {
+	_atk->setTouchEnabled(enable);
 	_atk->setEnabled(enable);
 }
 
 void UIManager::setEnable_SearchBtn(bool enable)
 {
-	_search->setEnabled(enable);
+	_search->setTouchEnabled(enable);
 }
 
 void UIManager::setEnable_KeyBtn(bool enable)
 {
-	_key->setEnabled(enable);
+	_key->setTouchEnabled(enable);
 }
 
 void UIManager::setEnable_TrapBtn(bool enable)
 {
-	_trap->setEnabled(enable);
+	_trap->setTouchEnabled(enable);
 }
 
 void UIManager::set_btn_ui(Button_Ui * btn_ui)

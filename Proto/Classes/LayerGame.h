@@ -14,6 +14,7 @@
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawDeco.h"
 #include "../proj.win32/DrawDoor.h"
+#include "../proj.win32/AudioManager.h"
 
 USING_NS_CC;
 
@@ -29,6 +30,8 @@ private:
 	DrawField* df;
 	DrawDoor* ddor;
 	DoorUI* du;
+	AudioManager* audio;
+
 	int _roomNum;
 
 
@@ -44,6 +47,9 @@ private:
 	//player_Move_enum playerState_move_camera;
 	bool camera_check;
 	Vec2 camera_move;
+	//¹ø°³
+	int Thunder_ran;
+
 //JSONtest* jt;
 };
 

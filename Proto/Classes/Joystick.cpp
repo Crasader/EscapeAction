@@ -1,4 +1,5 @@
 #include "Joystick.h"
+#include "../proj.win32/GameManager.h"
 
 bool Joystick::init()
 {
@@ -49,11 +50,7 @@ bool Joystick::onTouchBegan(Touch * touch, Event * unused_event)
 		mj->setPosition(Point(Umj_Touch_p));
 
 		umj->setVisible(true);
-		mj->setVisible(true);
-	}
-	else
-	{
-		
+		mj->setVisible(true);		
 	}
 	return true;
 }
@@ -65,10 +62,18 @@ void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 
 	Mj_Touch_p = mj_p->getPosition();
 
-	if (max_touch.x > Win_size.width *0.15)
+	if (max_touch.x > Win_size.width *0.15 && GameManager::getInstance()->getPlayerState() == IDLE|| GameManager::getInstance()->getPlayerState() == LMOVE|| GameManager::getInstance()->getPlayerState() == RMOVE)
 	{
 		Move_p_joy1 = Mj_Touch_p - Umj_Touch_p;
 		Move_p_joy2 = Move_p_joy1.getNormalized();
+		if (Move_p_joy2.x > 0)
+		{
+			GameManager::getInstance()->setState(RMOVE);
+		}
+		if (Move_p_joy2.x < 0)
+		{
+			GameManager::getInstance()->setState(LMOVE);
+		}
 	}
 }
 
@@ -82,4 +87,7 @@ void Joystick::onTouchEnded(Touch * touch, Event * unused_event)
 
 	umj->setVisible(false);
 	mj->setVisible(false);
+
+	if (GameManager::getInstance()->getPlayerState() != SEARCH && GameManager::getInstance()->getPlayerState() != ATTACK && GameManager::getInstance()->getPlayerState() != UMOVE)
+	GameManager::getInstance()->setState(IDLE);
 }

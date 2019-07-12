@@ -1,5 +1,3 @@
-#define __HELLOWORLD_SCENE_H__
-
 #pragma once
 
 #include "cocos2d.h"
