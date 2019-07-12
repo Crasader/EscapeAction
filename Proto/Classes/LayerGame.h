@@ -8,11 +8,11 @@
 #include "UIManager.h"
 
 #include "../proj.win32/Enum_collection.h"
-/*#include "../proj.win32/JSONtest.h"
-#include "../proj.win32/DrawStruct.h"*/
 #include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/LevelDataSet.h"
 #include "../proj.win32/DrawField.h"
+#include "../proj.win32/DrawStruct.h"
+#include "../proj.win32/DrawDeco.h"
 
 USING_NS_CC;
 
@@ -22,6 +22,13 @@ public:
 	virtual bool init();
     CREATE_FUNC(LayerGame);
 private:
+	//draw
+	DrawFurniture* dfur;
+	FurnitureUI* fu;
+	DrawField* df;
+	int _roomNum;
+
+
 	player* pyer;
 	Camera* camera;
 

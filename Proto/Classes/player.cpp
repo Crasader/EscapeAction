@@ -6,8 +6,12 @@ player::~player()
 
 bool player::init()
 {
+	check_fur = false;
 	_camera = NULL;
 	delayAfterimg = 0;
+	_firstPos = 0;
+	_lastPos = 0;
+
 	//test
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_1(player::onPress, this);
@@ -25,10 +29,11 @@ bool player::init()
 	win_size = Director::getInstance()->getWinSize();
 
 	_player = Sprite::create("I0.png");
-	_player->setAnchorPoint(Vec2(0,0));
-	_player->setPosition(0,120);
+	_player->setAnchorPoint(Vec2(0.5,0));
+	_player->setPosition(50,0);
 	this->addChild(_player);
 	_player->setName("player_ani");
+	plyer_size = _player->getContentSize();
 
 	_player_anime = Animation::create();
 	_player_anime->setDelayPerUnit(0.5f);
@@ -42,15 +47,9 @@ bool player::init()
 	return true;
 }
 
-void player::setRect(Rect back_rc)
+void player::checkFur()
 {
-	rc = back_rc;
-}
-
-
-void player::check()
-{
-	auto player_bounding = (Sprite*)this->getChildByName("player_move");
+/*	auto player_bounding = (Sprite*)this->getChildByName("player_move");
 	//가구 오브젝트랑 만나는것 체크
 	if (player_bounding->getPosition() < win_size*0.5)
 	{
@@ -64,14 +63,24 @@ void player::check()
 	{
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 		oncheck = false;
+	}*/
+
+	if (playerState != player_Move_enum::SEARCH) {
+		playerState = player_Move_enum::SEARCH;
+		check_fur = true;
+		oncheck = true;
 	}
 
+}
 
+bool player::getCheckFur()
+{
+	return check_fur;
 }
 
 void player::Joy_move_check()
 {
-	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2()*3;
+	auto player_animetion_move = UIManager::getInstance()->get_Player_m_p2() * 3;
 	int move = 3;
 	//CCLOG("_p %f", _player->getPositionX());
 
@@ -82,9 +91,8 @@ void player::Joy_move_check()
 			playerState = RMOVE;
 			oncheck = true;
 		}
-		//if (_player->getPositionX() < 780){
+		if(_player->getPositionX()<_lastPos- (plyer_size.width*0.5)-6)
 			_player->setPosition(_player->getPosition() + (Point(move, 0)));
-		//}
 	}
 	else if (player_animetion_move.x < 0)
 	{
@@ -93,9 +101,8 @@ void player::Joy_move_check()
 			playerState = LMOVE;
 			oncheck = true;
 		}
-		//if (_player->getPositionX() > -780){
+		if (_player->getPositionX()>_firstPos +(plyer_size.width*0.5)+6)
 			_player->setPosition(_player->getPosition() - (Point(move, 0)));
-		//}
 	}
 	else
 	{
@@ -175,7 +182,7 @@ void player::Joy_move_check()
 			oncheck = false;
 			break;
 		case SEARCH:
-
+			oncheck = false;
 			break;
 		default:
 			break;
@@ -223,4 +230,30 @@ void player::afterImage(float dt)
 	else {
 		delayAfterimg += dt*2;
 	}
+}
+
+int player::getRoomNum()
+{
+	return _roomNum;
+}
+
+void player::setRoomNum(int roomNum)
+{
+	_roomNum = roomNum;
+}
+
+void player::setFirst(float first)
+{
+	_firstPos = first;
+}
+
+void player::setLast(float last)
+{
+	_lastPos = last;
+}
+
+Rect player::getRect()
+{
+	//가구 체크할 Rect 설정
+	return _player->getBoundingBox();
 }

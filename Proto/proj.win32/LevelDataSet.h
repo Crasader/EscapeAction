@@ -7,6 +7,7 @@
 #include "external/json/filewritestream.h"
 //c언어의 FILE 사용
 #include <cstdio>
+#include <iostream>
 //Resource 이름을 받아오기 위함
 #include "Furniture.h"
 #include "RandomWall.h"
@@ -28,7 +29,6 @@ private:
 	//변수
 	int testLevel;  ///*실제 레벨 받아오는 걸로 변경!*///
 	int* floor_rm;//층수당 방 갯수
-	// setRoomCnt()에서 설정
 	int fl_maxWl;//층수당 최대 벽 갯수
 	int fl_maxRm;//층수당 최대 방갯수
 	int fl_minRm;//층수당 최소 방갯수

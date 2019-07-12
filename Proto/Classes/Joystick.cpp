@@ -5,6 +5,7 @@ bool Joystick::init()
 	Win_size = Director::getInstance()->getWinSize();
 
 	_UnMoveJoy = Sprite::create("Unjoy.png");
+	_UnMoveJoy->setScale(0.2);
 	_UnMoveJoy->setName("Joystick_umj");
 	_UnMoveJoy->setOpacity(150);
 	_UnMoveJoy->setVisible(false);
@@ -12,6 +13,7 @@ bool Joystick::init()
 	this->addChild(_UnMoveJoy);
 
 	_MoveJoy = Sprite::create("Joy.png");
+	_MoveJoy->setScale(0.2);
 	_MoveJoy->setName("Joystick_mj");
 	_MoveJoy->setOpacity(150);
 	_MoveJoy->setVisible(false);

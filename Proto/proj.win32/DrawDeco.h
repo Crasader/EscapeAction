@@ -6,16 +6,13 @@
 USING_NS_CC;
 using namespace rapidjson;
 using namespace std;
-class DrawField : public Node
+class DrawDeco : public Node
 {
 public:
-	CREATE_FUNC(DrawField);
+	CREATE_FUNC(DrawDeco);
 	virtual bool init();
-	float getFirst(int num);
-	float getLast(int num);
-	~DrawField();
+	~DrawDeco();
 private:
-	vector<float> v_first;//∞¢ πÊ¿« first pos
-	vector<float> v_last;//last pos
+	Document draw_deco;
 };
 
