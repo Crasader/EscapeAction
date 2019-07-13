@@ -15,12 +15,13 @@ class DrawFurniture :public Node
 public:
 	CREATE_FUNC(DrawFurniture);
 	virtual bool init();
-	void checkFur(Rect player, int roomNum);
+	void checkFur();
 	~DrawFurniture();
 
 	void setFurUI(FurnitureUI* fu);
 
 private:
+	int _roomNum;
 	vector<int> v_furCnt;//가구 갯수 누적
 	Vector<Sprite*> v_spr;
 	FurnitureUI* _fu;

@@ -1,12 +1,10 @@
 #include "DoorUI.h"
-
+#include "GameManager.h"
 
 bool DoorUI::init()
 {
-	moveRoom = false;//방 번호
 	v_left.clear();
 	v_right.clear();
-	btnNum = 0;
 	//문 데이터 불러오기
 	FILE* fp = fopen("jsonData/trans/transDoor.json", "rb");
 	char readBuffer[5000];
@@ -44,42 +42,22 @@ bool DoorUI::init()
 
 void DoorUI::clickBtn(int num)
 {
-/*	if (v_right.at(num) == _nowRoom) {
-		_nowRoom = v_left.at(num);
+	if (GameManager::getInstance()->setState(player_Move_enum::OPEN)) {
+		int playerRoomNum = GameManager::getInstance()->getPlayerRoomNum();
+		if (v_right.at(num) == playerRoomNum) {
+			playerRoomNum = v_left.at(num);
+		}
+		else if (v_left.at(num) == playerRoomNum) {
+			playerRoomNum = v_right.at(num);
+		}
+		GameManager::getInstance()->setPlayerRoomNum(playerRoomNum);
 	}
-	else if (v_left.at(num) == _nowRoom) {
-		_nowRoom = v_right.at(num);
-	}*/
-	moveRoom = true;
-	btnNum = num;
 }
 
 void DoorUI::setBtnVisible(int num, bool setBool)
 {
 	v_btn.at(num)->setVisible(setBool);
 }
-
-bool DoorUI::moveDoor()
-{
-	return moveRoom;
-}
-
-int DoorUI::getNextRoom(int nowRoom)
-{
-	if (v_right.at(btnNum) == nowRoom) {
-		nowRoom = v_left.at(btnNum);
-	}
-	else if (v_left.at(btnNum) == nowRoom) {
-		nowRoom = v_right.at(btnNum);
-	}
-	return nowRoom;
-}
-
-void DoorUI::setUnMove()
-{
-	moveRoom = false;
-}
-
 DoorUI::~DoorUI()
 {
 }

@@ -8,6 +8,7 @@ using namespace std;
 USING_NS_CC;
 class DataManager
 {
+	/*첫 게임 실행 이후 바뀌지 않는 데이터*/
 private:
 	DataManager();
 	~DataManager();

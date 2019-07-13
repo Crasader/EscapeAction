@@ -33,8 +33,10 @@ private:
 	void setLadderData();
 	void setFurData();
 	void setStructData();
-	void setDeco();
-	//void setData();
+	void setDecoData();
+	void setItemData();
+	void setDefaultInfo();
+
 	//변수
 	int testLevel;  ///*실제 레벨 받아오는 걸로 변경!*///
 	int* floor_rm;//층수당 방 갯수
@@ -44,9 +46,6 @@ private:
 
 	int* escRmfl;//탈출방 층수
 	int* escRmNum;//해당 층에서 탈출방 번호
-	int* escRm;//모든 방중 탈출방 번호
-
-	int* ladfl;//층당 사다리 갯수
 
 	//Documents
 	Document draw_wall;
@@ -59,6 +58,8 @@ private:
 	Document trans_ladder;
 
 	Document check_blank;
+
+	Document default_Info;
 	
 };
 

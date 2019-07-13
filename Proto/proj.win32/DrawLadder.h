@@ -7,7 +7,7 @@
 //c언어의 FILE 사용
 #include <iostream>
 #include <cstdio>
-
+#include "LadderUI.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -19,7 +19,12 @@ public:
 	CREATE_FUNC(DrawLadder);
 	virtual bool init();
 	~DrawLadder();
+	void checkLadder();
+	void setLadderUI(LadderUI* lu);
 private:
-	
+	int _floor;
+	LadderUI* _lu;
+	vector<int> v_ladderCnt;
+	Vector<Sprite*> v_spr;
 };
 

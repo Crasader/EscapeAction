@@ -24,7 +24,6 @@ bool DrawField::init()
 
 	int fl = 0;
 	for (auto& floor : field.GetArray()) {
-
 		for (auto& rm : floor.GetArray()) {
 			float i = rm["pos"].GetDouble()*wid;
 			v_first.push_back(i);

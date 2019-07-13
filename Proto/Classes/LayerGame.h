@@ -15,6 +15,7 @@
 #include "../proj.win32/DrawStruct.h"
 #include "../proj.win32/DrawFurniture.h"
 #include "../proj.win32/DrawDeco.h"
+#include "../proj.win32/LadderUI.h"
 
 USING_NS_CC;
 
@@ -24,31 +25,22 @@ public:
 	virtual bool init();
     CREATE_FUNC(LayerGame);
 private:
-	//draw
-/*	
-	
-	;*/
-	FurnitureUI* fu;
+	//map 그리기
 	DrawFurniture* dfur;
-	DoorUI* du;
 	DrawField* df;
 	DrawDoor* ddor;
 	DrawLadder* dlad;
-	int _roomNum;
-
+	//ui 그리기
+	FurnitureUI* fu;
+	DoorUI* du;
+	LadderUI* lu;
+	//플레이어
 	player* pyer;
+	//카메라
 	Camera* camera;
 
-	Size win_size;
-	Vec2 pos;
-	bool pos_RL;
-	//스케쥴 업데이트
+	//스케줄 업데이트
 	void update(float dt);
-
-	//player_Move_enum playerState_move_camera;
-	bool camera_check;
-	Vec2 camera_move;
-//JSONtest* jt;
 };
 
 #endif // __LAYER_GAME_H__

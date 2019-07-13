@@ -18,7 +18,9 @@ bool LevelDataSet::init()
 	setLadderData();
 	setFurData();
 	setStructData();
-	setDeco();
+	setDecoData();
+	setItemData();
+	setDefaultInfo();
 
 	return true;
 }
@@ -28,7 +30,6 @@ LevelDataSet::~LevelDataSet()
 	delete[] floor_rm;
 	delete[] escRmfl;
 	delete[] escRmNum;
-	delete[] ladfl;
 }
 
 void LevelDataSet::setRoomCnt(int level)
@@ -66,7 +67,6 @@ void LevelDataSet::setRoomCnt(int level)
 	//탈출방 설정
 	escRmfl = new int[escRmCnt];
 	escRmNum = new int[escRmCnt];
-	escRm = new int[escRmCnt];
 	int rm_dis = rmCnt / escRmCnt;
 
 	for (int i = 0; i < escRmCnt; i++) {
@@ -86,15 +86,9 @@ void LevelDataSet::setRoomCnt(int level)
 			if (esc_rm < flRm) {
 				escRmfl[i] = j;//층수 대입
 				escRmNum[i] = esc_rm - pre_flRm;//해당 층에 번호 대입
-				escRm[i] = esc_rm + i;
 				break;
 			}
 		}
-	}
-	//층당 사다리 갯수 동적 할당, 초기화
-	ladfl = new int[floor];
-	for (int i = 0; i < floor; i++) {
-		ladfl[i] = 0;
 	}
 }
 
@@ -267,7 +261,6 @@ void LevelDataSet::setLadderData()
 {
 	/*데이터 구조
 	trans_door[fl][ladder]{  "pos" : 중앙지점 위치::Int,
-						     "lock" : 잠김 여부::Bool,
 						     "up" : 위 방 번호:: Int,
 						     "down" : 아래 방 번호:: Int,
 						     "hp" : 문의 hp ::Int
@@ -293,6 +286,7 @@ void LevelDataSet::setLadderData()
 		for (auto& rm : fl.GetArray()) {
 			//현재 방이 탈출 방이면 사다리 만들지 않음
 			if (rm["esc"].GetBool()) {
+				roomNum++;
 				continue;
 			}
 			int minNow = rm["pos"].GetInt();
@@ -330,7 +324,6 @@ void LevelDataSet::setLadderData()
 					rapidjson::Value tl_la(kObjectType);
 
 					tl_la.AddMember("pos", ladder_pos, tl_a);
-					tl_la.AddMember("lock", true, tl_a);
 					tl_la.AddMember("up", upRmNum + i, tl_a);
 					tl_la.AddMember("down", roomNum, tl_a);
 					tl_la.AddMember("hp", 100, tl_a);
@@ -379,6 +372,8 @@ void LevelDataSet::setFurData()
 
 			//탈출 방이면 가구 세팅 안함
 			if (rm["esc"].GetBool()) {
+				roomNum++;
+				df_fl.PushBack(df_rm, df_a);
 				cb_fl.PushBack(cb_rm, cb_a);
 				continue;
 			}
@@ -387,18 +382,17 @@ void LevelDataSet::setFurData()
 			int right = 0;
 			bool have_ladder = false;
 			int lad_pos = 0;
-			for (auto& lad : trans_ladder[floor].GetArray()) {
-				if (roomNum == lad["down"].GetInt()) {
-					const int ladPos = lad["pos"].GetInt() - rm["pos"].GetInt();
-					lad_pos = ladPos;
-					right = left - ladPos;
-					left = ladPos - 1;
-					have_ladder = true;
-					log("ladder %d", lad_pos);
-					break;
+				for (auto& lad : trans_ladder[floor].GetArray()) {
+					if (roomNum == lad["down"].GetInt()) {
+						const int ladPos = lad["pos"].GetInt() - rm["pos"].GetInt();
+						lad_pos = ladPos;
+						right = left - ladPos;
+						left = ladPos - 1;
+						have_ladder = true;
+						log("ladder %d", lad_pos);
+						break;
+					}
 				}
-			}
-
 			//가구 정보
 			Furniture* furni_name = Furniture::create(left, right, have_ladder);
 			int prePos = 1;
@@ -521,7 +515,7 @@ void LevelDataSet::setStructData()
 	fclose(fp);
 }
 
-void LevelDataSet::setDeco()
+void LevelDataSet::setDecoData()
 {
 	/*데이터 구조
 	draw_deco[floor][deco]{"name" : 가구 이름::String,
@@ -568,4 +562,54 @@ void LevelDataSet::setDeco()
 	fclose(fp);
 	
 
+}
+
+void LevelDataSet::setItemData()
+{
+	/*데이터 구조
+	trans_item[가구번호][아이템::int형 Array]
+	*/
+	trans_item.SetArray();
+	Document::AllocatorType& ti_a = trans_item.GetAllocator();
+
+	int fntCnt = 0; //총 가구 갯수
+	for (auto& fl : draw_fur.GetArray()) {
+		for (auto& rm : draw_fur.GetArray()) {
+			fntCnt+=rm.GetArray().Size();
+		}
+	}
+	log("fntCnt %d", fntCnt);
+	//각 물품 갯수 결정
+	int key = 0;//탈출 방 아닌 방문 갯수
+	for (auto& fl : trans_door.GetArray()) {
+
+	}
+	//아이템 데이터 파일 쓰기
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/trans/transItem.json", "wb");
+	FileWriteStream item_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> item_writer(item_os);
+	draw_deco.Accept(item_writer);
+	fclose(fp);
+
+}
+
+void LevelDataSet::setDefaultInfo()
+{
+	/*데이터 구조
+	default_info{
+		"startRoom" : [첫방 정보::int 형 Array],
+	}*/
+	default_Info.SetObject();
+	Document::AllocatorType& dd_a = draw_deco.GetAllocator();
+	
+	//첫 방 정보
+
+	//캐릭터 정보 데이터 파일 쓰기
+	strcat(writeBuffer, "");
+	fp = fopen("jsonData/DefaultInfo.json", "wb");
+	FileWriteStream deco_os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> deco_writer(deco_os);
+	draw_deco.Accept(deco_writer);
+	fclose(fp);
 }

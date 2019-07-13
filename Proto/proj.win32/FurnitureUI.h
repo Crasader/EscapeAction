@@ -5,10 +5,6 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "UIManager.h"
-#include "GameManager.h"
-#include "Button_Ui.h"
-#include "Item.h"
-
 USING_NS_CC;
 using namespace std;
 using namespace rapidjson;
@@ -18,21 +14,17 @@ public:
 	CREATE_FUNC(FurnitureUI);
 	virtual bool init();
 	void setBtnVisible(int num, bool setbool);
-	bool checkSearch();//탐색중인지 확인
-	float getPos();//서치 중일시 위치 받아오기
-	void setStart();
-	void setCancle();//캐릭터 이동시 탐색 중지
-	void changeRm();
-
+	void clearCheckBtnVector();
 	~FurnitureUI();
 private:
-	Vector<ui::Button*> v_chekcBtn;
+	Vector<ui::Button*> v_chekcBtn;//플레이어가 위치한 방안에서 이미 체크한 가구 모음
 	Vector<ui::Button*> v_btn;
 	Vector<ProgressTimer*> v_pro;
-	int check_furNum;//체크중인 가구 번호, -1이면 체크 x
-	bool startSearch;
+	int _checkfurNum;
 	//함수
 	void clickBtn(int num);
-	void schedule_clickBtn(float dt);
+	void schedule_gotoBtn(float dt);//플레이어가 서치 하기위해 이동
+	void schedule_search(float dt);//플레이어 서치
+
 };
 

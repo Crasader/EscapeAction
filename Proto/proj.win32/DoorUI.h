@@ -12,12 +12,7 @@ class DoorUI : public Node
 public:
 	CREATE_FUNC(DoorUI);
 	virtual bool init();
-	void clickBtn(int num);
 	void setBtnVisible(int num, bool setBool);
-	bool moveDoor();
-	int getNextRoom(int nowRoom);
-	void setUnMove();
-
 	~DoorUI();
 private:
 	Document trans_door;
@@ -25,8 +20,7 @@ private:
 	vector<int> v_left;
 	vector<int> v_right;
 	vector<bool> v_lock;
-	int btnNum;
-	bool moveRoom;
-	
+	//ÇÔ¼ö
+	void clickBtn(int num);
 };
 

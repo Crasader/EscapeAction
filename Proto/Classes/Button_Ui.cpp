@@ -39,8 +39,7 @@ bool Button_Ui::init()
 
 void Button_Ui::atkobj()
 {
-	if (GameManager::getInstance()->getPlayerState() == IDLE) {
-		GameManager::getInstance()->setState(ATTACK);
+	if (GameManager::getInstance()->setState(ATTACK)) {//플레이어 상태 변화 가능할때만
 		UIManager::getInstance()->setEnable_AtkBtn(false);
 	}
 }

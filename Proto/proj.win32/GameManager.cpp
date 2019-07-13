@@ -46,3 +46,67 @@ bool GameManager::setState(player_Move_enum state)
 	}//state가 제대로 들어갔을때 true 반환
 	return false;
 }
+
+void GameManager::playerEndLoopAni()
+{
+	_player->ani_pause();
+}
+
+int GameManager::getPlayerRoomNum()
+{
+	if (_player != NULL) {
+		return _player->getRoomNum();
+	}
+	return NULL;
+}
+
+void GameManager::setPlayerRoomNum(int num)
+{
+	if (_player != NULL) {
+		_player->setRoomNum(num);
+	}
+}
+
+Rect GameManager::getPlayerRect()
+{
+	if (_player != NULL) {
+		return _player->getRect();
+	}
+	return Rect::ZERO;
+}
+
+int GameManager::getPlayerFloor()
+{
+	if (_player != NULL) {
+		return _player->getFloor();
+	}
+}
+
+void GameManager::setPlayerFloor(int floor)
+{
+	if (_player != NULL) {
+		_player->setFloor(floor);
+	}
+}
+
+float GameManager::getPlayerPositionX()
+{
+	if (_player != NULL) {
+		return _player->getPlayerSprPositionX();
+	}
+	return NULL;
+}
+
+void GameManager::setPlayerPositionX(float posX)
+{
+	if (_player != NULL) {
+		_player->setPlayerSprPositionX(posX);
+	}
+}
+
+void GameManager::setContactDoorWithPlayer(Sprite * doorSpr)
+{
+	if (_player != NULL) {
+		_player->setContactDoorSpr(doorSpr);
+	}
+}

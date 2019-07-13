@@ -1,6 +1,5 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
-
 bool GameScene::init()
 {
 
@@ -11,6 +10,8 @@ bool GameScene::init()
 	this->addChild(ly_game);
 	this->addChild(ly_ui);
 	this->addChild(Joy_ui);
+
+	UIManager::getInstance()->setJoystick(Joy_ui);
 
     return true;
 }

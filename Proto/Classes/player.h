@@ -4,6 +4,7 @@
 #include "../proj.win32/Enum_collection.h"
 #include "SimpleAudioEngine.h"
 
+#include "../proj.win32/ShadowLayer.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -29,41 +30,45 @@ public:
 	int atk_ran;
 	void make_atk_ani();
 	
-	void Joy_move_check();
+	void Joy_move_check(float _firstPos, float _lastPos);
 	
 	
 	//테스트
 	virtual void onPress(EventKeyboard::KeyCode key);
 	virtual void onRelease(EventKeyboard::KeyCode key);	
 
-
-
 	Camera* _camera;
 	void checkFur();
 	bool getCheckFur();
 
-	void afterImage(float dt);
+	//void afterImage(float dt);'
 
+	//가구서치시 애니메이션 설정<<이거 안해도 됨
+	void set_RL_filp(bool RL);
+	bool get_RL_filp();
+
+	/*GAME MANAGER에서 사용하는 함수*/
 	//방관련
 	//player가 위치한 방 번호 받아오기
 	int getRoomNum();
 	//player 방 번호 setting
 	void setRoomNum(int roomNum);
-	void setFirst(float first);
-	void setLast(float last);
-	
-	//플레이어 State 관련 :: GameManager에서 사용할 것
+	//위치한 층
+	int getFloor();
+	void setFloor(int floor);
+	//플레이어 State 관련
 	player_Move_enum getState();
 	bool setState(player_Move_enum state);//세팅 성공시 true 반환
-	
-	//가구 관련
+	float getPlayerSprPositionX();
+	void setPlayerSprPositionX(float posX);
+	//인접한 문 스프라이트 주소 받아오기
+	void setContactDoorSpr(Sprite* contactDoor);
+	//충돌 체크 관련
 	Rect getRect();
 
-	//가구서치시 애니메이션 설정
-	void set_RL_filp(bool RL);
-	bool get_RL_filp();
-
 private : 
+
+	ShadowLayer* _shadowLayer;
 	Rect _playerRect;
 
 	bool keyUp, keyDown, keyLeft, keyRight;
@@ -96,9 +101,14 @@ private :
 
 	//player가 현재 위치한 방 번호
 	int _roomNum;
-	//방 크기
-	float _firstPos;
-	float _lastPos;
+	int _floor;//위치한 층
+	//빛 크기
+	float lightSize;
+	//인접한 방문 스프라이트 주소
+	Sprite* _door;
+
+	//함수
+	void returnDoorTexture();
 
 };
 

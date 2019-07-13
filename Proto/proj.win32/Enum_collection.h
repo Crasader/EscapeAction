@@ -10,4 +10,5 @@ enum player_Move_enum
 	ATTACK,
 	OPEN,
 	UMOVE,
+	DMOVE,
 };

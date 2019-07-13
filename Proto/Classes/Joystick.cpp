@@ -61,18 +61,32 @@ void Joystick::onTouchMoved(Touch * touch, Event * unused_event)
 	mj_p->setPosition(Point(touch->getLocation()));
 
 	Mj_Touch_p = mj_p->getPosition();
-
-	if (max_touch.x > Win_size.width *0.15 && GameManager::getInstance()->getPlayerState() == IDLE)
+	player_Move_enum state = GameManager::getInstance()->getPlayerState();
+	if (max_touch.x > Win_size.width *0.15 && state == IDLE||state==RMOVE||state==LMOVE)
 	{
+		//GameManager::getInstance()->playerEndLoopAni();
 		Move_p_joy1 = Mj_Touch_p - Umj_Touch_p;
 		Move_p_joy2 = Move_p_joy1.getNormalized();
 		if (Move_p_joy2.x > 0)
 		{
-			GameManager::getInstance()->setState(RMOVE);
+			GameManager::getInstance()->setState(player_Move_enum::RMOVE);
 		}
 		if (Move_p_joy2.x < 0)
 		{
-			GameManager::getInstance()->setState(LMOVE);
+			GameManager::getInstance()->setState(player_Move_enum::LMOVE);
+		}
+	}
+	if (max_touch.x > Win_size.width *0.15 &&state == SEARCH&&abs((Mj_Touch_p - Umj_Touch_p).x)>30) {
+		GameManager::getInstance()->playerEndLoopAni();
+		Move_p_joy1 = Mj_Touch_p - Umj_Touch_p;
+		Move_p_joy2 = Move_p_joy1.getNormalized();
+		if (Move_p_joy2.x > 0)
+		{
+			GameManager::getInstance()->setState(player_Move_enum::RMOVE);
+		}
+		if (Move_p_joy2.x < 0)
+		{
+			GameManager::getInstance()->setState(player_Move_enum::LMOVE);
 		}
 	}
 }

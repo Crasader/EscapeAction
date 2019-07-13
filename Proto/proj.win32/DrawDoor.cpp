@@ -1,12 +1,15 @@
 #include "DrawDoor.h"
-
+#include "GameManager.h"
 bool DrawDoor::init()
 {
+	//초기화
+	int _roomNum = 0;
 	v_doorCnt.clear();
 	v_spr.clear();
 	_du = NULL;
-
+	_floor = 0;
 	//파일 내용 불러오기
+	Document trans_door;
 	FILE* fp = fopen("jsonData/trans/transDoor.json", "rb");
 	char readBuffer[5000];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
@@ -38,20 +41,39 @@ bool DrawDoor::init()
 	return true;
 }
 
-void DrawDoor::checkDoor(Rect player, int floor)
+void DrawDoor::checkDoor()
 {
+	int playerFloor = GameManager::getInstance()->getPlayerFloor();
+	Rect playerRect = GameManager::getInstance()->getPlayerRect();
+	//플레이어 층과 문 층이 다를때
+	if (playerFloor != _floor) {
+		int fir;
+		if (_floor == 0) {
+			fir = 0;
+		}
+		else {
+			fir = v_doorCnt.at(_floor - 1);
+		}
+		int last = v_doorCnt.at(_floor);
+		for (int i = fir; i < last; i++) {
+			_du->setBtnVisible(i, false);
+		}
+		
+		_floor = playerFloor;
+	}
 	int fir;
-	if (floor == 0) {
+	if (_floor == 0) {
 		fir = 0;
 	}
 	else {
-		fir = v_doorCnt.at(floor-1);
+		fir = v_doorCnt.at(_floor-1);
 	}
-	int last = v_doorCnt.at(floor);
+	int last = v_doorCnt.at(_floor);
 	for (int i = fir; i < last; i++) {
 		Sprite* spr = v_spr.at(i);
 		Rect spr_rc = spr->getBoundingBox();
-		if (player.intersectsRect(spr_rc)) {
+		if (playerRect.intersectsRect(spr_rc)) {
+			GameManager::getInstance()->setContactDoorWithPlayer(spr);
 			_du->setBtnVisible(i, true);
 		}
 		else {

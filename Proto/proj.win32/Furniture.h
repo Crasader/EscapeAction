@@ -14,7 +14,7 @@ using namespace std;
 using namespace rapidjson;
 USING_NS_CC;
 
-//190712
+//190701
 
 struct FurnitureData
 {
@@ -24,11 +24,10 @@ struct FurnitureData
 	bool deco;
 	//int fnt_sprite; //가구 종류 랜덤 지정
 	//ItemData* F_ItemData; //아이템 클래스에서 데이터 받아옴
-	int item_num; //각각 저장된 아이템 번호(0:weapon, 1:key, 2:trap, 3:no_item)
+	//int item_num; //각각 저장된 아이템 번호(0:weapon, 1:key, 2:trap, 3:no_item)
+	//bool search; //탐색 여부(true: 탐색했음 / false: 탐색 안 했음)
 
 }typedef FntData;
-
-
 
 class Furniture : public Node
 {
@@ -42,10 +41,14 @@ public:
 	vector<FntData*> v_FntData;
 	vector<int> v_fntKind;
 
-	Size win_size;
-
-	bool isselect;
-	Sprite* select;
+	//Size win_size;
+	//Vec2 Ary_fnt_wall_pos[8]; //Vec2 위치값 저장 배열 <안씀
+	//void Create_Furniture(); //가구 생성
+	//void Touch_React(); //가구 터치시 반응
+	//virtual bool onTouchBegan(Touch* touch, Event* unused_event);
+	//virtual void onTouchEnded(Touch* touch, Event* unused_event);
+	//bool isselect;
+	//Sprite* select;
 	
 	CREATE_FUNC(Furniture);
 

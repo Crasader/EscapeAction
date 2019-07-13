@@ -19,12 +19,12 @@ class DrawDoor:public Node
 public:
 	CREATE_FUNC(DrawDoor);
 	virtual bool init();
-	void checkDoor(Rect player, int floor);//현재 층, 방번호
+	void checkDoor();
 	void setDoorUI(DoorUI* du);
 	~DrawDoor();
 private:
+	int _floor;
 	DoorUI* _du;
-	Document trans_door;
 	vector<int> v_doorCnt;
 	Vector<Sprite*> v_spr;
 };

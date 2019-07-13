@@ -1,164 +1,178 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="win32">
-      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resource">
-      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NameInfo">
-      <UniqueIdentifier>{47aae85d-ca7a-42dc-876b-4b20829e6cf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DrawMap">
-      <UniqueIdentifier>{efe53c31-d9db-4d65-8242-700c462d4479}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>win32</Filter>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="LevelDataSet.cpp">
+      <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\LayerGame.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\LayerUI.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="ShadowLayer.cpp">
+      <Filter>cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\player.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Room.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UIManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Button_Ui.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Joystick.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="LevelDataSet.cpp" />
-    <ClCompile Include="Furniture.cpp">
-      <Filter>NameInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomWall.cpp">
-      <Filter>NameInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomDeco.cpp">
-      <Filter>NameInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawField.cpp">
-      <Filter>DrawMap</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawFurniture.cpp">
-      <Filter>DrawMap</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawStruct.cpp">
-      <Filter>DrawMap</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawDeco.cpp">
-      <Filter>DrawMap</Filter>
-    </ClCompile>
-    <ClCompile Include="FurnitureUI.cpp">
-      <Filter>DrawMap</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawDoor.cpp">
-      <Filter>DrawMap</Filter>
+      <Filter>cpp</Filter>
     </ClCompile>
     <ClCompile Include="DoorUI.cpp">
-      <Filter>DrawMap</Filter>
+      <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="FurnitureUI.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="LadderUI.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawStruct.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
     <ClCompile Include="DrawLadder.cpp">
-      <Filter>DrawMap</Filter>
+      <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DrawFurniture.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawField.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawDoor.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawDeco.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Furniture.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomDeco.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomWall.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Button_Ui.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Joystick.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UIManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LayerGame.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LayerUI.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Joystick.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LayerGame.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LayerUI.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\GameScene.h" />
+    <ClInclude Include="..\Classes\LayerGame.h" />
+    <ClInclude Include="..\Classes\LayerUI.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="ShadowLayer.h">
+      <Filter>LayerGame</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\player.h">
-      <Filter>src</Filter>
+      <Filter>LayerGame</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Room.h">
-      <Filter>src</Filter>
+    <ClInclude Include="DataManager.h">
+      <Filter>singletone</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>singletone</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UIManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
+      <Filter>singletone</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Button_Ui.h">
-      <Filter>src</Filter>
+      <Filter>LayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>src</Filter>
+    <ClInclude Include="Enum_collection.h">
+      <Filter>LayerGame</Filter>
     </ClInclude>
-    <ClInclude Include="Enum_collection.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="LevelDataSet.h" />
+    <ClInclude Include="..\Classes\Joystick.h">
+      <Filter>LayerUI</Filter>
+    </ClInclude>
     <ClInclude Include="Furniture.h">
-      <Filter>NameInfo</Filter>
+      <Filter>LayerGame\GetRadomData</Filter>
     </ClInclude>
-    <ClInclude Include="RandomWall.h">
-      <Filter>NameInfo</Filter>
+    <ClInclude Include="Item.h">
+      <Filter>LayerGame\GetRadomData</Filter>
     </ClInclude>
     <ClInclude Include="RandomDeco.h">
-      <Filter>NameInfo</Filter>
+      <Filter>LayerGame\GetRadomData</Filter>
     </ClInclude>
-    <ClInclude Include="DrawField.h">
-      <Filter>DrawMap</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawFurniture.h">
-      <Filter>DrawMap</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawStruct.h">
-      <Filter>DrawMap</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawDeco.h">
-      <Filter>DrawMap</Filter>
-    </ClInclude>
-    <ClInclude Include="FurnitureUI.h">
-      <Filter>DrawMap</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawDoor.h">
-      <Filter>DrawMap</Filter>
+    <ClInclude Include="RandomWall.h">
+      <Filter>LayerGame\GetRadomData</Filter>
     </ClInclude>
     <ClInclude Include="DoorUI.h">
-      <Filter>DrawMap</Filter>
+      <Filter>LayerGame\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="LadderUI.h">
+      <Filter>LayerGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FurnitureUI.h">
+      <Filter>LayerGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDeco.h">
+      <Filter>LayerGame\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDoor.h">
+      <Filter>LayerGame\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawField.h">
+      <Filter>LayerGame\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawFurniture.h">
+      <Filter>LayerGame\Draw</Filter>
+    </ClInclude>
     <ClInclude Include="DrawLadder.h">
-      <Filter>DrawMap</Filter>
+      <Filter>LayerGame\Draw</Filter>
     </ClInclude>
-    <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DrawStruct.h">
+      <Filter>LayerGame\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelDataSet.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc">
-      <Filter>resource</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LayerGame">
+      <UniqueIdentifier>{8e52b0bd-6b24-46fc-81d1-d7995d6a0aed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="singletone">
+      <UniqueIdentifier>{7373c7a9-44c0-4328-8026-292863822b3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LayerUI">
+      <UniqueIdentifier>{cb5b5439-6ff9-489a-99a4-fc166fb255c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LayerGame\GetRadomData">
+      <UniqueIdentifier>{519a9fe2-9e30-4b50-9897-71e7459c8979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LayerGame\UI">
+      <UniqueIdentifier>{1ea861ba-1c75-4261-9403-72300344fcf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LayerGame\Draw">
+      <UniqueIdentifier>{dec72f36-bd1a-417f-a101-8c455e9ba7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{2ce770f5-f871-41d1-bfd8-020ee4753e3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
