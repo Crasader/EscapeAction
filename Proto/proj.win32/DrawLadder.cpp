@@ -9,7 +9,7 @@ bool DrawLadder::init()
 
 	Document trans_ladder;
 	//파일 내용 불러오기
-	FILE* fp = fopen("jsonData/trans/transLadder.json", "rb");
+	FILE* fp = fopen("jsonData/draw/drawLadder.json", "rb");
 	char readBuffer[5000];
 	FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 	trans_ladder.ParseStream(is);

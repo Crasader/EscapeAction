@@ -341,7 +341,7 @@ void LevelDataSet::setLadderData()
 
 	//문  데이터 파일 쓰기
 	strcat(writeBuffer, "");
-	fp = fopen("jsonData/trans/transLadder.json", "wb");
+	fp = fopen("jsonData/draw/drawLadder.json", "wb");
 	FileWriteStream door_os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> door_writer(door_os);
 	trans_ladder.Accept(door_writer);
