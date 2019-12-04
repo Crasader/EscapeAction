@@ -1,5 +1,9 @@
 # EscapeAction
-방탈출 액션 cocos 프로젝트
+플레이 영상 : [https://www.youtube.com/watch?v=VC4d8rjUITo&t=5s](https://www.youtube.com/watch?v=VC4d8rjUITo&t=5s)
+
+- [1) 데이터 설계](https://github.com/KimHeeRyeong/EscapeAction#1-데이터-설계)
+- [2) 방 랜덤 생성](https://github.com/KimHeeRyeong/EscapeAction#2-방-랜덤-생성)
+- [3) 탐색 및 아이템 획득](https://github.com/KimHeeRyeong/EscapeAction#3-탐색-및-아이템-획득)
 
 ## 1) 데이터 설계
 [관련 코드] [json data folder](https://github.com/KimHeeRyeong/EscapeAction/tree/master/jsonData)   
